@@ -13,7 +13,7 @@ export default {
         cardbody: ["14px"],
       },
       colors: {
-        primary: "#3DBB47", // Custom primary color
+        primary: "#2D3648", // Custom primary color
         secondary: "#2EA14A", // Custom secondary color
         hihglight: "#154119",
         sub: "#F5F5F5",
