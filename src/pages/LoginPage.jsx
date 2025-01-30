@@ -1,11 +1,31 @@
 import React, { useState } from "react";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import handleLogin from "../api/auth/login";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [showpw, setshowpw] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const submitLogin = async () => {
+    const data = {
+      username,
+      password,
+    };
+
+    const res = await handleLogin(data);
+
+    console.log(res.data.user.role);
+    if (res.data.user.role === "owner") {
+      navigate("/admin");
+    } else {
+      navigate("/employee");
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
@@ -18,6 +38,8 @@ const LoginPage = () => {
             <span className="text-lg font-semibold">User Name</span>
           </span>
           <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             type="text"
             placeholder="Enter Name"
             className="mt-1 text-lg block w-full p-3 px-4 border-2 border-gray-300 rounded"
@@ -30,6 +52,8 @@ const LoginPage = () => {
             <span className="text-lg font-semibold">Password</span>
           </span>
           <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type={showpw ? "text" : "password"}
             placeholder="Enter Password"
             className="mt-1 text-lg block w-full py-3 px-4 border-2 border-gray-300 rounded shadow-md"
@@ -48,7 +72,10 @@ const LoginPage = () => {
           Forget Password?
         </Link>
 
-        <button className="w-full bg-primary text-lg font-bold text-white py-3 rounded hover:bg-gray-700 transition">
+        <button
+          className="w-full bg-primary text-lg font-bold text-white py-3 rounded hover:bg-gray-700 transition"
+          onClick={() => submitLogin()}
+        >
           Login Account
         </button>
       </div>

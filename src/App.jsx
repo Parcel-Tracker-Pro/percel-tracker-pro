@@ -10,7 +10,6 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/" element={<LoginPage />} />
         <Route path="/admin/*" element={<AdminPage />} />
         <Route path="/employee" element={<EmployeePage />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
