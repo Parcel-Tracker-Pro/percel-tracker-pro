@@ -1,11 +1,11 @@
-import axios, { setAuthToken } from "./../axios";
+import axios from "./../axios";
 import { toast } from "sonner";
 // import { jwtDecode } from "jwt-decode";
 
 const createEmployee = async (data) => {
-  const toastId = toast.loading("Logging in...");
+  const toastId = toast.loading("Creating...");
   try {
-    const response = await axios.post("api/v1/user/login", data);
+    const response = await axios.post("api/v1/user/signup", data);
     toast.success("Created successfully!", {
       id: toastId,
       autoClose: 500, // Auto-close the toast after 5 seconds
@@ -13,10 +13,12 @@ const createEmployee = async (data) => {
 
     return response.data;
   } catch (error) {
-    toast.error(`${error.response.data.message}`, {
-      id: toastId,
-      autoClose: 500, // Auto-close the toast after 5 seconds
-    });
+    if (error) {
+      toast.error(`${error.response.data.message}`, {
+        id: toastId,
+        autoClose: 500, // Auto-close the toast after 5 seconds
+      });
+    }
   }
 };
 

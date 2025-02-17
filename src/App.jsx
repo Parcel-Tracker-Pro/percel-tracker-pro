@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
-import AdminPage from "./pages/AdminPage";
+import AdminPage from "./pages/Admin/AdminPage";
 import EmployeePage from "./pages/EmployeePage";
 import ForgotPassword from "./pages/ForgotPassword";
 

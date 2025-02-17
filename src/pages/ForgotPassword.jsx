@@ -3,7 +3,7 @@ import forgot from "./../assets/images/Forgot.svg";
 
 function ForgotPassword() {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
       <div>
         <img src={forgot} alt="forgot" />
         <div className="text-center">
@@ -13,6 +13,9 @@ function ForgotPassword() {
           </p>
         </div>
       </div>
+      <button className="bg-primary mt-2 text-md py-3 px-10 rounded-md">
+        Close
+      </button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_APP_API;
-const token = localStorage.getItem("percelToken");
+const token = localStorage.getItem("percel");
 // let usertoken = localStorage.getItem("token");
 axios.defaults.baseURL = BASE_URL;
 // axios.defaults.withCredentials = true;
