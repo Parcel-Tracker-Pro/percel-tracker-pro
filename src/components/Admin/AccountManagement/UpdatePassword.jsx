@@ -80,7 +80,7 @@ const UpdatePassword = ({ isOpen, onClose, id }) => {
                 onClick={createAccount}
                 className="w-full button"
               >
-                Create Account
+                Update Password
               </button>
             </div>
           </div>
