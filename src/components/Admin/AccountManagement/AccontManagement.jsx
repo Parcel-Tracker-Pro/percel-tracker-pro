@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
-import CreateAccountModal from "../../components/accmanagement/CreateAccountModel";
-import getAllEmployees from "../../api/employee/getAllemployees";
-import VertifyPassword from "../../components/accmanagement/VertifyPassword";
+import { MdGroupAdd } from "react-icons/md";
+// page
+import CreateAccountModal from "./CreateAccountModel";
+import VertifyPassword from "./VertifyPassword";
+// api
+import getAllEmployees from "./../../../api/employee/getAllemployees";
+import UpdatePassword from "./UpdatePassword";
 
 function AccontManagement() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isVertifyOpen, setVertifyOpen] = useState(false);
+  const [isUpdateOpen, setUpdateOpen] = useState(false);
   const [employee, setEmployee] = useState([]);
+  const [id, setId] = useState("");
 
   const getEmployees = async () => {
     const res = await getAllEmployees();
@@ -19,7 +25,7 @@ function AccontManagement() {
   }, [isModalOpen]);
 
   return (
-    <div>
+    <div className="mb-20">
       <p className="text-2xl font-medium">Account Management</p>
       {/* ____________________________________________________________________________________ */}
       <div className="flex w-full justify-between gap-2 items-center bg-gray-200 px-4 py-3 rounded-lg my-5">
@@ -36,7 +42,7 @@ function AccontManagement() {
         </div>
         <button
           onClick={() => setVertifyOpen(true)}
-          className="py-2 px-4 border border-black rounded-lg"
+          className="py-2 px-4 border-2 border-secondary rounded-lg text-secondary font-bold hover:scale-105 transition duration-300 bg-white"
         >
           Update
         </button>
@@ -46,10 +52,10 @@ function AccontManagement() {
         <div className="flex justify-between items-center mb-5">
           <p className="text-lg font-medium ">Staff Accounts</p>
           <button
-            className="bg-primary text-white py-2 px-4 font-medium rounded-md"
+            className="button px-4 flex justify-center itmes-center gap-4"
             onClick={() => setModalOpen(true)}
           >
-            Add Account
+            <span> Add Staff</span> <MdGroupAdd size={25} />
           </button>
         </div>
         {employee.map((staff, index) => (
@@ -69,12 +75,16 @@ function AccontManagement() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="py-2 px-4 border border-black rounded-lg">
+              <button
+                className="py-2 px-4 border border-black rounded-lg"
+                onClick={() => {
+                  setUpdateOpen(true);
+                  setId(staff._id);
+                  console.log(staff._id);
+                }}
+              >
                 Update
               </button>
-              {/* <button className="p-3 border border-black rounded-lg">
-                <FaRegTrashAlt size={15} />
-              </button> */}
             </div>
           </div>
         ))}
@@ -87,6 +97,11 @@ function AccontManagement() {
       <VertifyPassword
         isOpen={isVertifyOpen}
         onClose={() => setVertifyOpen(false)}
+      />
+      <UpdatePassword
+        isOpen={isUpdateOpen}
+        onClose={() => setUpdateOpen(false)}
+        id={id}
       />
     </div>
   );

@@ -4,10 +4,8 @@ import { toast } from "sonner";
 
 const vertifypassword = async (data) => {
   try {
-    const response = await axios.post("api/v1/user", data, {
-      withCredentials: true,
-    });
-    return response.data;
+    const response = await axios.post("api/v1/user", data);
+    return response;
   } catch (error) {
     if (error) {
       toast.error(`${error.response.data.message}`, {

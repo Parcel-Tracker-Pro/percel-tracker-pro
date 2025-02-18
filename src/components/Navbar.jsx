@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MdHomeFilled } from "react-icons/md";
 import { TbReportMoney } from "react-icons/tb";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -32,16 +32,21 @@ const navs = [
 function Navbar() {
   return (
     <div>
-      <div className="flex justify-between items-center px-5 py-3">
+      <div className="flex w-full md:w-2/4 mx-auto border border-gray-200 shadow-lg md:rounded-lg justify-between items-center px-5 py-3">
         {navs.map((nav, index) => (
-          <Link
+          <NavLink
             to={nav.link}
             key={index}
-            className="flex flex-col gap-2 items-center"
+            end={nav.link === "/admin/"}
+            className={({ isActive }) =>
+              `flex flex-col gap-2 items-center text-sm ${
+                isActive ? "text-secondary" : "text-gray-400"
+              }`
+            }
           >
             {nav.icon}
             <p>{nav.name}</p>
-          </Link>
+          </NavLink>
         ))}
       </div>
     </div>

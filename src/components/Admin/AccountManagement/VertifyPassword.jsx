@@ -1,26 +1,27 @@
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { RiLockPasswordLine } from "react-icons/ri";
-import vertifypassword from "../../api/auth/vertifyPassword";
+import vertifypassword from "./../../../api/auth/vertifyPassword";
 import UpdatePassword from "./UpdatePassword";
-import { Cookies } from "react-cookie";
 
 const VertifyPassword = ({ isOpen, onClose }) => {
+  const id = localStorage.getItem("userId");
   const [verifyPassword, setvertifyPassword] = useState("");
   const [showpw, setshowpw] = useState(false);
   const [modelOpen, setModalOpen] = useState(false);
 
   const vertifypw = async (e) => {
+    console.log(verifyPassword);
     e.preventDefault();
     const data = {
       verifyPassword,
     };
 
     const res = await vertifypassword(data);
-    console.log(res);
-    if (res.code === 200) {
+    console.log(res.data);
+    if (res.data.code === 200) {
       setModalOpen(true);
-      console.log(res);
+      // onClose();
     }
   };
 
@@ -30,7 +31,7 @@ const VertifyPassword = ({ isOpen, onClose }) => {
         <div className="bg-white rounded-lg p-6 m-5">
           <h2 className="text-2xl font-semibold mb-10">Owner Verification</h2>
           <div>
-            <label className="block mb-2 text-primary relative">
+            <label className="block mb-2 text-secondary relative">
               <span className="flex items-center mb-2">
                 <RiLockPasswordLine className="mr-5" size={20} />
                 <span className="text-lg font-semibold">Password</span>
@@ -51,17 +52,13 @@ const VertifyPassword = ({ isOpen, onClose }) => {
             </label>
 
             <div className="flex justify-between gap-5 mt-10">
-              <button
-                type="button"
-                className="rounded-md w-full py-3 border border-primary text-sm text-gray-500 hover:text-gray-700"
-                onClick={onClose}
-              >
+              <button type="button" className="w-full cancel" onClick={onClose}>
                 Discard
               </button>
               <button
                 type="submit"
                 onClick={vertifypw}
-                className="w-full bg-primary text-white rounded-md px-2 py-3 hover:bg-blue-600"
+                className="w-full button"
               >
                 Confirm
               </button>
@@ -71,7 +68,11 @@ const VertifyPassword = ({ isOpen, onClose }) => {
 
         <UpdatePassword
           isOpen={modelOpen}
-          onClose={() => setModalOpen(false)}
+          onClose={() => {
+            setModalOpen(false);
+            onClose();
+          }}
+          id={id}
         />
       </div>
     )

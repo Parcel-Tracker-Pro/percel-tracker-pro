@@ -8,17 +8,21 @@ const handleLogin = async (data) => {
     const response = await axios.post("api/v1/user/login", data);
     toast.success("Logged in successfully!", {
       id: toastId,
-      autoClose: 500, // Auto-close the toast after 5 seconds
+      autoClose: 200, // Auto-close the toast after 5 seconds
     });
+    console.log(response.data.data.user._id);
+    console.log(response);
+    const userId = response.data.data.user._id;
     const percelToken = response.data.data.token;
     setAuthToken(percelToken);
+    localStorage.setItem("userId", userId);
     localStorage.setItem("percel", percelToken);
 
     return response.data;
   } catch (error) {
     toast.error(`${error.response.data.message}`, {
       id: toastId,
-      autoClose: 500, // Auto-close the toast after 5 seconds
+      autoClose: 200, // Auto-close the toast after 5 seconds
     });
   }
 };

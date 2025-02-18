@@ -4,7 +4,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import handleLogin from "../api/auth/login";
-import logo from "./../assets/images/meme.png";
+import logo from "./../assets/images/logo/logo.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     const res = await handleLogin(data);
 
-    console.log(res.data.user.role);
+    // console.log(res.data.user.role);
     if (res.data.user.role === "owner") {
       navigate("/admin");
     } else {
@@ -30,7 +30,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
-      <div className="bg-white py-8 px-10 rounded-lg lg:shadow-lg lg:border border-gray-300">
+      <div className="bg-white py-8 px-10">
         <div>
           <img src={logo} alt="logo" className="w-40 h-40 mx-auto" />
         </div>
@@ -48,7 +48,7 @@ const LoginPage = () => {
             onChange={(e) => setUsername(e.target.value)}
             type="text"
             placeholder="Enter Name"
-            className="mt-1 text-lg block w-full py-2 lg:py-3 px-4 border-2 border-gray-300 rounded"
+            className="mt-1 text-lg block w-full py-4 lg:py-3 px-4 border-2 border-[#CBD2E0] focus:outline-none rounded placeholder:text-secondary"
           />
         </label>
 
@@ -64,26 +64,23 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
             type={showpw ? "text" : "password"}
             placeholder="Enter Password"
-            className="mt-1 text-lg block w-full py-2 lg:py-3 px-4 border-2 border-gray-300 rounded shadow-md"
+            className="mt-1 text-lg block w-full py-4 lg:py-3 px-4 border-2 border-[#CBD2E0] focus:outline-none rounded placeholder:text-secondary"
           />
           <button
             onClick={() => setshowpw(!showpw)}
-            className="absolute bottom-1 right-3 transform -translate-y-1/2 cursor-pointer"
+            className="absolute bottom-3 right-3 transform -translate-y-1/2 cursor-pointer"
           >
             {showpw ? <FiEyeOff size={20} /> : <FiEye size={20} />}
           </button>
         </label>
         <Link
           to="/forgotpassword"
-          className="text-sm text-end text-primary font-bold mt-1 block mb-5"
+          className="text-sm text-end text-primary font-bold mt-1 block mb-5 hover:text-secondary transition duration-300 hover:scale-105 hover:translate-x-[-10px] "
         >
           Forget Password?
         </Link>
 
-        <button
-          className="w-full bg-primary text-lg font-bold text-white py-2 lg:py-3 rounded hover:bg-gray-700 transition"
-          onClick={() => submitLogin()}
-        >
+        <button className="w-full button" onClick={() => submitLogin()}>
           Login Account
         </button>
       </div>

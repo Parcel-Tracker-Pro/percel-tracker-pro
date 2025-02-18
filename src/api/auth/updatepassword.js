@@ -2,13 +2,11 @@ import axios from "./../axios";
 import { toast } from "sonner";
 // import { jwtDecode } from "jwt-decode";
 
-const updatepassword = async (data) => {
+const updatepassword = async (data, id) => {
   console.log(document.cookie);
 
   try {
-    const response = await axios.patch("api/v1/user/owner", data, {
-      withCredentials: true,
-    });
+    const response = await axios.patch(`api/v1/user/staff/${id}`, data);
     return response.data;
   } catch (error) {
     if (error) {

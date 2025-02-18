@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Sofia Pro";
-  src: local("CHANGANUNITYPE-BOLD"),
-    url("./assets/fonts/SofiaPro") format("truetype");
+  font-family: "Poppins";
+  src: local("Poppins-Regular"),
+    url("./assets/Fonts/Poppins-Regular.ttf") format("truetype");
 }
 
 html {
@@ -13,9 +13,18 @@ html {
 }
 
 body {
+  font-family: "Poppins", sans-serif;
   background-color: white;
   scroll-behavior: smooth;
-  color: black;
+  color: #2d3648;
+}
+
+.button {
+  @apply bg-primary text-lg font-bold text-secondary py-4 lg:py-3 rounded hover:bg-secondary hover:text-white transition duration-300;
+}
+
+.cancel {
+  @apply rounded-md px-7 py-3 shadow-md font-bold text-secondary hover:scale-105;
 }
 
 .header-text {

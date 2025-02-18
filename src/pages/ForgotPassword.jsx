@@ -1,5 +1,6 @@
 import React from "react";
 import forgot from "./../assets/images/Forgot.svg";
+import { Link } from "react-router-dom";
 
 function ForgotPassword() {
   return (
@@ -13,9 +14,9 @@ function ForgotPassword() {
           </p>
         </div>
       </div>
-      <button className="bg-primary mt-2 text-md py-3 px-10 rounded-md">
+      <Link to="/" className="button w-48 mt-5 text-center">
         Close
-      </button>
+      </Link>
     </div>
   );
 }

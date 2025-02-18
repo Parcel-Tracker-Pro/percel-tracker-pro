@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sofia: ["Sofia Pro"],
+        poppins: ["Poppins", "sans-serif"],
       },
       fontSize: {
         header: ["28px"],
@@ -14,7 +14,7 @@ export default {
       },
       colors: {
         primary: "#FEC303", // Custom primary color
-        secondary: "#18181B", // Custom secondary color
+        secondary: "#2D3648", // Custom secondary color
         hihglight: "#154119",
         sub: "#1C1B1F",
         footer: "#1C1C1C",

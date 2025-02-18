@@ -103,6 +103,22 @@ function PercelPage() {
       staffNo: "5",
       date: "2025-02-17",
     },
+    {
+      id: "09",
+      customer: "Khaing Wint",
+      status: "Success",
+      price: "75,000",
+      staffNo: "5",
+      date: "2025-02-18",
+    },
+    {
+      id: "10",
+      customer: "Ko Shine",
+      status: "Pending",
+      price: "5,000",
+      staffNo: "5",
+      date: "2025-02-18",
+    },
   ];
 
   useEffect(() => {
@@ -233,8 +249,17 @@ function PercelPage() {
         onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
       >
         <div className="bg-red-500 h-full flex items-center px-4 text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+              clipRule="evenodd"
+            />
           </svg>
           Delete
         </div>
@@ -244,9 +269,16 @@ function PercelPage() {
 
   const leadingActions = (parcel) => (
     <LeadingActions>
-      <SwipeAction onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}>
+      <SwipeAction
+        onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
+      >
         <div className="bg-blue-500 h-full flex items-center px-4 text-white">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
           </svg>
           Edit
@@ -256,7 +288,7 @@ function PercelPage() {
   );
 
   return (
-    <div className="relative">
+    <div className="relative mb-20">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Parcel List</h1>
@@ -600,28 +632,28 @@ function PercelPage() {
         {/* Table */}
         <div className="mx-auto w-full flex justify-center">
           <div>
-            <div className="flex w-[350px] md:w-full py-2 bg-gray-300 mb-2 gap-4">
-              <div className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                No
+            <div className="flex w-[350px] md:w-full py-2 bg-gray-300 mb-2">
+              <div className="w-[30px] md:w-[70px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <span className="">No</span>
               </div>
-              <div className="w-[100px] py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="w-[150px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase">
                 Customer
               </div>
-              {/* <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="hidden md:block w-[100px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Staff No
-              </div> */}
-              <div className="w-[100px] py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              </div>
+              <div className="w-[100px] md:w-[150px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Price
               </div>
-              <div className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="w-[70px] md:w-[200px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </div>
-              {/* <div className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <div className="hidden md:block w-[300px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Date
-              </div> */}
+              </div>
             </div>
 
-            <div className="w-[350px] md:w-full bg-white divide-y divide-gray-200">
+            <div className="w-[350px] md:w-full divide-y divide-gray-200">
               {!isFiltered ? (
                 <div className="px-6 py-4 text-center text-gray-500">
                   Please apply filters to see parcel data
@@ -632,28 +664,28 @@ function PercelPage() {
                 </div>
               ) : (
                 <SwipeableList threshold={0.25} type={ListType.IOS}>
-                  {filteredParcels.map((parcel) => (
+                  {filteredParcels.map((parcel, index) => (
                     <SwipeableListItem
                       key={parcel.id}
                       trailingActions={trailingActions(parcel)}
                       leadingActions={leadingActions(parcel)}
                     >
-                      <div className="w-full flex gap-4 hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="px-2 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {parcel.id}
+                      <div className="w-[350px] md:w-full bg-white mb-2 flex hover:bg-gray-50 cursor-pointer items-center">
+                        <div className="w-[30px] md:w-[70px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className=""> {index + 1}</span>
                         </div>
-                        <div className="w-[100px] whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-[150px] md:px-4 py-4 text-center md:text-left whitespace-nowrap text-sm text-gray-900">
                           {parcel.customer}
                         </div>
-                        {/* <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <p className="bg-orange-200 p-2 rounded-full text-center">
-                          {parcel.staffNo}
-                        </p>
-                      </div> */}
-                        <div className="w-[100px] text-center  whitespace-nowrap text-sm text-gray-900">
+                        <div className="hidden md:block w-[100px] md:px-4 py-4 text-center md:text-left  whitespace-nowrap text-sm text-gray-900">
+                          <p className="bg-orange-200 p-2 rounded-full text-center">
+                            {parcel.staffNo}
+                          </p>
+                        </div>
+                        <div className="w-[100px] md:w-[150px] md:px-4 py-4 text-center text-sm text-gray-900">
                           {parcel.price} Ks
                         </div>
-                        <div className="px-6 py-4 text-center whitespace-nowrap">
+                        <div className="w-[70px] md:w-[200px] md:px-4 py-4 text-center whitespace-nowrap">
                           <span
                             className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
                               parcel.status
@@ -662,9 +694,9 @@ function PercelPage() {
                             {parcel.status}
                           </span>
                         </div>
-                        {/* <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatDisplayDate(parcel.date)}
-                      </div> */}
+                        <div className="hidden md:block w-[300px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
+                          {formatDisplayDate(parcel.date)}
+                        </div>
                       </div>
                     </SwipeableListItem>
                   ))}
@@ -673,7 +705,7 @@ function PercelPage() {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-20 left-0 w-full">
+        {/* <div className="fixed bottom-20 left-0 w-full">
           <div className="flex items-center justify-between bg-white shadow-lg border border-gray-300 w-11/12 mx-auto px-4 py-6 text-gray-600 font-bold rounded-lg">
             <div className="">
               <p className="mb-2 text-[16px]">Total Parcels</p>
@@ -690,7 +722,7 @@ function PercelPage() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

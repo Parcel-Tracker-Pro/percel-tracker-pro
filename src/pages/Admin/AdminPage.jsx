@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import AccontManagement from "./AccontManagement";
-import PercelPage from "../PercelPage";
+import AccontManagement from "../../components/Admin/AccountManagement/AccontManagement";
+import PercelPage from "./../PercelPage";
 import Navbar from "../../components/Navbar";
 
 function AdminPage() {
@@ -14,8 +14,8 @@ function AdminPage() {
           <Route path="/" element={<PercelPage />} />
         </Routes>
       </div>
-      <div className="fixed bottom-0 left-0 right-0">
-        <div className="bg-white w-full">
+      <div className="fixed bg-white border-t border-gray-200 bottom-0 left-0 right-0">
+        <div className="">
           <Navbar />
         </div>
       </div>
