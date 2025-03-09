@@ -17,10 +17,12 @@ const LoginPage = () => {
       username,
       password,
     };
+    // console.log(data);
+      
 
     const res = await handleLogin(data);
 
-    // console.log(res.data.user.role);
+    // console.log(res);
     if (res.data.user.role === "owner") {
       navigate("/admin");
     } else {

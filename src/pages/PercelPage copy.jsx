@@ -290,9 +290,9 @@ function PercelPage() {
   );
 
   return (
-    <div className="overflow-hidden w-full ">
+    <div className="mb-20 overflow-hidden w-full">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 gap-4 px-2">
+      <div className="flex items-center mb-6 gap-4">
         <div className="flex bg-white items-center border border-gray-500 rounded-full px-4 py-3">
           <input
             type="text"
@@ -315,7 +315,7 @@ function PercelPage() {
         <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
           <div className="p-4 border-b border-gray-200">
             <div className="flex justify-between items-center">
-              <h3 className="text-[13px] font-medium text-gray-700">
+              <h3 className="text-lg font-medium text-gray-700">
                 Select Date Range
               </h3>
               <button
@@ -345,8 +345,8 @@ function PercelPage() {
       )}
 
       {/* Table */}
-      <div className="bg-gray-200 pt-4">
-        <div className="flex justify-between items-center mx-1 mb-5 px-2">
+      <div className="mb-4 min-h-screen bg-gray-200 py-4 rounded-lg">
+        <div className="flex justify-between items-center mx-1 mb-5">
           <p className="text-2xl font-medium">Today Percel</p>
 
           <button className="flex items-center gap-2 px-4 py-3 bg-red-500 text-white rounded-full">
@@ -355,37 +355,30 @@ function PercelPage() {
           </button>
         </div>
         {/* ____________________________________________ */}
-        <div className="mx-auto w-full flex justify-center ">
-          <div className="rounded-2xl overflow-hidden">
-            <div className="flex md:w-full py-2 bg-white pb-4">
-              <div className="w-[40px] md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-              </div>
-
-              <div className="w-[30px] mr-4 md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+        <div className="mx-auto w-full flex justify-center">
+          <div>
+            <div className="flex md:w-full py-2 bg-white mb-2">
+              <div className="w-[30px] md:w-[70px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 <span className="">No</span>
               </div>
-              <div className="w-[130px] md:px-4 py-3 text-left text-[13px] font-medium text-gray-500 uppercase">
+              <div className="w-[150px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase">
                 Customer
               </div>
-              <div className="hidden md:block w-[100px] md:px-4 py-3 text-center md:text-left text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+              <div className="hidden md:block w-[100px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Staff No
               </div>
-              <div className="w-[100px] md:w-[150px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+              <div className="w-[100px] md:w-[150px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Price
               </div>
-              <div className="w-[50px] md:w-[200px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                Items
+              <div className="w-[70px] md:w-[200px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
               </div>
-              <div className="hidden md:block w-[300px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+              <div className="hidden md:block w-[300px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Date
               </div>
             </div>
 
-            <div className="w-full bg-white h-[550px] overflow-y-auto pb-5">
+            <div className="w-[350px] md:w-full">
               {!isFiltered ? (
                 <div className="px-6 py-4 text-center text-gray-500">
                   Please apply filters to see parcel data
@@ -395,20 +388,18 @@ function PercelPage() {
                   No parcels found matching the filters
                 </div>
               ) : (
-                <div>
+                <SwipeableList threshold={0.25} type={ListType.IOS}>
                   {filteredParcels.map((parcel, index) => (
-                    <div key={parcel.id}>
-                      <div className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="w-[40px] md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                          />
-                        </div>
-                        <div className="w-[30px] mr-4 md:w-[70px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
+                    <SwipeableListItem
+                      key={parcel.id}
+                      trailingActions={trailingActions(parcel)}
+                      leadingActions={leadingActions(parcel)}
+                    >
+                      <div className="w-[350px] md:w-full bg-white mb-2 flex hover:bg-gray-50 cursor-pointer items-center">
+                        <div className="w-[30px] md:w-[70px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
                           <span className=""> {index + 1}</span>
                         </div>
-                        <div className="w-[130px] md:px-4 py-4 text-left md:text-left whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-[150px] md:px-4 py-4 text-center md:text-left whitespace-nowrap text-sm text-gray-900">
                           {parcel.customer}
                         </div>
                         <div className="hidden md:block w-[100px] md:px-4 py-4 text-center md:text-left  whitespace-nowrap text-sm text-gray-900">
@@ -419,16 +410,22 @@ function PercelPage() {
                         <div className="w-[100px] md:w-[150px] md:px-4 py-4 text-center text-sm text-gray-900">
                           {parcel.price} Ks
                         </div>
-                        <div className=" w-[50px] md:w-[200px] md:px-4 py-4 text-center whitespace-nowrap">
-                          <p>1</p>
+                        <div className="w-[70px] md:w-[200px] md:px-4 py-4 text-center whitespace-nowrap">
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
+                              parcel.status
+                            )}`}
+                          >
+                            {parcel.status}
+                          </span>
                         </div>
                         <div className="hidden md:block w-[300px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
                           {formatDisplayDate(parcel.date)}
                         </div>
                       </div>
-                    </div>
+                    </SwipeableListItem>
                   ))}
-                </div>
+                </SwipeableList>
               )}
             </div>
           </div>
