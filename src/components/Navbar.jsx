@@ -4,6 +4,7 @@ import { TbReportMoney } from "react-icons/tb";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { PackagePlus } from "lucide";
 import { LuPackagePlus } from "react-icons/lu";
+import { CiDeliveryTruck } from "react-icons/ci";
 
 // import React from "react";
 const navs = [
@@ -21,6 +22,11 @@ const navs = [
     name: "Sale Report",
     icon: <TbReportMoney size={20} />,
     link: "/admin/report",
+  },
+  {
+    name: "Delivery",
+    icon: <CiDeliveryTruck size={20} />,
+    link: "/admin/delivery",
   },
   {
     name: "Account",

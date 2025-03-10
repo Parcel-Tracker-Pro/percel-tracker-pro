@@ -14,8 +14,9 @@ import {
 import "react-swipeable-list/dist/styles.css";
 import { FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
+import { Eye, MoveLeft, MoveRight } from "lucide-react";
 
-function PercelPage() {
+function CreateDelivery() {
   const today = new Date();
   const [filters, setFilters] = useState({
     no: "",
@@ -244,69 +245,62 @@ function PercelPage() {
     return date ? format(parseISO(date), "MMM dd, yyyy") : "";
   };
 
-  const trailingActions = (parcel) => (
-    <TrailingActions>
-      <SwipeAction
-        destructive={true}
-        onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
-      >
-        <div className="bg-red-500 h-full flex items-center px-4 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Delete
-        </div>
-      </SwipeAction>
-    </TrailingActions>
-  );
+  //   const trailingActions = (parcel) => (
+  //     <TrailingActions>
+  //       <SwipeAction
+  //         destructive={true}
+  //         onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
+  //       >
+  //         <div className="bg-red-500 h-full flex items-center px-4 text-white">
+  //           <svg
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             className="h-5 w-5 mr-2"
+  //             viewBox="0 0 20 20"
+  //             fill="currentColor"
+  //           >
+  //             <path
+  //               fillRule="evenodd"
+  //               d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+  //               clipRule="evenodd"
+  //             />
+  //           </svg>
+  //           Delete
+  //         </div>
+  //       </SwipeAction>
+  //     </TrailingActions>
+  //   );
 
-  const leadingActions = (parcel) => (
-    <LeadingActions>
-      <SwipeAction
-        onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
-      >
-        <div className="bg-blue-500 h-full flex items-center px-4 text-white">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-          </svg>
-          Edit
-        </div>
-      </SwipeAction>
-    </LeadingActions>
-  );
+  //   const leadingActions = (parcel) => (
+  //     <LeadingActions>
+  //       <SwipeAction
+  //         onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
+  //       >
+  //         <div className="bg-blue-500 h-full flex items-center px-4 text-white">
+  //           <svg
+  //             xmlns="http://www.w3.org/2000/svg"
+  //             className="h-5 w-5 mr-2"
+  //             viewBox="0 0 20 20"
+  //             fill="currentColor"
+  //           >
+  //             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+  //           </svg>
+  //           Edit
+  //         </div>
+  //       </SwipeAction>
+  //     </LeadingActions>
+  //   );
 
   return (
     <div className="overflow-hidden w-full ">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 gap-4 px-2">
-        <div className="flex bg-white items-center border border-gray-500 rounded-full px-4 py-3">
-          <input
-            type="text"
-            placeholder="Search Parcel"
-            className="focus:outline-none w-full"
-          />
-          <FaMagnifyingGlass className="text-gray-500" />
+      <div className="flex items-center justify-between gap-4 px-4 py-5">
+        <div className="flex items-center">
+          <MoveLeft className="mr-2" size={18} />
+          <p className="font-medium text-lg text-gray-700">Create Delivery</p>
         </div>
-        <button
-          onClick={() => setShowDatePicker(!showDatePicker)}
-          className="bg-primary flex items-center gap-2 bg-primary font-medium rounded-full px-4 py-3"
-        >
-          <FaCalendarAlt className="text-white" />
-          <p className="font-medium text-white">10.3.2023</p>
+        <button className="flex items-center gap-2 bg-orange-200 font-medium rounded-full px-4 py-3">
+          <Eye />
+          <p className="font-medium text-sm"> ViewSummary</p>
         </button>
       </div>
 
@@ -341,47 +335,59 @@ function PercelPage() {
             ranges={dateRange}
             className="p-4"
           />
+          <div className="flex items-center justify-end gap-2 p-4">
+            <button
+              className="flex items-center gap-2 px-8 py-3 bg-orange-200  rounded-xl"
+              onClick={() => setShowDatePicker(false)}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="flex items-center gap-2 px-8 py-3 bg-primary  rounded-xl"
+              onClick={() => setShowDatePicker(false)}
+              x
+            >
+              Ok
+            </button>
+          </div>
         </div>
       )}
 
       {/* Table */}
       <div className="bg-gray-200 pt-4">
         <div className="flex justify-between items-center mx-1 mb-5 px-2">
-          <p className="text-2xl font-medium">Today Percel</p>
+          <p className="text-2xl font-medium">Percel</p>
 
-          <button className="flex items-center gap-2 px-4 py-3 bg-red-500 text-white rounded-full">
-            <FaTrash size={20} />
-            <p> Remove Parcels</p>
+          <button
+            className="flex items-center gap-2 px-5 py-3 bg-orange-200 rounded-full"
+            onClick={() => setShowDatePicker(!showDatePicker)}
+          >
+            <FaCalendarAlt size={20} />
+            <p>21.6.2020</p>
           </button>
         </div>
         {/* ____________________________________________ */}
-        <div className="mx-auto w-full flex justify-center ">
-          <div className="rounded-2xl overflow-hidden">
-            <div className="flex md:w-full py-2 bg-white pb-4">
-              <div className="w-[40px] md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+        <div className="w-screen">
+          <div className="rounded-2xl overflow-hidden mx-3">
+            <div className="flex w-full py-2 bg-red-500 pb-4">
+              <div className="w-2/12 bg-blue-500 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
                 <input
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
               </div>
 
-              <div className="w-[30px] mr-4 md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <span className="">No</span>
+              <div className="w-2/12 bg-orange-500 py-3 text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                <span className="ms-2">No</span>
               </div>
-              <div className="w-[130px] md:px-4 py-3 text-left text-[13px] font-medium text-gray-500 uppercase">
+
+              <div className="w-5/12 py-3 bg-green-500 text-left text-[13px] font-medium text-gray-500 uppercase">
                 Customer
               </div>
-              <div className="hidden md:block w-[100px] md:px-4 py-3 text-center md:text-left text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                Staff No
-              </div>
-              <div className="w-[100px] md:w-[150px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </div>
-              <div className="w-[50px] md:w-[200px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                Items
-              </div>
-              <div className="hidden md:block w-[300px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                Date
+
+              <div className="w-3/12 py-3 bg-yellow-500 text-end text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                <span className="me-3">Price</span>
               </div>
             </div>
 
@@ -399,31 +405,21 @@ function PercelPage() {
                   {filteredParcels.map((parcel, index) => (
                     <div key={parcel.id}>
                       <div className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="w-[40px] md:w-[70px] md:px-4 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                        <div className="w-2/12 py-3 bg-blue-500 text-center text-[13px] font-medium text-gray-500">
                           <input
                             type="checkbox"
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                           />
                         </div>
-                        <div className="w-[30px] mr-4 md:w-[70px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
-                          <span className=""> {index + 1}</span>
+                        <div className="w-2/12 bg-orange-500 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className="ms-2"> {index + 1}</span>
                         </div>
-                        <div className="w-[130px] md:px-4 py-4 text-left md:text-left whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-5/12 bg-green-500 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                           {parcel.customer}
                         </div>
-                        <div className="hidden md:block w-[100px] md:px-4 py-4 text-center md:text-left  whitespace-nowrap text-sm text-gray-900">
-                          <p className="bg-orange-200 p-2 rounded-full text-center">
-                            {parcel.staffNo}
-                          </p>
-                        </div>
-                        <div className="w-[100px] md:w-[150px] md:px-4 py-4 text-center text-sm text-gray-900">
-                          {parcel.price} Ks
-                        </div>
-                        <div className=" w-[50px] md:w-[200px] md:px-4 py-4 text-center whitespace-nowrap">
-                          <p>1</p>
-                        </div>
-                        <div className="hidden md:block w-[300px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
-                          {formatDisplayDate(parcel.date)}
+
+                        <div className="w-3/12 bg-yellow-500 py-4 text-end text-sm text-gray-900">
+                          <span className="me-3"> {parcel.price} Ks</span>
                         </div>
                       </div>
                     </div>
@@ -438,4 +434,4 @@ function PercelPage() {
   );
 }
 
-export default PercelPage;
+export default CreateDelivery;

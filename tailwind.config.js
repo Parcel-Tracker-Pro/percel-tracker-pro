@@ -15,23 +15,11 @@ export default {
       colors: {
         primary: "#FEC303", // Custom primary color
         secondary: "#2D3648", // Custom secondary color
-        hihglight: "#154119",
-        sub: "#1C1B1F",
-        footer: "#1C1C1C",
+        success: "#1C431E",
+        btn: "#FFECB1",
         // Add more custom colors as needed
       },
     },
-
-    // screens: {
-    //   sm: "576px",
-    //   // => @media (min-width: 576px) { ... }
-
-    //   md: "960px",
-    //   // => @media (min-width: 960px) { ... }
-
-    //   lg: "1440px",
-    //   // => @media (min-width: 1440px) { ... }
-    // },
   },
   plugins: [],
 };

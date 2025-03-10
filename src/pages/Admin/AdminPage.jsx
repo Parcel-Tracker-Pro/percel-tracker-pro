@@ -1,25 +1,34 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import AccontManagement from "../../components/Admin/AccountManagement/AccontManagement";
 import PercelPage from "./../PercelPage";
 import Navbar from "../../components/Navbar";
 import CreateParcel from "../../components/CreateParcel";
+import Delivery from "../../components/Delivery/Delivery";
+import CreateDelivery from "../../components/Delivery/CreateDelivery";
 
 function AdminPage() {
+  const location = useLocation();
+  // console.log(location);
+
   return (
-    <div className="bg-white min-h-screen">
-      <div className="py-3">
+    <div className="bg-gray-100 min-h-screen">
+      <div className="">
         <Routes>
           <Route path="/acc" element={<AccontManagement />} />
+          <Route path="/delivery" element={<Delivery />} />
           <Route path="/addpercel" element={<CreateParcel />} />
           <Route path="/report" element={<PercelPage />} />
           <Route path="/" element={<PercelPage />} />
+          <Route path="/createdelivery" element={<CreateDelivery />} />
         </Routes>
       </div>
-      <div className="fixed bg-white border-t border-gray-200 bottom-0 left-0 right-0">
-        <div className="">
-          <Navbar />
+      {!location.pathname.includes("create") && (
+        <div className="fixed bg-white border-t border-gray-200 bottom-0 left-0 right-0">
+          <div className="">
+            <Navbar />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
