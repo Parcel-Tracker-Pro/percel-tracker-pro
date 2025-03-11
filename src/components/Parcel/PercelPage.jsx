@@ -9,6 +9,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import getAllPercel from "../../api/percel/getAllPercel";
 import deleteParcel from "../../api/percel/deleteParcel";
+import noParcel from "../../assets/images/noparcel.svg";
 
 function PercelPage() {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ function PercelPage() {
       key: "selection",
     },
   ]);
+
+  // console.log(filteredParcels);
 
   const handleDateRangeChange = (ranges) => {
     setDateRange([
@@ -73,6 +76,7 @@ function PercelPage() {
     // console.log(startDate, endDate);
     try {
       const response = await getAllPercel({ start, end });
+      // console.log(response);
       setFilteredParcels(response.data);
     } catch (error) {
       toast.error(`${error.response.data.message}`, {
@@ -176,74 +180,87 @@ function PercelPage() {
           </button>
         </div>
         {/* ____________________________________________ */}
-        <div className="w-screen">
-          <div className="rounded-2xl overflow-hidden mx-3">
-            <div className="flex w-full bg-white py-2 pb-4">
-              <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <input
-                  checked={selectedParcels.length === filteredParcels.length}
-                  type="checkbox"
-                  className="h-4 w-4 text-[#6B5201]  focus:ring-indigo-500 border-gray-300 rounded"
-                  onChange={selectAll}
-                />
+        {filteredParcels.length > 0 ? (
+          <div className="w-screen">
+            <div className="rounded-2xl overflow-hidden mx-3">
+              <div className="flex w-full bg-white py-2 pb-4">
+                <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                  <input
+                    checked={
+                      selectedParcels.length === filteredParcels.length &&
+                      selectedParcels.length > 0
+                    }
+                    type="checkbox"
+                    className="h-4 w-4 text-[#6B5201] focus:ring-indigo-500 border-gray-300 rounded"
+                    onChange={selectAll}
+                  />
+                </div>
+
+                <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
+                  <span className="ms-2">No</span>
+                </div>
+
+                <div className="w-5/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
+                  Customer
+                </div>
+
+                <div className="w-3/12 py-3 text-color text-center text-[13px] uppercase font-bold">
+                  <span className="me-3">Price</span>
+                </div>
               </div>
 
-              <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                <span className="ms-2">No</span>
-              </div>
-
-              <div className="w-5/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
-                Customer
-              </div>
-
-              <div className="w-3/12 py-3 text-color text-center text-[13px] uppercase font-bold">
-                <span className="me-3">Price</span>
-              </div>
-            </div>
-
-            <div className="w-full bg-white h-[65vh] overflow-y-auto pb-20">
-              {filteredParcels.length > 0 &&
-                filteredParcels.map((parcel, index) => (
-                  <div key={index}>
-                    <div
-                      className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center border-b border-gray-500"
-                      onClick={() => navigate(`detail/${parcel._id}`)}
-                    >
+              <div className="w-full bg-white h-[65vh] overflow-y-auto pb-20">
+                {filteredParcels.length > 0 &&
+                  filteredParcels.map((parcel, index) => (
+                    <div key={index}>
                       <div
-                        className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
-                        onClick={(e) => e.stopPropagation()}
+                        className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center border-b border-gray-500"
+                        onClick={() => navigate(`detail/${parcel._id}`)}
                       >
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                          checked={selectedParcels.includes(parcel._id)}
-                          onChange={(e) =>
-                            setSelectedParcels(
-                              e.target.checked
-                                ? [...selectedParcels, parcel._id]
-                                : selectedParcels.filter(
-                                    (p) => p !== parcel._id
-                                  )
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
-                        <span className="ms-2"> {index + 1}</span>
-                      </div>
-                      <div className="w-5/12 text-left py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900">
-                        {parcel.customerName}
-                      </div>
+                        <div
+                          className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            checked={selectedParcels.includes(parcel._id)}
+                            onChange={(e) =>
+                              setSelectedParcels(
+                                e.target.checked
+                                  ? [...selectedParcels, parcel._id]
+                                  : selectedParcels.filter(
+                                      (p) => p !== parcel._id
+                                    )
+                              )
+                            }
+                          />
+                        </div>
+                        <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className="ms-2"> {index + 1}</span>
+                        </div>
+                        <div className="w-5/12 text-left py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900">
+                          {parcel.customerName}
+                        </div>
 
-                      <div className="w-3/12 py-4 text-center text-sm text-gray-900">
-                        <span className="me-3"> {parcel.price} Ks</span>
+                        <div className="w-3/12 py-4 text-center text-sm text-gray-900">
+                          <span className="me-3"> {parcel.price} Ks</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center w-full h-[65vh]">
+            <img src={noParcel} alt="no parcel" />
+            <h3 className="font-bold text-xl mb-2">No Parcels Yet</h3>
+            <p className="text-gray-500">
+              Let’s add your first parcel to get started.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

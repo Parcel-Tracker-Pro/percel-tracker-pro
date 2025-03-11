@@ -4,7 +4,7 @@ import { toast } from "sonner";
 const CeateAParcel = async (data) => {
   //   console.log(data);
   try {
-    const response = await axios.post(`api/v1/parcels/`, data);
+    const response = await axios.post(`api/v1/parcel`, data);
     toast.success("Parcel created successfully!", {
       autoClose: 200, // Auto-close the toast after 5 seconds
     });

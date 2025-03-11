@@ -14,7 +14,7 @@
     "@szhsin/react-accordion": "^1.2.6",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
-    "framer-motion": "^11.11.11",
+    "framer-motion": "^11.18.2",
     "lottie-web": "^5.12.2",
     "lucide": "^0.474.0",
     "lucide-react": "^0.479.0",
@@ -31,6 +31,7 @@
     "react-social-icons": "^6.18.0",
     "react-swipeable": "^7.0.2",
     "react-swipeable-list": "^1.10.0",
+    "react-tailwindcss-select": "^1.8.5",
     "sonner": "^1.7.3"
   },
   "devDependencies": {

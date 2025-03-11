@@ -13,10 +13,12 @@ const handleLogin = async (data) => {
     console.log(response.data.data.user._id);
     console.log(response);
     const userId = response.data.data.user._id;
+    const username = response.data.data.user.username;
     const percelToken = response.data.data.token;
     setAuthToken(percelToken);
     localStorage.setItem("userId", userId);
     localStorage.setItem("percel", percelToken);
+    localStorage.setItem("percelUsername", username);
 
     return response.data;
   } catch (error) {

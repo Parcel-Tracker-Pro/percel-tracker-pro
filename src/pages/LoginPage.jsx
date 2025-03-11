@@ -18,7 +18,6 @@ const LoginPage = () => {
       password,
     };
     // console.log(data);
-      
 
     const res = await handleLogin(data);
 
@@ -82,7 +81,10 @@ const LoginPage = () => {
           Forget Password?
         </Link>
 
-        <button className="w-full button" onClick={() => submitLogin()}>
+        <button
+          className="bg-primary font-bold w-full py-4 px-6 rounded hover:scale-105 hover:translate-x-[-10px] transition duration-300"
+          onClick={() => submitLogin()}
+        >
           Login Account
         </button>
       </div>

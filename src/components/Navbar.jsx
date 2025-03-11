@@ -18,11 +18,11 @@ const navs = [
     icon: <LuPackagePlus size={20} />,
     link: "/admin/addpercel",
   },
-  {
-    name: "Sale Report",
-    icon: <TbReportMoney size={20} />,
-    link: "/admin/report",
-  },
+  // {
+  //   name: "Sale Report",
+  //   icon: <TbReportMoney size={20} />,
+  //   link: "/admin/report",
+  // },
   {
     name: "Delivery",
     icon: <CiDeliveryTruck size={20} />,

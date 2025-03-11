@@ -24,7 +24,7 @@ const PercelDetail = () => {
 
   const getPercel = async () => {
     const res = await getAPercel({ id });
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setLoading(false);
       setCustomerName(res.data.customerName);
@@ -59,7 +59,7 @@ const PercelDetail = () => {
       ids: [id],
     };
     const res = await deleteParcel(data);
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       navigate("/admin");
     }

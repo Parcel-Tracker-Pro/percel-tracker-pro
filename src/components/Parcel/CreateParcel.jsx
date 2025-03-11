@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import CeateAParcel from "../../api/percel/CreateParcle";
+import { format } from "date-fns";
+import { BiDownArrow } from "react-icons/bi";
 
 const CreateParcel = () => {
+  const today = new Date();
+  const username = localStorage.getItem("percelUsername");
+  // console.log(username);
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [items, setItems] = useState("");
@@ -10,6 +15,7 @@ const CreateParcel = () => {
   const [price, setPrice] = useState("");
   const [DeliFee, setDeliFee] = useState("");
   const [showErr, setShowErr] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
 
   const addParcel = async () => {
     if (
@@ -27,38 +33,39 @@ const CreateParcel = () => {
     const data = {
       customerName,
       address: phone,
-      items,
       paymentStatus: paymentMethod,
-      price,
-      deliveryFee: DeliFee,
-      seller: "5f971e91f0e2ad0a4c6e4567",
-      createdAt: new Date(),
+      price: price * 1,
+      deliveryFee: DeliFee * 1,
+      seller: username,
+      createdAt: format(today, "yyyy-MM-dd"),
     };
-    const res = await CeateAParcel({
-      customerName,
-      phone,
-      items,
-      paymentMethod,
-      price,
-      DeliFee,
-    });
-
-    console.log(res);
+    // console.log(data);
+    const res = await CeateAParcel(data);
+    if (res.code === 201) {
+      setCustomerName("");
+      setPhone("");
+      setItems("");
+      setPaymentMethod("");
+      setPrice("");
+      setDeliFee("");
+    }
   };
 
   return (
     <div className="bg-gray-300 min-h-screen">
       {/* Header */}
-      <div className="flex bg-white items-center justify-between mb-6 gap-4 px-2 pb-2">
+      <div className="flex bg-white items-center justify-between mb-6 gap-4 px-3 py-6">
         <p className="text-2xl font-bold">Add Parcel</p>
         <button
           // onClick={() => setShowDatePicker(!showDatePicker)}
           className="bg-primary flex items-center gap-2 text-white font-medium rounded-full px-4 py-3"
         >
-          <p className="font-bold">Sell By Admin</p>
+          <p className="font-bold">Sell By {username}</p>
         </button>
       </div>
-      <div className="mx-3 bg-white p-6 rounded-lg space-y-5">
+
+      {/* form */}
+      <div className="mx-3 bg-white px-6 pt-6 pb-[100px] rounded-lg space-y-5">
         <div className="space-y-3">
           <label className="font-bold text-lg">Customer Name</label>
           <div
@@ -77,7 +84,7 @@ const CreateParcel = () => {
           </div>
         </div>
         <div className="space-y-3">
-          <label className="font-bold text-lg">Phone Number</label>
+          <label className="font-bold text-lg">Address</label>
           <div
             className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
               !phone && showErr ? "border-red-500" : "border-gray-300"
@@ -88,7 +95,7 @@ const CreateParcel = () => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full focus:outline-none"
-              placeholder="Enter Phone Number"
+              placeholder="Enter Address"
             />
             <FaRegCopy />
           </div>
@@ -110,39 +117,73 @@ const CreateParcel = () => {
               />
             </div>
           </div>
-          <div className="space-y-3 w-1/2">
+          <div className="space-y-3 w-1/2 relative">
             <label className="font-bold text-lg">Payment Status</label>
             <div
-              className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
+              onClick={() => setDropDown(!dropDown)}
+              className={`flex items-center justify-between w-full px-2 py-3 overflow-hidden border-2 rounded-lg ${
                 !paymentMethod && showErr ? "border-red-500" : "border-gray-300"
               }`}
             >
-              <select
-                className="w-full bg-white focus:outline-none"
-                value={paymentMethod}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              >
-                <option value="" disabled>
-                  Select Payment Status
-                </option>
-                <option value="paid">Paid</option>
-                <option value="unpaid">Unpaid</option>
-                <option value="pending">Pending</option>
-                <option value="due">COD</option>
-              </select>
+              <p className="truncate w-24 text-gray-500">
+                {paymentMethod || "Select payment"}
+              </p>
+              <BiDownArrow size={25} />
             </div>
+            {dropDown && (
+              <div className="absolute w-full top-[80px] right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
+                <div className="text-center">
+                  <p
+                    className="truncate p-2 border-b border-gray-200"
+                    onClick={() => {
+                      setPaymentMethod("Delivery Only");
+                      setDropDown(!dropDown);
+                    }}
+                  >
+                    Deli Only
+                  </p>
+                  <p
+                    className="truncate p-2 border-b border-gray-200"
+                    onClick={() => {
+                      setPaymentMethod("Fully Paid");
+                      setDropDown(!dropDown);
+                    }}
+                  >
+                    paid
+                  </p>
+                  <p
+                    className="truncate p-2 border-b border-gray-200"
+                    onClick={() => {
+                      setPaymentMethod("COD");
+                      setDropDown(!dropDown);
+                    }}
+                  >
+                    COD{" "}
+                  </p>
+                  <p
+                    className="truncate p-2"
+                    onClick={() => {
+                      setPaymentMethod("Gate Drop Off");
+                      setDropDown(!dropDown);
+                    }}
+                  >
+                    Gate Drop Off
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex gap-4">
           <div className="space-y-3 w-1/2">
-            <label className="font-bold text-lg">Parcel</label>
+            <label className="font-bold text-lg">Price</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
                 !price && showErr ? "border-red-500" : "border-gray-300"
               }`}
             >
               <input
-                type="text"
+                type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="w-full focus:outline-none"
@@ -158,7 +199,7 @@ const CreateParcel = () => {
               }`}
             >
               <input
-                type="text"
+                type="number"
                 value={DeliFee}
                 onChange={(e) => setDeliFee(e.target.value)}
                 className="w-full focus:outline-none"
@@ -181,7 +222,7 @@ const CreateParcel = () => {
               !DeliFee
                 ? "bg-primary/50"
                 : "bg-primary"
-            } justify-center w-full flex items-center gap-2 text-white font-medium rounded-xl px-4 py-3`}
+            } justify-center w-full flex items-center gap-2 mt-10 text-white font-medium rounded-xl px-4 py-3`}
           >
             Add Parcel
           </button>
