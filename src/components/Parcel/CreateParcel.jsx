@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
+import CeateAParcel from "../../api/percel/CreateParcle";
 
 const CreateParcel = () => {
   const [customerName, setCustomerName] = useState("");
@@ -10,7 +11,7 @@ const CreateParcel = () => {
   const [DeliFee, setDeliFee] = useState("");
   const [showErr, setShowErr] = useState(false);
 
-  const addParcel = () => {
+  const addParcel = async () => {
     if (
       !customerName ||
       !phone ||
@@ -20,7 +21,29 @@ const CreateParcel = () => {
       !DeliFee
     ) {
       setShowErr(true);
+      return;
     }
+
+    const data = {
+      customerName,
+      address: phone,
+      items,
+      paymentStatus: paymentMethod,
+      price,
+      deliveryFee: DeliFee,
+      seller: "5f971e91f0e2ad0a4c6e4567",
+      createdAt: new Date(),
+    };
+    const res = await CeateAParcel({
+      customerName,
+      phone,
+      items,
+      paymentMethod,
+      price,
+      DeliFee,
+    });
+
+    console.log(res);
   };
 
   return (
@@ -71,7 +94,7 @@ const CreateParcel = () => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <label className="font-bold text-lg">Items</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
@@ -87,7 +110,7 @@ const CreateParcel = () => {
               />
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <label className="font-bold text-lg">Payment Status</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
@@ -95,7 +118,7 @@ const CreateParcel = () => {
               }`}
             >
               <select
-                className="w-full focus:outline-none"
+                className="w-full bg-white focus:outline-none"
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
               >
@@ -111,7 +134,7 @@ const CreateParcel = () => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <label className="font-bold text-lg">Parcel</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
@@ -127,7 +150,7 @@ const CreateParcel = () => {
               />
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-3 w-1/2">
             <label className="font-bold text-lg">Delivery Fees</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${

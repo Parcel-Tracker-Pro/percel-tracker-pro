@@ -20,21 +20,31 @@ body {
 }
 
 .button {
-  @apply bg-primary text-lg font-bold text-secondary py-4 lg:py-3 rounded hover:bg-secondary hover:text-white transition duration-300;
+  @apply flex items-center gap-2  font-medium rounded-full px-5 py-3 text-[10px];
+}
+
+.button-color {
+  @apply bg-[#FFECB1];
 }
 
 .cancel {
-  @apply rounded-md px-7 py-3 shadow-md font-bold text-secondary hover:scale-105;
+  @apply flex items-center gap-2 bg-red-500 font-medium rounded-full px-5 py-3 text-[14px] text-white;
 }
 
 .header-text {
-  @apply text-header md:text-[24px] lg:text-[42px];
-  color: "#1C1C1C";
+  @apply text-[#6B5201] text-[20px] font-bold;
+}
+
+.small-text {
+  @apply text-[#6B5201] text-sm;
+}
+
+.text-color {
+  @apply text-[#6B5201];
 }
 
 .body-text {
   @apply text-body md:text-[18px] lg:text-[21px];
-  color: "#565656";
 }
 
 .card-header {

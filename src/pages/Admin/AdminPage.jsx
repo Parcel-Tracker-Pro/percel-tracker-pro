@@ -1,10 +1,12 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import AccontManagement from "../../components/Admin/AccountManagement/AccontManagement";
-import PercelPage from "./../PercelPage";
+import PercelPage from "./../../components/Parcel/PercelPage";
 import Navbar from "../../components/Navbar";
-import CreateParcel from "../../components/CreateParcel";
+import CreateParcel from "../../components/Parcel/CreateParcel";
 import Delivery from "../../components/Delivery/Delivery";
 import CreateDelivery from "../../components/Delivery/CreateDelivery";
+import PercelDetail from "../../components/Parcel/ParcelDetail";
+import SearchParcel from "../../components/Parcel/SearchParcel";
 
 function AdminPage() {
   const location = useLocation();
@@ -19,6 +21,8 @@ function AdminPage() {
           <Route path="/addpercel" element={<CreateParcel />} />
           <Route path="/report" element={<PercelPage />} />
           <Route path="/" element={<PercelPage />} />
+          <Route path="/search" element={<SearchParcel />} />
+          <Route path="/detail/:id" element={<PercelDetail />} />
           <Route path="/createdelivery" element={<CreateDelivery />} />
         </Routes>
       </div>

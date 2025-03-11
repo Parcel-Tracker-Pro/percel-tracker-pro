@@ -349,36 +349,42 @@ function PercelPage() {
         <div className="flex justify-between items-center mx-1 mb-5">
           <p className="text-2xl font-medium">Today Percel</p>
 
-          <button className="flex items-center gap-2 px-4 py-3 bg-red-500 text-white rounded-full">
+          <button
+            className={`flex items-center gap-2 px-4 py-3 bg-red-500 text-white rounded-full ${
+              selectedParcels.length === 0 && "opacity-50 cursor-not-allowed"
+            }`}
+            disabled={selectedParcels.length === 0}
+          >
             <FaTrash size={20} />
             <p> Remove Parcels</p>
           </button>
         </div>
         {/* ____________________________________________ */}
-        <div className="mx-auto w-full flex justify-center">
-          <div>
-            <div className="flex md:w-full py-2 bg-white mb-2">
-              <div className="w-[30px] md:w-[70px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                <span className="">No</span>
+        <div className="w-screen">
+          <div className="rounded-2xl overflow-hidden mx-3">
+            <div className="flex w-full bg-white py-2 pb-4">
+              <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  onChange={selectAll}
+                />
               </div>
-              <div className="w-[150px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase">
+
+              <div className="w-2/12 py-3 text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                <span className="ms-2">No</span>
+              </div>
+
+              <div className="w-5/12 py-3 text-left text-[13px] font-medium text-gray-500 uppercase">
                 Customer
               </div>
-              <div className="hidden md:block w-[100px] md:px-4 py-3 text-center md:text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Staff No
-              </div>
-              <div className="w-[100px] md:w-[150px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Price
-              </div>
-              <div className="w-[70px] md:w-[200px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </div>
-              <div className="hidden md:block w-[300px] md:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date
+
+              <div className="w-3/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                <span className="me-3">Price</span>
               </div>
             </div>
 
-            <div className="w-[350px] md:w-full">
+            <div className="w-full bg-white h-[550px] overflow-y-auto pb-5">
               {!isFiltered ? (
                 <div className="px-6 py-4 text-center text-gray-500">
                   Please apply filters to see parcel data
@@ -388,44 +394,40 @@ function PercelPage() {
                   No parcels found matching the filters
                 </div>
               ) : (
-                <SwipeableList threshold={0.25} type={ListType.IOS}>
+                <div>
                   {filteredParcels.map((parcel, index) => (
-                    <SwipeableListItem
-                      key={parcel.id}
-                      trailingActions={trailingActions(parcel)}
-                      leadingActions={leadingActions(parcel)}
-                    >
-                      <div className="w-[350px] md:w-full bg-white mb-2 flex hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="w-[30px] md:w-[70px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
-                          <span className=""> {index + 1}</span>
+                    <div key={parcel._id}>
+                      <div className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center">
+                        <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            checked={selectedParcels.includes(parcel)}
+                            onChange={(e) =>
+                              setSelectedParcels(
+                                e.target.checked
+                                  ? [...selectedParcels, parcel]
+                                  : selectedParcels.filter(
+                                      (p) => p.id !== parcel.id
+                                    )
+                              )
+                            }
+                          />
                         </div>
-                        <div className="w-[150px] md:px-4 py-4 text-center md:text-left whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className="ms-2"> {index + 1}</span>
+                        </div>
+                        <div className="w-5/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                           {parcel.customer}
                         </div>
-                        <div className="hidden md:block w-[100px] md:px-4 py-4 text-center md:text-left  whitespace-nowrap text-sm text-gray-900">
-                          <p className="bg-orange-200 p-2 rounded-full text-center">
-                            {parcel.staffNo}
-                          </p>
-                        </div>
-                        <div className="w-[100px] md:w-[150px] md:px-4 py-4 text-center text-sm text-gray-900">
-                          {parcel.price} Ks
-                        </div>
-                        <div className="w-[70px] md:w-[200px] md:px-4 py-4 text-center whitespace-nowrap">
-                          <span
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                              parcel.status
-                            )}`}
-                          >
-                            {parcel.status}
-                          </span>
-                        </div>
-                        <div className="hidden md:block w-[300px] md:px-4 text-center py-4 whitespace-nowrap text-sm text-gray-900">
-                          {formatDisplayDate(parcel.date)}
+
+                        <div className="w-3/12 py-4 text-center text-sm text-gray-900">
+                          <span className="me-3"> {parcel.price} Ks</span>
                         </div>
                       </div>
-                    </SwipeableListItem>
+                    </div>
                   ))}
-                </SwipeableList>
+                </div>
               )}
             </div>
           </div>

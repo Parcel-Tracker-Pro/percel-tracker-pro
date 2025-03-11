@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-import PercelPage from "./PercelPage";
-import CreateParcel from "../components/CreateParcel";
+import PercelPage from "./../components/Parcel/PercelPage";
+// import CreateParcel from "../components/CreateParcel";
 
 function EmployeePage() {
   return (
@@ -10,7 +10,7 @@ function EmployeePage() {
       <div className="p-5">
         <Routes>
           {/* <Route path="/acc" element={<AccontManagement />} /> */}
-          <Route path="/addpercel" element={<CreateParcel />} />
+          <Route path="/addpercel" element={<AddPercel />} />
           <Route path="/report" element={<PercelPage />} />
           <Route path="/" element={<PercelPage />} />
         </Routes>

@@ -1,20 +1,93 @@
 import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import { format, startOfDay, endOfDay, parseISO } from "date-fns";
+import { startOfDay, endOfDay, parseISO } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import {
-  SwipeableList,
-  SwipeableListItem,
-  SwipeAction,
-  TrailingActions,
-  LeadingActions,
-  Type as ListType,
-} from "react-swipeable-list";
-import "react-swipeable-list/dist/styles.css";
-import { FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Eye, MoveLeft, MoveRight } from "lucide-react";
+
+const parcels = [
+  {
+    id: "01",
+    customer: "Mia Khalif",
+    status: "Pending",
+    price: "42,000",
+    staffNo: "1",
+    date: "2025-02-15",
+  },
+  {
+    id: "02",
+    customer: "Than Than Eye",
+    status: "Active",
+    price: "43,000",
+    staffNo: "2",
+    date: "2025-02-16",
+  },
+  {
+    id: "03",
+    customer: "Lay Phyu",
+    status: "Pending",
+    price: "12,000",
+    staffNo: "3",
+    date: "2025-02-16",
+  },
+  {
+    id: "04",
+    customer: "Lin Lin Lin",
+    status: "Failed",
+    price: "54,000",
+    staffNo: "1",
+    date: "2025-02-17",
+  },
+  {
+    id: "05",
+    customer: "Naw Htoo Aung",
+    status: "Success",
+    price: "65,000",
+    staffNo: "2",
+    date: "2025-02-17",
+  },
+  {
+    id: "06",
+    customer: "Zin Zin Latt",
+    status: "Active",
+    price: "34,000",
+    staffNo: "3",
+    date: "2025-02-17",
+  },
+  {
+    id: "07",
+    customer: "Rafaealla",
+    status: "Pending",
+    price: "75,000",
+    staffNo: "4",
+    date: "2025-02-17",
+  },
+  {
+    id: "08",
+    customer: "Khaing Wint",
+    status: "Success",
+    price: "75,000",
+    staffNo: "5",
+    date: "2025-02-17",
+  },
+  {
+    id: "09",
+    customer: "Khaing Wint",
+    status: "Success",
+    price: "75,000",
+    staffNo: "5",
+    date: "2025-02-18",
+  },
+  {
+    id: "10",
+    customer: "Ko Shine",
+    status: "Pending",
+    price: "5,000",
+    staffNo: "5",
+    date: "2025-02-18",
+  },
+];
 
 function CreateDelivery() {
   const today = new Date();
@@ -37,92 +110,9 @@ function CreateDelivery() {
     },
   ]);
 
-  const [showFilters, setShowFilters] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const parcels = [
-    {
-      id: "01",
-      customer: "Mia Khalif",
-      status: "Pending",
-      price: "42,000",
-      staffNo: "1",
-      date: "2025-02-15",
-    },
-    {
-      id: "02",
-      customer: "Than Than Eye",
-      status: "Active",
-      price: "43,000",
-      staffNo: "2",
-      date: "2025-02-16",
-    },
-    {
-      id: "03",
-      customer: "Lay Phyu",
-      status: "Pending",
-      price: "12,000",
-      staffNo: "3",
-      date: "2025-02-16",
-    },
-    {
-      id: "04",
-      customer: "Lin Lin Lin",
-      status: "Failed",
-      price: "54,000",
-      staffNo: "1",
-      date: "2025-02-17",
-    },
-    {
-      id: "05",
-      customer: "Naw Htoo Aung",
-      status: "Success",
-      price: "65,000",
-      staffNo: "2",
-      date: "2025-02-17",
-    },
-    {
-      id: "06",
-      customer: "Zin Zin Latt",
-      status: "Active",
-      price: "34,000",
-      staffNo: "3",
-      date: "2025-02-17",
-    },
-    {
-      id: "07",
-      customer: "Rafaealla",
-      status: "Pending",
-      price: "75,000",
-      staffNo: "4",
-      date: "2025-02-17",
-    },
-    {
-      id: "08",
-      customer: "Khaing Wint",
-      status: "Success",
-      price: "75,000",
-      staffNo: "5",
-      date: "2025-02-17",
-    },
-    {
-      id: "09",
-      customer: "Khaing Wint",
-      status: "Success",
-      price: "75,000",
-      staffNo: "5",
-      date: "2025-02-18",
-    },
-    {
-      id: "10",
-      customer: "Ko Shine",
-      status: "Pending",
-      price: "5,000",
-      staffNo: "5",
-      date: "2025-02-18",
-    },
-  ];
+  const [selectedParcels, setSelectedParcels] = useState([]);
 
   useEffect(() => {
     const filterParcels = () => {
@@ -166,65 +156,6 @@ function CreateDelivery() {
     filterParcels();
   }, [filters, dateRange]);
 
-  const handleClearFilters = () => {
-    setFilters({
-      no: "",
-      customer: "",
-      staffNo: "",
-      price: "",
-      status: "",
-    });
-    setDateRange([
-      {
-        startDate: startOfDay(today),
-        endDate: endOfDay(today),
-        key: "selection",
-      },
-    ]);
-    setIsFiltered(false);
-    setFilteredParcels([]);
-  };
-
-  const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "active":
-        return "bg-blue-100 text-blue-800";
-      case "failed":
-        return "bg-red-100 text-red-800";
-      case "success":
-        return "bg-green-100 text-green-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const handleFilterChange = (field, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleSearchClick = () => {
-    setShowSearch(!showSearch);
-    setShowFilters(false);
-    setShowDatePicker(false);
-  };
-
-  const handleFilterClick = () => {
-    setShowFilters(!showFilters);
-    setShowSearch(false);
-    setShowDatePicker(false);
-  };
-
-  const handleDateClick = () => {
-    setShowDatePicker(!showDatePicker);
-    setShowSearch(false);
-    setShowFilters(false);
-  };
-
   const handleDateRangeChange = (ranges) => {
     setDateRange([
       {
@@ -235,15 +166,15 @@ function CreateDelivery() {
     ]);
   };
 
-  const totalParcels = filteredParcels.length;
-  const totalPrice = filteredParcels.reduce(
-    (sum, parcel) => sum + parseInt(parcel.price.replace(/,/g, "")),
-    0
-  );
-
-  const formatDisplayDate = (date) => {
-    return date ? format(parseISO(date), "MMM dd, yyyy") : "";
+  const selectAll = () => {
+    if (selectedParcels.length === filteredParcels.length) {
+      setSelectedParcels([]);
+    } else {
+      setSelectedParcels(filteredParcels);
+    }
   };
+
+  // console.log(selectedParcels);
 
   //   const trailingActions = (parcel) => (
   //     <TrailingActions>
@@ -370,23 +301,24 @@ function CreateDelivery() {
         {/* ____________________________________________ */}
         <div className="w-screen">
           <div className="rounded-2xl overflow-hidden mx-3">
-            <div className="flex w-full py-2 bg-red-500 pb-4">
-              <div className="w-2/12 bg-blue-500 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+            <div className="flex w-full bg-white py-2 pb-4">
+              <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
                 <input
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                  onChange={selectAll}
                 />
               </div>
 
-              <div className="w-2/12 bg-orange-500 py-3 text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+              <div className="w-2/12 py-3 text-[13px] font-medium text-gray-500 uppercase tracking-wider">
                 <span className="ms-2">No</span>
               </div>
 
-              <div className="w-5/12 py-3 bg-green-500 text-left text-[13px] font-medium text-gray-500 uppercase">
+              <div className="w-5/12 py-3 text-left text-[13px] font-medium text-gray-500 uppercase">
                 Customer
               </div>
 
-              <div className="w-3/12 py-3 bg-yellow-500 text-end text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+              <div className="w-3/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
                 <span className="me-3">Price</span>
               </div>
             </div>
@@ -405,20 +337,30 @@ function CreateDelivery() {
                   {filteredParcels.map((parcel, index) => (
                     <div key={parcel.id}>
                       <div className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="w-2/12 py-3 bg-blue-500 text-center text-[13px] font-medium text-gray-500">
+                        <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500">
                           <input
                             type="checkbox"
                             className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            checked={selectedParcels.includes(parcel)}
+                            onChange={(e) =>
+                              setSelectedParcels(
+                                e.target.checked
+                                  ? [...selectedParcels, parcel]
+                                  : selectedParcels.filter(
+                                      (p) => p.id !== parcel.id
+                                    )
+                              )
+                            }
                           />
                         </div>
-                        <div className="w-2/12 bg-orange-500 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                           <span className="ms-2"> {index + 1}</span>
                         </div>
-                        <div className="w-5/12 bg-green-500 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                        <div className="w-5/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                           {parcel.customer}
                         </div>
 
-                        <div className="w-3/12 bg-yellow-500 py-4 text-end text-sm text-gray-900">
+                        <div className="w-3/12 py-4 text-center text-sm text-gray-900">
                           <span className="me-3"> {parcel.price} Ks</span>
                         </div>
                       </div>
@@ -428,6 +370,17 @@ function CreateDelivery() {
               )}
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center">
+        <div className="bg-white rounded-lg p-5 border border-gray-200 shadow-md w-11/12 fixed bottom-0 left-0">
+          <button
+            className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm text-white font-semibold text-lg px-8 py-3 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            // disabled={selectedParcels.length === 0}
+          >
+            <span>Add to Delivery</span>
+          </button>
         </div>
       </div>
     </div>

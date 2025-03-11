@@ -17,6 +17,7 @@ export default {
         secondary: "#2D3648", // Custom secondary color
         success: "#1C431E",
         btn: "#FFECB1",
+        warning: "#6B5201",
         // Add more custom colors as needed
       },
     },
