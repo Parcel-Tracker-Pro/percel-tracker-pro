@@ -20,7 +20,7 @@ body {
 }
 
 .button {
-  @apply flex items-center gap-2  font-medium rounded-full px-5 py-3 text-[10px];
+  @apply flex items-center gap-2  font-medium rounded-full px-5 py-3 text-[13px];
 }
 
 .button-color {

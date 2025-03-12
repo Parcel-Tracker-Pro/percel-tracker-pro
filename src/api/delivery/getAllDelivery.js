@@ -1,9 +1,9 @@
 import axios from "../axios";
 import { toast } from "sonner";
 
-const getAPercel = async ({ id }) => {
+const getAllDelivery = async (data) => {
   try {
-    const response = await axios.get(`api/v1/parcel/${id}`);
+    const response = await axios.get(`api/v1/parcel-batch`);
     // console.log(response.data);
     return response.data;
   } catch (error) {
@@ -13,4 +13,4 @@ const getAPercel = async ({ id }) => {
   }
 };
 
-export default getAPercel;
+export default getAllDelivery;

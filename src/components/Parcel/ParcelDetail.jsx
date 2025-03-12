@@ -34,7 +34,7 @@ const PercelDetail = () => {
       setItems(10);
       setPaymentMethod(res.data.paymentStatus);
       setPrice(res.data.price);
-      setDeliFee(res.data.DeliveryFee);
+      setDeliFee(res.data.deliveryFee);
       setSeller(res.data.seller);
     }
   };

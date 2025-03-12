@@ -1,111 +1,161 @@
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaCalendarAlt } from "react-icons/fa";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { ReceiptText } from "lucide-react";
 import { Truck } from "lucide-react";
 import { FileCheck } from "lucide-react";
 import { LuPackagePlus } from "react-icons/lu";
-
-const deliveryList = [
-  {
-    id: 1,
-    name: "Delivery bar",
-    delivery: "Ninja Van",
-    status: "Pending",
-    date: "12-1-25",
-    items: 27,
-  },
-  {
-    id: 2,
-    name: "Delivery bar",
-    delivery: "Ninja Van",
-    status: "Active",
-    date: "12-1-25",
-    items: 27,
-  },
-  {
-    id: 3,
-    name: "Delivery bar",
-    delivery: "Ninja Van",
-    status: "Finished",
-    date: "12-1-25",
-    items: 27,
-  },
-];
+import { useEffect, useState } from "react";
+import getAllDelivery from "../../api/delivery/getAllDelivery";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 const Delivery = () => {
+  const navigate = useNavigate();
+  const [delilist, setDeliList] = useState([]);
+  const [filterDeliList, setFilterDelilist] = useState([]);
+  const [filter, setFilter] = useState("All");
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    let hours = date.getUTCHours(); // Get hours in UTC
+    const minutes = date.getUTCMinutes(); // Get minutes in UTC
+    const ampm = hours >= 12 ? "PM" : "AM"; // Determine AM/PM
+
+    // Adjust hours to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+      minutes
+    ).padStart(2, "0")} ${ampm}`;
+
+    return formattedTime;
+  };
+
+  const getDeliveryList = async () => {
+    const res = await getAllDelivery();
+    if (res.code === 200) {
+      setDeliList(res.data);
+    }
+  };
+
+  const filterDeliver = (status) => {
+    if (status === "All") {
+      setFilterDelilist(delilist);
+    } else {
+      const filtered = delilist.filter((deli) => deli.status === status);
+      setFilterDelilist(filtered);
+    }
+  };
+
+  useEffect(() => {
+    getDeliveryList();
+  }, []);
+
+  useEffect(() => {
+    filterDeliver(filter);
+  }, [filter, delilist]);
+
+  // console.log("filter", filterDeliList);
+
   return (
-    <div>
-      {/* Header */}
-      <div className="flex bg-white py-5 items-center justify-between mb-6 gap-4 px-2">
-        <div className="flex bg-white items-center border border-gray-500 rounded-full px-4 py-3">
-          <input
-            type="text"
-            placeholder="Search Parcel"
-            className="focus:outline-none w-full"
-          />
-          <FaMagnifyingGlass className="text-gray-500" />
-        </div>
+    <div className="px-2 py-5 pb-20">
+      <div className="flex items-center justify-between mb-10">
+        <p className="header-text">Delivery List</p>
         <button
-          onClick={() => setShowDatePicker(!showDatePicker)}
-          className="bg-primary flex items-center gap-2 bg-primary font-medium rounded-full px-4 py-3"
+          // onClick=(()=>navigate)
+          onClick={() => navigate("/admin/createdelivery")}
+          className="button bg-primary"
         >
-          <FaCalendarAlt className="text-white" />
-          <p className="font-medium text-white">10.3.2023</p>
+          <FaCalendarAlt className="" />
+          <p className="font-medium">Create Deliverys</p>
         </button>
       </div>
 
-      <div className="px-2">
-        <div className="flex items-center justify-between mb-5">
-          <p className="font-bold text-xl">Delivery List</p>
-          <button
-            onClick={() => setShowDatePicker(!showDatePicker)}
-            className="bg-primary flex items-center gap-2 bg-primary font-medium rounded-full px-4 py-3"
-          >
-            <FaCalendarAlt className="" />
-            <p className="font-medium">Create Deliverys</p>
-          </button>
-        </div>
+      <div className="flex items-center gap-4 mb-5">
+        <button
+          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "All" ? "button-color" : ""
+          }`}
+          onClick={() => setFilter("All")}
+        >
+          <ReceiptText size={10} />
+          <p className="text-[10px]">All</p>
+        </button>
 
+        <button
+          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "On Deliver" ? "button-color" : ""
+          }`}
+          onClick={() => setFilter("On Deliver")}
+        >
+          <ReceiptText size={10} />
+          <p className="text-[10px]">Delivering</p>
+        </button>
+
+        <div
+          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "Finished" ? "button-color" : ""
+          }`}
+          onClick={() => setFilter("Finished")}
+        >
+          <ReceiptText size={10} />
+          <p className="text-[10px]">Finished</p>
+        </div>
+      </div>
+
+      {filterDeliList.length > 0 ? (
         <div className="space-y-4">
-          {deliveryList.map((item) => (
-            <div className="flex p-3 bg-white mx-2 rounded-lg items-center justify-between">
+          {filterDeliList.map((item) => (
+            <div
+              key={item._id}
+              className="flex p-3 bg-white mx-2 rounded-lg items-center justify-between"
+            >
               <div>
-                <p className="mb-3 font-bold text-base">{item.name}</p>
+                <div className="flex gap-4 items-center mb-2">
+                  <p className="mb-3 font-bold text-base">
+                    {item.deliveryType}
+                  </p>
+                  <p className="mb-3 font-bold text-base">
+                    {formatTime(item.batchCreatedAt)}
+                  </p>
+                </div>
                 <div className="flex items-center gap-2">
                   <div className="border border-black w-20 justify-center py-1 flex items-center gap-1 rounded-full">
                     <FaCalendarAlt size={10} />
-                    <p className="text-[10px]">{item.date}</p>
+                    <p className="text-[10px]">
+                      {format(item.batchCreatedAt, "dd.MM.yyyy")}
+                    </p>
                   </div>
 
                   <div className="border border-black w-20 justify-center py-1 flex items-center gap-1 rounded-full">
                     <CiDeliveryTruck size={10} />
-                    <p className="text-[10px]">Ninja Van</p>
+                    <p className="text-[10px]">{item.deliveryType}</p>
                   </div>
 
                   <div className="border border-black w-10 justify-center py-1 flex items-center gap-1 rounded-full">
                     <LuPackagePlus size={10} />
-                    <p className="text-[10px]">79</p>
+                    <p className="text-[10px]">{item.parcelCount}</p>
                   </div>
                 </div>
               </div>
 
               <div>
                 {item.status === "Finished" ? (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-green-200 w-24 py-3">
+                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-green-200 w-24 py-3 text-green-900">
                     <FileCheck size={15} />
-                    <p className="text-[14px]">Finsihed </p>
+                    <p className="text-[14px] font-bold">Finsihed </p>
                   </button>
                 ) : (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-yellow-200 w-24 py-3">
+                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-blue-200 w-24 py-3 text-blue-900">
                     <Truck size={15} />
-                    <p className="text-[14px]">Delivering</p>
+                    <p className="text-[14px] font-bold">Delivering</p>
                   </button>
                 )}
               </div>
             </div>
           ))}
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

@@ -1,107 +1,35 @@
 import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import { startOfDay, endOfDay, parseISO } from "date-fns";
+import { format, startOfDay, endOfDay, parseISO } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import "react-swipeable-list/dist/styles.css";
+import { FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
-import { Eye, MoveLeft, MoveRight } from "lucide-react";
-
-const parcels = [
-  {
-    id: "01",
-    customer: "Mia Khalif",
-    status: "Pending",
-    price: "42,000",
-    staffNo: "1",
-    date: "2025-02-15",
-  },
-  {
-    id: "02",
-    customer: "Than Than Eye",
-    status: "Active",
-    price: "43,000",
-    staffNo: "2",
-    date: "2025-02-16",
-  },
-  {
-    id: "03",
-    customer: "Lay Phyu",
-    status: "Pending",
-    price: "12,000",
-    staffNo: "3",
-    date: "2025-02-16",
-  },
-  {
-    id: "04",
-    customer: "Lin Lin Lin",
-    status: "Failed",
-    price: "54,000",
-    staffNo: "1",
-    date: "2025-02-17",
-  },
-  {
-    id: "05",
-    customer: "Naw Htoo Aung",
-    status: "Success",
-    price: "65,000",
-    staffNo: "2",
-    date: "2025-02-17",
-  },
-  {
-    id: "06",
-    customer: "Zin Zin Latt",
-    status: "Active",
-    price: "34,000",
-    staffNo: "3",
-    date: "2025-02-17",
-  },
-  {
-    id: "07",
-    customer: "Rafaealla",
-    status: "Pending",
-    price: "75,000",
-    staffNo: "4",
-    date: "2025-02-17",
-  },
-  {
-    id: "08",
-    customer: "Khaing Wint",
-    status: "Success",
-    price: "75,000",
-    staffNo: "5",
-    date: "2025-02-17",
-  },
-  {
-    id: "09",
-    customer: "Khaing Wint",
-    status: "Success",
-    price: "75,000",
-    staffNo: "5",
-    date: "2025-02-18",
-  },
-  {
-    id: "10",
-    customer: "Ko Shine",
-    status: "Pending",
-    price: "5,000",
-    staffNo: "5",
-    date: "2025-02-18",
-  },
-];
+import { useNavigate } from "react-router-dom";
+import getAllPercel from "../../api/percel/getAllPercel";
+import deleteParcel from "../../api/percel/deleteParcel";
+import noParcel from "../../assets/images/noparcel.svg";
+import Loading from "../Loading";
+import ConfirmModel from "../Model/ConfirmModel";
+import { MoveLeft } from "lucide-react";
+import DeliCreateModel from "../Model/DeliCreateModel";
 
 function CreateDelivery() {
+  const navigate = useNavigate();
   const today = new Date();
-  const [filters, setFilters] = useState({
-    no: "",
-    customer: "",
-    staffNo: "",
-    price: "",
-    status: "",
-  });
-
   const [filteredParcels, setFilteredParcels] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
-
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedParcels, setSelectedParcels] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const [totalprice, setTotalPrice] = useState(0);
+  const [startDate, setStartDate] = useState(
+    sessionStorage.getItem("startDate") || startOfDay(today)
+  );
+  const [endDate, setEndDate] = useState(
+    sessionStorage.getItem("endDate") || endOfDay(today)
+  );
   const [dateRange, setDateRange] = useState([
     {
       startDate: startOfDay(today),
@@ -110,51 +38,7 @@ function CreateDelivery() {
     },
   ]);
 
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  const [selectedParcels, setSelectedParcels] = useState([]);
-
-  useEffect(() => {
-    const filterParcels = () => {
-      // Check if any filter is active
-      const hasActiveFilters =
-        Object.values(filters).some((filter) => filter !== "") ||
-        dateRange[0].startDate !== startOfDay(today) ||
-        dateRange[0].endDate !== endOfDay(today);
-
-      setIsFiltered(hasActiveFilters);
-
-      if (!hasActiveFilters) {
-        setFilteredParcels([]);
-        return;
-      }
-
-      const filtered = parcels.filter((parcel) => {
-        const matchesText =
-          parcel.id.toLowerCase().includes(filters.no.toLowerCase()) &&
-          parcel.customer
-            .toLowerCase()
-            .includes(filters.customer.toLowerCase()) &&
-          parcel.staffNo.toString().includes(filters.staffNo) &&
-          parcel.price.includes(filters.price) &&
-          (filters.status === "" ||
-            parcel.status.toLowerCase() === filters.status.toLowerCase());
-
-        const parcelDate = parseISO(parcel.date);
-        const { startDate, endDate } = dateRange[0];
-
-        const matchesDate =
-          parcelDate >= startOfDay(startDate) &&
-          parcelDate <= endOfDay(endDate);
-
-        return matchesText && matchesDate;
-      });
-
-      setFilteredParcels(filtered);
-    };
-
-    filterParcels();
-  }, [filters, dateRange]);
+  // console.log(filteredParcels);
 
   const handleDateRangeChange = (ranges) => {
     setDateRange([
@@ -166,73 +50,60 @@ function CreateDelivery() {
     ]);
   };
 
-  const selectAll = () => {
-    if (selectedParcels.length === filteredParcels.length) {
-      setSelectedParcels([]);
-    } else {
-      setSelectedParcels(filteredParcels);
-    }
+  const ApplyDate = () => {
+    setStartDate(startOfDay(dateRange[0].startDate));
+    setEndDate(endOfDay(dateRange[0].endDate));
+    setShowDatePicker(false);
+    sessionStorage.setItem("startDate", dateRange[0].startDate);
+    sessionStorage.setItem("endDate", dateRange[0].endDate);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      ids: selectedParcels,
+    };
   };
 
   // console.log(selectedParcels);
 
-  //   const trailingActions = (parcel) => (
-  //     <TrailingActions>
-  //       <SwipeAction
-  //         destructive={true}
-  //         onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
-  //       >
-  //         <div className="bg-red-500 h-full flex items-center px-4 text-white">
-  //           <svg
-  //             xmlns="http://www.w3.org/2000/svg"
-  //             className="h-5 w-5 mr-2"
-  //             viewBox="0 0 20 20"
-  //             fill="currentColor"
-  //           >
-  //             <path
-  //               fillRule="evenodd"
-  //               d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-  //               clipRule="evenodd"
-  //             />
-  //           </svg>
-  //           Delete
-  //         </div>
-  //       </SwipeAction>
-  //     </TrailingActions>
-  //   );
+  const selectAll = () => {
+    if (selectedParcels.length === filteredParcels.length) {
+      setSelectedParcels([]);
+    } else {
+      setSelectedParcels(filteredParcels.map((parcel) => parcel));
+    }
+  };
 
-  //   const leadingActions = (parcel) => (
-  //     <LeadingActions>
-  //       <SwipeAction
-  //         onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
-  //       >
-  //         <div className="bg-blue-500 h-full flex items-center px-4 text-white">
-  //           <svg
-  //             xmlns="http://www.w3.org/2000/svg"
-  //             className="h-5 w-5 mr-2"
-  //             viewBox="0 0 20 20"
-  //             fill="currentColor"
-  //           >
-  //             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-  //           </svg>
-  //           Edit
-  //         </div>
-  //       </SwipeAction>
-  //     </LeadingActions>
-  //   );
+  // console.log("total", totalprice);
+
+  const getPercels = async () => {
+    setLoading(true);
+    const start = format(startDate, "yyyy-MM-dd");
+    const end = format(endDate, "yyyy-MM-dd");
+    // console.log(startDate, endDate);
+
+    const response = await getAllPercel({ start, end });
+    if (response.code === 200) {
+      setFilteredParcels(response.data);
+      setLoading(false);
+    }
+    // console.log(response);
+  };
+
+  useEffect(() => {
+    getPercels();
+  }, [startDate, endDate]);
 
   return (
-    <div className="overflow-hidden w-full ">
+    <div className="overflow-hidden w-full">
       {/* Header */}
-      <div className="flex items-center justify-between gap-4 px-4 py-5">
-        <div className="flex items-center">
-          <MoveLeft className="mr-2" size={18} />
-          <p className="font-medium text-lg text-gray-700">Create Delivery</p>
-        </div>
-        <button className="flex items-center gap-2 bg-orange-200 font-medium rounded-full px-4 py-3">
-          <Eye />
-          <p className="font-medium text-sm"> ViewSummary</p>
-        </button>
+      <div className="flex items-center bg-white py-5 gap-4 px-4">
+        <MoveLeft
+          className="mr-4 text-color"
+          size={23}
+          onClick={() => navigate(-1)}
+        />
+        <p className="header-text">Create Delivery</p>
       </div>
 
       {/* Date Range Picker */}
@@ -240,23 +111,7 @@ function CreateDelivery() {
         <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
           <div className="p-4 border-b border-gray-200">
             <div className="flex justify-between items-center">
-              <h3 className="text-[13px] font-medium text-gray-700">
-                Select Date Range
-              </h3>
-              <button
-                onClick={() =>
-                  setDateRange([
-                    {
-                      startDate: startOfDay(today),
-                      endDate: endOfDay(today),
-                      key: "selection",
-                    },
-                  ])
-                }
-                className="text-sm text-gray-500 hover:text-gray-700"
-              >
-                Reset to Today
-              </button>
+              <h3 className="header-text">Select Date Range</h3>
             </div>
           </div>
           <DateRange
@@ -268,121 +123,166 @@ function CreateDelivery() {
           />
           <div className="flex items-center justify-end gap-2 p-4">
             <button
-              className="flex items-center gap-2 px-8 py-3 bg-orange-200  rounded-xl"
-              onClick={() => setShowDatePicker(false)}
+              className="flex items-center w-24 justify-center py-3 button-color text-color  rounded-xl"
+              onClick={() => {
+                setShowDatePicker(false);
+                setDateRange([
+                  {
+                    ...dateRange[0],
+                    startDate: startOfDay(startDate),
+                    endDate: endOfDay(endDate),
+                  },
+                ]);
+              }}
             >
               Cancel
             </button>
 
             <button
-              className="flex items-center gap-2 px-8 py-3 bg-primary  rounded-xl"
-              onClick={() => setShowDatePicker(false)}
-              x
+              className="flex items-center w-24 justify-center py-3 bg-primary  rounded-xl text-color"
+              onClick={() => ApplyDate()}
             >
-              Ok
+              <p>OK</p>
             </button>
           </div>
         </div>
       )}
 
-      {/* Table */}
-      <div className="bg-gray-200 pt-4">
-        <div className="flex justify-between items-center mx-1 mb-5 px-2">
-          <p className="text-2xl font-medium">Percel</p>
-
-          <button
-            className="flex items-center gap-2 px-5 py-3 bg-orange-200 rounded-full"
-            onClick={() => setShowDatePicker(!showDatePicker)}
-          >
-            <FaCalendarAlt size={20} />
-            <p>21.6.2020</p>
-          </button>
+      {loading ? (
+        <div>
+          <Loading />
         </div>
-        {/* ____________________________________________ */}
-        <div className="w-screen">
-          <div className="rounded-2xl overflow-hidden mx-3">
-            <div className="flex w-full bg-white py-2 pb-4">
-              <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  onChange={selectAll}
-                />
-              </div>
+      ) : (
+        <div>
+          {/* Table */}
+          <div className="bg-gray-200 pt-6">
+            <div className="flex justify-between items-center mx-1 mb-5 px-2">
+              <p className="header-text">
+                {format(dateRange[0].startDate, "MMMM d,yyyy") ==
+                format(dateRange[0].endDate, "MMMM d,yyyy")
+                  ? format(dateRange[0].startDate, "MMMM d,yyyy") ==
+                    format(today, "MMMM d,yyyy")
+                    ? "Today"
+                    : "Available Parcels"
+                  : "Available Parcels"}
+              </p>
 
-              <div className="w-2/12 py-3 text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <span className="ms-2">No</span>
-              </div>
-
-              <div className="w-5/12 py-3 text-left text-[13px] font-medium text-gray-500 uppercase">
-                Customer
-              </div>
-
-              <div className="w-3/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                <span className="me-3">Price</span>
-              </div>
+              <button
+                onClick={() => setShowDatePicker(!showDatePicker)}
+                className="button button-color text-color border border-primary "
+              >
+                <FaCalendarAlt className="text-color" />
+                {format(startDate, "MMMM d,yyyy") ==
+                format(endDate, "MMMM d,yyyy")
+                  ? format(startDate, "dd-MM-yyyy")
+                  : `${format(startDate, "dd-MM-yyyy")} - ${format(
+                      endDate,
+                      "dd-MM-yyyy"
+                    )}`}
+              </button>
             </div>
-
-            <div className="w-full bg-white h-[550px] overflow-y-auto pb-5">
-              {!isFiltered ? (
-                <div className="px-6 py-4 text-center text-gray-500">
-                  Please apply filters to see parcel data
-                </div>
-              ) : filteredParcels.length === 0 ? (
-                <div className="px-6 py-4 text-center text-gray-500">
-                  No parcels found matching the filters
-                </div>
-              ) : (
-                <div>
-                  {filteredParcels.map((parcel, index) => (
-                    <div key={parcel.id}>
-                      <div className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center">
-                        <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                            checked={selectedParcels.includes(parcel)}
-                            onChange={(e) =>
-                              setSelectedParcels(
-                                e.target.checked
-                                  ? [...selectedParcels, parcel]
-                                  : selectedParcels.filter(
-                                      (p) => p.id !== parcel.id
-                                    )
-                              )
-                            }
-                          />
-                        </div>
-                        <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
-                          <span className="ms-2"> {index + 1}</span>
-                        </div>
-                        <div className="w-5/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
-                          {parcel.customer}
-                        </div>
-
-                        <div className="w-3/12 py-4 text-center text-sm text-gray-900">
-                          <span className="me-3"> {parcel.price} Ks</span>
-                        </div>
-                      </div>
+            {/* ____________________________________________ */}
+            {filteredParcels.length > 0 ? (
+              <div className="w-screen">
+                <div className="rounded-2xl overflow-hidden mx-3">
+                  <div className="flex w-full bg-white py-2 pb-4">
+                    <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                      <input
+                        checked={
+                          selectedParcels.length === filteredParcels.length &&
+                          selectedParcels.length > 0
+                        }
+                        type="checkbox"
+                        className="h-4 w-4 text-[#6B5201] focus:ring-indigo-500 border-gray-300 rounded"
+                        onChange={selectAll}
+                      />
                     </div>
-                  ))}
+
+                    <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
+                      <span className="ms-2">No</span>
+                    </div>
+
+                    <div className="w-5/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
+                      Customer
+                    </div>
+
+                    <div className="w-3/12 py-3 text-color text-center text-[13px] uppercase font-bold">
+                      <span className="me-3">Price</span>
+                    </div>
+                  </div>
+
+                  <div className="w-full bg-white h-[65vh] overflow-y-auto pb-20">
+                    {filteredParcels.length > 0 &&
+                      filteredParcels.map((parcel, index) => (
+                        <div key={index}>
+                          <div
+                            className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center border-b border-gray-500"
+                            onClick={() =>
+                              navigate(`/admin/detail/${parcel._id}`)
+                            }
+                          >
+                            <div
+                              className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <input
+                                type="checkbox"
+                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                checked={selectedParcels.includes(parcel)}
+                                onChange={(e) =>
+                                  setSelectedParcels(
+                                    e.target.checked
+                                      ? [...selectedParcels, parcel]
+                                      : selectedParcels.filter(
+                                          (p) => p !== parcel
+                                        )
+                                  )
+                                }
+                              />
+                            </div>
+                            <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                              <span className="ms-2"> {index + 1}</span>
+                            </div>
+                            <div className="w-5/12 text-left py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900">
+                              {parcel.customerName}
+                            </div>
+
+                            <div className="w-3/12 py-4 text-center text-sm text-gray-900">
+                              <span className="me-3"> {parcel.price} Ks</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-[65vh]">
+                <img src={noParcel} alt="no parcel" />
+                <h3 className="font-bold text-xl mb-2">No Parcels Yet</h3>
+                <p className="text-gray-500">
+                  Let’s add your first parcel to get started.
+                </p>
+              </div>
+            )}
           </div>
         </div>
+      )}
+
+      <div className="bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
+        <button
+          onClick={() => setShowSummary(true)}
+          className="bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 "
+        >
+          Add to Delivery
+        </button>
       </div>
 
-      <div className="flex justify-center">
-        <div className="bg-white rounded-lg p-5 border border-gray-200 shadow-md w-11/12 fixed bottom-0 left-0">
-          <button
-            className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm text-white font-semibold text-lg px-8 py-3 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            // disabled={selectedParcels.length === 0}
-          >
-            <span>Add to Delivery</span>
-          </button>
-        </div>
-      </div>
+      <DeliCreateModel
+        isOpen={showSummary}
+        onClose={() => setShowSummary(false)}
+        selectedParcels={selectedParcels}
+      />
     </div>
   );
 }
