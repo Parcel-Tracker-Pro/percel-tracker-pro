@@ -34,7 +34,7 @@ function SearchParcel() {
       //   return acc;
       // }, {});
 
-      setMatchedParcels(groupedParcels);
+      // setMatchedParcels(groupedParcels);
     }
   };
 
