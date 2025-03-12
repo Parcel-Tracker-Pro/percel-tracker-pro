@@ -126,7 +126,9 @@ function SearchParcel() {
                       <div key={index}>
                         <div
                           className="w-full bg-white flex hover:bg-gray-50 cursor-pointer items-center border-b border-gray-500"
-                          onClick={() => navigate(`detail/${parcel._id}`)}
+                          onClick={() =>
+                            navigate(`/admin/detail/${parcel._id}`)
+                          }
                         >
                           <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                             <span className="ms-2"> {index + 1}</span>
