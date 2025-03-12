@@ -11,6 +11,7 @@ import getAllPercel from "../../api/percel/getAllPercel";
 import deleteParcel from "../../api/percel/deleteParcel";
 import noParcel from "../../assets/images/noparcel.svg";
 import Loading from "../Loading";
+import ConfirmModel from "../Model/ConfirmModel";
 
 function PercelPage() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function PercelPage() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedParcels, setSelectedParcels] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [startDate, setStartDate] = useState(
     sessionStorage.getItem("startDate") || startOfDay(today)
   );
@@ -60,6 +62,7 @@ function PercelPage() {
     const res = await deleteParcel(data);
     if (res.code === 200) {
       getPercels();
+      setShowDelete(false);
       setSelectedParcels([]);
     }
   };
@@ -180,7 +183,8 @@ function PercelPage() {
                   selectedParcels.length === 0 &&
                   "opacity-50 cursor-not-allowed"
                 }`}
-                onClick={handleDelete}
+                onClick={() => setShowDelete(true)}
+                // onClick={handleDelete}
                 disabled={selectedParcels.length === 0}
               >
                 <FaTrash size={20} />
@@ -272,6 +276,13 @@ function PercelPage() {
           </div>
         </div>
       )}
+
+      <ConfirmModel
+        isOpen={showDelete}
+        onClose={() => setShowDelete(false)}
+        submit={handleDelete}
+        text="Delete Parcel Cannot be recovered !!"
+      />
     </div>
   );
 }

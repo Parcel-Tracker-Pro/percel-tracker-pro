@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import getAPercel from "../../api/percel/getAPercel";
 import Loading from "../Loading";
 import deleteParcel from "../../api/percel/deleteParcel";
+import ConfirmModel from "../Model/ConfirmModel";
 
 const PercelDetail = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const PercelDetail = () => {
   const [seller, setSeller] = useState("");
   const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const getPercel = async () => {
     const res = await getAPercel({ id });
@@ -70,16 +72,21 @@ const PercelDetail = () => {
       {/* Header */}
       <div className="bg-white mb-6 flex items-center justify-between gap-4 px-4 py-5">
         <div className="flex items-center">
-          <MoveLeft className="mr-4" size={23} onClick={() => navigate(-1)} />
+          <MoveLeft
+            className="mr-4 text-color"
+            size={23}
+            onClick={() => navigate(-1)}
+          />
           <div>
             <p className="header-text">Percel Detail</p>
-            <span className="small-text">{seller}</span>
+            {/* <span className="small-text">{seller}</span> */}
           </div>
         </div>
         <div className="flex gap-2">
           <button
             className="flex items-center bg-orange-200 font-medium rounded-full px-4 py-3"
-            onClick={handleDelete}
+            // onClick={handleDelete}
+            onClick={() => setShowDelete(true)}
           >
             <Trash className="header-text" size={20} />
           </button>
@@ -142,7 +149,7 @@ const PercelDetail = () => {
           </div>
           <div className="flex gap-4">
             <div className="space-y-3 w-1/2">
-              <label className="font-bold text-lg">Items</label>
+              <label className="font-bold text-lg">Seller</label>
               <div
                 className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
                   !items && showErr
@@ -151,11 +158,11 @@ const PercelDetail = () => {
                 }`}
               >
                 <input
-                  value={items}
-                  onChange={(e) => setItems(e.target.value)}
+                  value={seller}
+                  onChange={(e) => setSeller(e.target.value)}
                   type="text"
                   className="w-full focus:outline-none"
-                  placeholder="Enter Total Items"
+                  placeholder="Enter Seller"
                   readOnly={!edit}
                 />
               </div>
@@ -249,6 +256,13 @@ const PercelDetail = () => {
           )}
         </div>
       )}
+
+      <ConfirmModel
+        isOpen={showDelete}
+        onClose={() => setShowDelete(false)}
+        submit={handleDelete}
+        text="Delete Parcel Cannot be recovered !!"
+      />
     </div>
   );
 };
