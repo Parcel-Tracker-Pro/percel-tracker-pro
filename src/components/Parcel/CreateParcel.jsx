@@ -16,6 +16,8 @@ const CreateParcel = () => {
   const [DeliFee, setDeliFee] = useState("");
   const [showErr, setShowErr] = useState(false);
   const [dropDown, setDropDown] = useState(false);
+  const [seller, setSeller] = useState(username);
+  const [showSeller, setShowSeller] = useState(false);
 
   const addParcel = async () => {
     if (
@@ -56,12 +58,6 @@ const CreateParcel = () => {
       {/* Header */}
       <div className="flex bg-white items-center justify-between mb-6 gap-4 px-3 py-6">
         <p className="text-2xl font-bold">Add Parcel</p>
-        <button
-          // onClick={() => setShowDatePicker(!showDatePicker)}
-          className="bg-primary flex items-center gap-2 text-white font-medium rounded-full px-4 py-3"
-        >
-          <p className="font-bold">Sell By {username}</p>
-        </button>
       </div>
 
       {/* form */}
@@ -101,21 +97,34 @@ const CreateParcel = () => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="space-y-3 w-1/2">
-            <label className="font-bold text-lg">Items</label>
+          <div className="space-y-3 w-1/2 relative">
+            <label className="font-bold text-lg">Seller</label>
             <div
-              className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
-                !items && showErr ? "border-red-500" : "border-gray-300"
+              onClick={() => setShowSeller(!showSeller)}
+              className={`flex items-center justify-between w-full px-2 py-3 overflow-hidden border-2 rounded-lg ${
+                !seller && showErr ? "border-red-500" : "border-gray-300"
               }`}
             >
-              <input
-                value={items}
-                onChange={(e) => setItems(e.target.value)}
-                type="text"
-                className="w-full focus:outline-none"
-                placeholder="Enter Total Items"
-              />
+              <p className="truncate w-24 text-gray-500">
+                {seller || "Select seller"}
+              </p>
+              <BiDownArrow size={25} />
             </div>
+            {/* {showSeller && (
+              <div className="absolute w-full top-[80px] right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
+                <div className="text-center">
+                  <p
+                    className="truncate p-2 border-b border-gray-200"
+                    onClick={() => {
+                      setSeller("Me Me - 1");
+                      setShowSeller(!showSeller);
+                    }}
+                  >
+                    Me Me - 1
+                  </p>
+                </div>
+              </div>
+            )} */}
           </div>
           <div className="space-y-3 w-1/2 relative">
             <label className="font-bold text-lg">Payment Status</label>
