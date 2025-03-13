@@ -23,7 +23,7 @@ function CreateDelivery() {
   const [selectedParcels, setSelectedParcels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
-  const [totalprice, setTotalPrice] = useState(0);
+  // const [totalprice, setTotalPrice] = useState(0);
   const [startDate, setStartDate] = useState(
     sessionStorage.getItem("startDate") || startOfDay(today)
   );

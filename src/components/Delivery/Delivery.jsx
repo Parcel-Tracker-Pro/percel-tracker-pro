@@ -108,6 +108,7 @@ const Delivery = () => {
           {filterDeliList.map((item) => (
             <div
               key={item._id}
+              onClick={() => navigate(`/admin/deliverydetail/${item._id}`)}
               className="flex p-3 bg-white mx-2 rounded-lg items-center justify-between"
             >
               <div>
