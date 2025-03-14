@@ -25,8 +25,8 @@ function AccontManagement() {
   }, [isModalOpen]);
 
   return (
-    <div className="mb-20">
-      <p className="text-2xl font-medium">Account Management</p>
+    <div className="mb-20 py-5 px-2">
+      <p className="header-text">Account Management</p>
       {/* ____________________________________________________________________________________ */}
       <div className="flex w-full justify-between gap-2 items-center bg-gray-200 px-4 py-3 rounded-lg my-5">
         <div className="flex gap-4 items-center">

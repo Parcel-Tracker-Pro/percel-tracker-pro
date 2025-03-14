@@ -112,14 +112,7 @@ const Delivery = () => {
               className="flex p-3 bg-white mx-2 rounded-lg items-center justify-between"
             >
               <div>
-                <div className="flex gap-4 items-center mb-2">
-                  <p className="mb-3 font-bold text-base">
-                    {item.deliveryType}
-                  </p>
-                  <p className="mb-3 font-bold text-base">
-                    {formatTime(item.batchCreatedAt)}
-                  </p>
-                </div>
+                <p className="mb-3">{item.batchName}</p>
                 <div className="flex items-center gap-2">
                   <div className="border border-black w-20 justify-center py-1 flex items-center gap-1 rounded-full">
                     <FaCalendarAlt size={10} />
@@ -128,7 +121,7 @@ const Delivery = () => {
                     </p>
                   </div>
 
-                  <div className="border border-black w-20 justify-center py-1 flex items-center gap-1 rounded-full">
+                  <div className="border border-black w-24 justify-center py-1 flex items-center gap-1 rounded-full">
                     <CiDeliveryTruck size={10} />
                     <p className="text-[10px]">{item.deliveryType}</p>
                   </div>

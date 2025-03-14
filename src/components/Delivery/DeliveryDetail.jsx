@@ -14,9 +14,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import DeliStatusModel from "../Model/DeliStatusModel";
+import Loading from "../Loading";
 
 const DeliveryDetail = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const navigate = useNavigate();
   const [delivery, setDelivery] = useState([]);
@@ -27,19 +29,20 @@ const DeliveryDetail = () => {
   const [edit, setEdit] = useState(false);
 
   const getDelivery = async (id) => {
+    setLoading(true);
     const response = await getADelivery(id);
-    setStatus(response.data.status);
-    console.log(
-      response.data.deliveryType,
-      formatTime(response.data.batchCreatedAt)
-    );
-    setName(
-      response.data.deliveryType +
-        " " +
-        formatTime(response.data.batchCreatedAt)
-    );
-    setDelivery(response.data.parcels);
-    setFilteredParcels(response.data.parcels);
+    console.log(response);
+    if (response.code === 200) {
+      setLoading(false);
+      setStatus(response.data.status);
+      setName(
+        response.data.deliveryType +
+          " " +
+          formatTime(response.data.batchCreatedAt)
+      );
+      setDelivery(response.data.parcels);
+      setFilteredParcels(response.data.parcels);
+    }
   };
 
   const formatTime = (dateString) => {
@@ -103,8 +106,8 @@ const DeliveryDetail = () => {
 
           {status !== "On Deliver" && (
             <button className="button-color button">
-              <EyeOff size={23} />
-              <span>Hide Summary</span>
+              <EyeOff size={10} />
+              <span className="text-[10px]">Hide Summary</span>
             </button>
           )}
         </div>
@@ -135,7 +138,7 @@ const DeliveryDetail = () => {
             </div>
           </div>
 
-          {status !== "On Deliver" && !edit && (
+          {/* {status !== "On Deliver" && !edit && (
             <button
               className="button-color button"
               onClick={() => setEdit(!edit)}
@@ -143,7 +146,7 @@ const DeliveryDetail = () => {
               <Edit2Icon size={23} />
               <span>Edit</span>
             </button>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -166,8 +169,13 @@ const DeliveryDetail = () => {
 
       {/* Table */}
       <div className="pt-6">
+        {loading && (
+          <div>
+            <Loading />
+          </div>
+        )}
         {/* ____________________________________________ */}
-        {filteredParcels.length > 0 ? (
+        {filteredParcels.length > 0 && !loading && (
           <div className="w-screen">
             <div className="rounded-2xl overflow-hidden mx-3">
               <div className="flex w-full bg-white py-2 pb-4">
@@ -210,7 +218,7 @@ const DeliveryDetail = () => {
                             ? "bg-[#F7C2C0]"
                             : "bg-white"
                         }`}
-                        onClick={() => navigate(`detail/${parcel._id}`)}
+                        onClick={() => navigate(`/admin/detail/${parcel._id}`)}
                       >
                         <div
                           className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
@@ -260,11 +268,6 @@ const DeliveryDetail = () => {
                   ))}
               </div>
             </div>
-          </div>
-        ) : (
-          <div>
-            {/* <img src={noParcel} alt="no parcel" /> */}
-            <h3 className="font-bold text-xl mb-2">No Parcels Yet</h3>
           </div>
         )}
       </div>

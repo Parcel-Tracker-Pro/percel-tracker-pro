@@ -6,12 +6,13 @@ import "react-date-range/dist/theme/default.css";
 import "react-swipeable-list/dist/styles.css";
 import { FaMagnifyingGlass, FaTrash } from "react-icons/fa6";
 import { FaCalendarAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import getAllPercel from "../../api/percel/getAllPercel";
 import deleteParcel from "../../api/percel/deleteParcel";
 import noParcel from "../../assets/images/noparcel.svg";
 import Loading from "../Loading";
 import ConfirmModel from "../Model/ConfirmModel";
+import { UserCog } from "lucide-react";
 
 function PercelPage() {
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ function PercelPage() {
     // console.log(startDate, endDate);
 
     const response = await getAllPercel({ start, end });
+    // console.log(response);
     if (response.code === 200) {
       setFilteredParcels(response.data);
       setLoading(false);
@@ -97,18 +99,26 @@ function PercelPage() {
     <div className="overflow-hidden w-full">
       {/* Header */}
       <div className="flex items-center bg-white justify-between py-5 gap-4 px-4">
-        <button
-          onClick={() => setShowDatePicker(!showDatePicker)}
-          className="button button-color text-color border border-primary "
-        >
-          <FaCalendarAlt className="text-color" />
-          {format(startDate, "MMMM d,yyyy") == format(endDate, "MMMM d,yyyy")
-            ? format(startDate, "dd-MM-yyyy")
-            : `${format(startDate, "dd-MM-yyyy")} - ${format(
-                endDate,
-                "dd-MM-yyyy"
-              )}`}
-        </button>
+        <div className="flex gap-4 items-center">
+          <button
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="button button-color text-color border border-primary "
+          >
+            <FaCalendarAlt className="text-color" />
+            {format(startDate, "MMMM d,yyyy") == format(endDate, "MMMM d,yyyy")
+              ? format(startDate, "dd-MM-yyyy")
+              : `${format(startDate, "dd-MM-yyyy")} - ${format(
+                  endDate,
+                  "dd-MM-yyyy"
+                )}`}
+          </button>
+          <Link
+            to="/admin/acc"
+            className="button button-color text-color border border-primary "
+          >
+            <UserCog size={18} className="text-color" />
+          </Link>
+        </div>
         <div
           className="flex bg-primary items-center border border-gray-500 rounded-full p-2"
           onClick={() => navigate("search")}

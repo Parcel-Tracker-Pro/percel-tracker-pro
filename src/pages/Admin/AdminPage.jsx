@@ -8,6 +8,7 @@ import CreateDelivery from "../../components/Delivery/CreateDelivery";
 import PercelDetail from "../../components/Parcel/ParcelDetail";
 import SearchParcel from "../../components/Parcel/SearchParcel";
 import DeliveryDetail from "../../components/Delivery/DeliveryDetail";
+import SaleReport from "../../components/SaleReport/SaleReport";
 
 function AdminPage() {
   const location = useLocation();
@@ -20,7 +21,7 @@ function AdminPage() {
           <Route path="/acc" element={<AccontManagement />} />
           <Route path="/delivery" element={<Delivery />} />
           <Route path="/addpercel" element={<CreateParcel />} />
-          <Route path="/report" element={<PercelPage />} />
+          <Route path="/report" element={<SaleReport />} />
           <Route path="/" element={<PercelPage />} />
           <Route path="/search" element={<SearchParcel />} />
           <Route path="/detail/:id" element={<PercelDetail />} />

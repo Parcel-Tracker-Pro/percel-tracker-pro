@@ -14,7 +14,7 @@ function ForgotPassword() {
           </p>
         </div>
       </div>
-      <Link to="/" className="button w-48 mt-5 text-center">
+      <Link to="/" className="bg-primary font-bold px-8 py-2 rounded">
         Close
       </Link>
     </div>

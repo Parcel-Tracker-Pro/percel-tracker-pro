@@ -14,25 +14,25 @@ const navs = [
     link: "/admin/",
   },
   {
-    name: "Add Percel",
+    name: "Add Parcel",
     icon: <LuPackagePlus size={20} />,
     link: "/admin/addpercel",
   },
-  // {
-  //   name: "Sale Report",
-  //   icon: <TbReportMoney size={20} />,
-  //   link: "/admin/report",
-  // },
+  {
+    name: "Sale Report",
+    icon: <TbReportMoney size={20} />,
+    link: "/admin/report",
+  },
   {
     name: "Delivery",
     icon: <CiDeliveryTruck size={20} />,
     link: "/admin/delivery",
   },
-  {
-    name: "Account",
-    icon: <FaRegCircleUser size={20} />,
-    link: "/admin/acc",
-  },
+  // {
+  //   name: "Account",
+  //   icon: <FaRegCircleUser size={20} />,
+  //   link: "/admin/acc",
+  // },
 ];
 
 function Navbar() {

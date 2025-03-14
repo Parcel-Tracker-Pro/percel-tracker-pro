@@ -11,8 +11,10 @@ const LoginPage = () => {
   const [showpw, setshowpw] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitLogin = async () => {
+    setIsLoading(true);
     const data = {
       username,
       password,
@@ -20,18 +22,21 @@ const LoginPage = () => {
     // console.log(data);
 
     const res = await handleLogin(data);
-
-    // console.log(res);
-    if (res.data.user.role === "owner") {
-      navigate("/admin");
+    if (res.code === 200) {
+      setIsLoading(false);
+      if (res.data.user.role === "owner") {
+        navigate("/admin");
+      } else {
+        navigate("/employee");
+      }
     } else {
-      navigate("/employee");
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-white">
-      <div className="bg-white py-8 px-10">
+      <div className="bg-white w-full py-8 px-5">
         <div>
           <img src={logo} alt="logo" className="w-40 h-40 mx-auto" />
         </div>
@@ -82,7 +87,12 @@ const LoginPage = () => {
         </Link>
 
         <button
-          className="bg-primary font-bold w-full py-4 px-6 rounded hover:scale-105 hover:translate-x-[-10px] transition duration-300"
+          disabled={username === "" || password === ""}
+          className={`${
+            username === "" || password === ""
+              ? "button-color cursor-not-allowed "
+              : "bg-primary hover:scale-105 active:scale-95"
+          } font-bold w-full py-4 px-6 rounded transition duration-300`}
           onClick={() => submitLogin()}
         >
           Login Account
