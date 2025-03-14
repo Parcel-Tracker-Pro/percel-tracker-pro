@@ -23,7 +23,7 @@ const CreateParcel = () => {
     if (
       !customerName ||
       !phone ||
-      !items ||
+      !seller ||
       !paymentMethod ||
       !price ||
       !DeliFee
@@ -50,6 +50,7 @@ const CreateParcel = () => {
       setPaymentMethod("");
       setPrice("");
       setDeliFee("");
+      setShowErr(false);
     }
   };
 
@@ -225,7 +226,7 @@ const CreateParcel = () => {
             className={`${
               !customerName ||
               !phone ||
-              !items ||
+              !seller ||
               !paymentMethod ||
               !price ||
               !DeliFee

@@ -98,7 +98,7 @@ const DeliveryDetail = () => {
               size={23}
               onClick={() => navigate(-1)}
             />
-            <p className="header-text">{name}</p>
+            <p className="text-color ">{name}</p>
           </div>
 
           {status !== "On Deliver" && (
@@ -135,7 +135,7 @@ const DeliveryDetail = () => {
             </div>
           </div>
 
-          {status !== "On Deliver" && (
+          {status !== "On Deliver" && !edit && (
             <button
               className="button-color button"
               onClick={() => setEdit(!edit)}
@@ -286,7 +286,7 @@ const DeliveryDetail = () => {
 
       {status === "Finished" && edit && (
         <div className=" flex gap-4 bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
-          <button onClick={() => setShowSummary(true)}>
+          <button onClick={() => setEdit(false)}>
             {/* <ClipboardCheck size={20} /> */}
             Discard
           </button>
