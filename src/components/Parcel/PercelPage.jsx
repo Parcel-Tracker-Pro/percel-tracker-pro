@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import { format, startOfDay, endOfDay, parseISO } from "date-fns";
+import { format, startOfDay, endOfDay } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "react-swipeable-list/dist/styles.css";
@@ -203,7 +203,7 @@ function PercelPage() {
             </div>
             {/* ____________________________________________ */}
             {filteredParcels.length > 0 ? (
-              <div className="w-screen">
+              <div className="w-full">
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4">
                     <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">

@@ -10,7 +10,8 @@ const handleLogin = async (data) => {
       id: toastId,
       autoClose: 200, // Auto-close the toast after 5 seconds
     });
-
+    console.log(response.data);
+    const role = response.data.data.user.role;
     const userId = response.data.data.user._id;
     const username = response.data.data.user.username;
     const percelToken = response.data.data.token;
@@ -18,6 +19,7 @@ const handleLogin = async (data) => {
     localStorage.setItem("userId", userId);
     localStorage.setItem("percel", percelToken);
     localStorage.setItem("percelUsername", username);
+    localStorage.setItem("parcelRole", role);
 
     return response.data;
   } catch (error) {

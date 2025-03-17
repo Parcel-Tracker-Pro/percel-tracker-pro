@@ -150,7 +150,7 @@ const CreateParcel = () => {
                       setDropDown(!dropDown);
                     }}
                   >
-                    Deli Only
+                    Delivery Only
                   </p>
                   <p
                     className="truncate p-2 border-b border-gray-200"
@@ -159,7 +159,7 @@ const CreateParcel = () => {
                       setDropDown(!dropDown);
                     }}
                   >
-                    paid
+                    Fully Paid
                   </p>
                   <p
                     className="truncate p-2 border-b border-gray-200"
@@ -168,7 +168,7 @@ const CreateParcel = () => {
                       setDropDown(!dropDown);
                     }}
                   >
-                    COD{" "}
+                    COD
                   </p>
                   <p
                     className="truncate p-2"

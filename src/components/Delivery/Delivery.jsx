@@ -93,7 +93,7 @@ const Delivery = () => {
         </button>
 
         <div
-          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+          className={`transition all cursor-pointer duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
             filter === "Finished" ? "button-color" : ""
           }`}
           onClick={() => setFilter("Finished")}

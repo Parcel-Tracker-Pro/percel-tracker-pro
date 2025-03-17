@@ -1,11 +1,11 @@
 import axios from "../axios";
 import { toast } from "sonner";
 
-const getsellersale = async (month, year) => {
+const getdeliveryreport = async (month, year) => {
   // console.log(month, year);
   try {
     const response = await axios.get(
-      `api/v1/sales-report?month=${month}&year=${year}`
+      `api/v1/delivery-report?month=${month}&year=${year}`
     );
     // console.log(response.data);
     return response.data;
@@ -16,4 +16,4 @@ const getsellersale = async (month, year) => {
   }
 };
 
-export default getsellersale;
+export default getdeliveryreport;

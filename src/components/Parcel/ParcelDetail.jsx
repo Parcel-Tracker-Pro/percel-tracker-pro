@@ -128,7 +128,7 @@ const PercelDetail = () => {
             </div>
           </div>
           <div className="space-y-3">
-            <label className="font-bold text-lg">Phone Number</label>
+            <label className="font-bold text-lg">Address</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
                 !phone && showErr

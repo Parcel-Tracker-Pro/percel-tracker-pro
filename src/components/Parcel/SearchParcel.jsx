@@ -13,7 +13,7 @@ function SearchParcel() {
   const [matchedParcels, setMatchedParcels] = useState([]);
   const [cusname, setCusname] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log("cus", cusname);
+  // console.log("cus", cusname);
 
   const filterMatchedParcels = async (name) => {
     setLoading(true);
@@ -22,7 +22,7 @@ function SearchParcel() {
     if (res.code === 200) {
       setLoading(false);
       const data = res.data;
-      console.log("data", data);
+      // console.log("data", data);
       setMatchedParcels(data);
       // Group parcels by date
       // const groupedParcels = data.reduce((acc, parcel) => {
