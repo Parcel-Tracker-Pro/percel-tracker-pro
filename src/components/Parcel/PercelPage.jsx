@@ -15,6 +15,7 @@ import ConfirmModel from "../Model/ConfirmModel";
 import { UserCog } from "lucide-react";
 
 function PercelPage() {
+  const role = localStorage.getItem("parcelRole");
   const navigate = useNavigate();
   const today = new Date();
   const [filteredParcels, setFilteredParcels] = useState([]);
@@ -112,12 +113,14 @@ function PercelPage() {
                   "dd-MM-yyyy"
                 )}`}
           </button>
-          <Link
-            to="/admin/acc"
-            className="button button-color text-color border border-primary "
-          >
-            <UserCog size={18} className="text-color" />
-          </Link>
+          {role === "owner" && (
+            <Link
+              to="/admin/acc"
+              className="button button-color text-color border border-primary "
+            >
+              <UserCog size={18} className="text-color" />
+            </Link>
+          )}
         </div>
         <div
           className="flex bg-primary items-center border border-gray-500 rounded-full p-2"

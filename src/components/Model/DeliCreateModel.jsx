@@ -5,8 +5,34 @@ import { useState } from "react";
 import { BiDownArrow } from "react-icons/bi";
 import CreateDeliBatch from "../../api/delivery/CreateDeliBatch";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
+  const today = new Date();
+  console.log(today);
+
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+      timeZone: "Asia/Yangon", // Myanmar Time
+    };
+
+    // Format the date/time to ISO standard
+    const formattedDateTime = now
+      .toLocaleString("sv-SE", options)
+      .replace(" ", "T");
+    const offset = "+06:30"; // Myanmar Time
+
+    return `${formattedDateTime}${offset}`;
+  };
+  // console.log(format(today, "yyyy-MM-dd"));
   const navigate = useNavigate();
   const totalPrice = selectedParcels.reduce(
     (accumulator, item) => accumulator + item.price,
@@ -24,6 +50,7 @@ const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
     const data = {
       parcelIds: selectedParcels.map((parcel) => parcel._id),
       deliveryType: deliService,
+      batchCreatedAt: getCurrentDateTime(),
     };
     console.log(data);
     const response = await CreateDeliBatch(data);
