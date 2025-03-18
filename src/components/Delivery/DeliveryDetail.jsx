@@ -31,6 +31,7 @@ const DeliveryDetail = () => {
   const [edit, setEdit] = useState(false);
   const [time, setTime] = useState(new Date());
   const [deliveryType, setDeliveryType] = useState("");
+  const [showModel, setShowModel] = useState(false);
 
   const getDelivery = async (id) => {
     setLoading(true);
@@ -69,7 +70,7 @@ const DeliveryDetail = () => {
     }
   };
 
-  //   console.log(filteredParcels);
+  console.log(filteredParcels);
 
   const searchParcels = (search) => {
     const response = delivery?.filter((parcel) =>
@@ -177,17 +178,19 @@ const DeliveryDetail = () => {
               <div className="w-full">
                 <div className="rounded-2xl overflow-hidden">
                   <div className="flex w-full bg-white py-2 px-4 pb-4">
-                    {/* <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                    <input
-                      checked={
-                        selectedParcels.length === filteredParcels.length &&
-                        selectedParcels.length > 0
-                      }
-                      type="checkbox"
-                      className="h-4 w-4"
-                      onChange={selectAll}
-                    />
-                  </div> */}
+                    {status === "On Deliver" && (
+                      <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
+                        <input
+                          checked={
+                            selectedParcels.length === filteredParcels.length &&
+                            selectedParcels.length > 0
+                          }
+                          type="checkbox"
+                          className="h-4 w-4"
+                          onChange={selectAll}
+                        />
+                      </div>
+                    )}
 
                     <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                       <span className="ms-2">No</span>
@@ -220,25 +223,27 @@ const DeliveryDetail = () => {
                               navigate(`/admin/detail/${parcel._id}`)
                             }
                           >
-                            {/* <div
-                            className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <input
-                              type="checkbox"
-                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                              checked={selectedParcels.includes(parcel)}
-                              onChange={(e) =>
-                                setSelectedParcels(
-                                  e.target.checked
-                                    ? [...selectedParcels, parcel]
-                                    : selectedParcels.filter(
-                                        (p) => p._id !== parcel._id
-                                      )
-                                )
-                              }
-                            />
-                          </div> */}
+                            {status === "On Deliver" && (
+                              <div
+                                className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <input
+                                  type="checkbox"
+                                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                                  checked={selectedParcels.includes(parcel)}
+                                  onChange={(e) =>
+                                    setSelectedParcels(
+                                      e.target.checked
+                                        ? [...selectedParcels, parcel]
+                                        : selectedParcels.filter(
+                                            (p) => p._id !== parcel._id
+                                          )
+                                    )
+                                  }
+                                />
+                              </div>
+                            )}
                             <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                               <span className="ms-2"> {index + 1}</span>
                             </div>
@@ -275,7 +280,7 @@ const DeliveryDetail = () => {
           {status === "On Deliver" && (
             <div className="bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
               <button
-                // onClick={() => setShowSummary(true)}
+                onClick={() => setShowModel(true)}
                 className={`bg-green-900 flex items-center justify-center gap-4 text-white px-4 py-3 rounded w-full active:scale-95 ${
                   selectedParcels.length === 0 &&
                   "opacity-50 cursor-not-allowed"
@@ -291,13 +296,16 @@ const DeliveryDetail = () => {
           {status === "Finished" && edit && (
             <div className=" flex gap-4 bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
               <button onClick={() => setEdit(false)}>
-                {/* <ClipboardCheck size={20} /> */}
+                <ClipboardCheck size={20} />
                 Discard
               </button>
               <button
-                // onClick={() => setShowSummary(true)}
-                className={`bg-primary   flex items-center justify-center gap-4 text-white px-4 py-3 rounded w-full active:scale-95 `}
-                // disabled={selectedParcels.length === 0}
+                onClick={() => setShowSummary(true)}
+                className={`bg-primary flex items-center justify-center gap-4 text-white px-4 py-3 rounded w-full active:scale-95 ${
+                  selectedParcels.length === 0 &&
+                  "opacity-50 cursor-not-allowed"
+                }`}
+                disabled={selectedParcels.length === 0}
               >
                 Confirm Edit
                 <CircleCheckBig />
@@ -348,6 +356,16 @@ const DeliveryDetail = () => {
             </div>
           )}
         </div>
+      )}
+
+      {status === "On Deliver" && (
+        <DeliStatusModel
+          totalParcels={delivery.length}
+          isOpen={showModel}
+          onClose={() => setShowModel(false)}
+          selectedParcels={selectedParcels}
+          id={id}
+        />
       )}
     </div>
   );

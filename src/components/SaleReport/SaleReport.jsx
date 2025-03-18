@@ -232,11 +232,11 @@ const SaleReport = () => {
               <div className="">
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4 px-2">
-                    <div className="w-3/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
+                    <div className="w-4/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                       <span className="ms-2">Date</span>
                     </div>
 
-                    <div className="w-5/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
+                    <div className="w-4/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
                       Delivery Name
                     </div>
 
@@ -259,13 +259,13 @@ const SaleReport = () => {
                               navigate(`/admin/deliverydetail/${parcel._id}`)
                             }
                           >
-                            <div className="w-3/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
+                            <div className="w-4/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                               <span className="ms-2">
                                 {" "}
                                 {format(parcel.batchCreatedAt, "dd/ MMMM")}
                               </span>
                             </div>
-                            <div className="w-5/12 text-left py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900">
+                            <div className="w-4/12 text-left py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900">
                               {parcel.batchName}
                             </div>
 

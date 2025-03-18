@@ -15,6 +15,7 @@ const DeliStatusModel = ({
   totalParcels,
   id,
 }) => {
+  // console.log(selectedParcels);
   const navigate = useNavigate();
   const date = format(new Date(), "yyyy-MM-dd");
   const totalPrice = selectedParcels.reduce(
