@@ -19,6 +19,26 @@ const CreateParcel = () => {
   const [seller, setSeller] = useState(username);
   const [showSeller, setShowSeller] = useState(false);
 
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setCustomerName(text);
+    } catch (err) {
+      console.error("Failed to read clipboard contents: ", err);
+      alert("Failed to paste from clipboard, please try again.");
+    }
+  };
+
+  const handlePasteAddress = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setPhone(text);
+    } catch (err) {
+      console.error("Failed to read clipboard contents: ", err);
+      alert("Failed to paste from clipboard, please try again.");
+    }
+  };
+
   const addParcel = async () => {
     if (
       !customerName ||
@@ -77,7 +97,7 @@ const CreateParcel = () => {
               className="w-full focus:outline-none"
               placeholder="Enter Customer Name"
             />
-            <FaRegCopy />
+            <FaRegCopy onClick={handlePaste} className="cursor-pointer" />
           </div>
         </div>
         <div className="space-y-3">
@@ -94,7 +114,10 @@ const CreateParcel = () => {
               className="w-full focus:outline-none"
               placeholder="Enter Address"
             />
-            <FaRegCopy />
+            <FaRegCopy
+              onClick={handlePasteAddress}
+              className="cursor-pointer"
+            />
           </div>
         </div>
         <div className="flex gap-4">

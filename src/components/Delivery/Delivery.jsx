@@ -79,8 +79,8 @@ const Delivery = () => {
           }`}
           onClick={() => setFilter("All")}
         >
-          <ReceiptText size={10} />
-          <p className="text-[10px]">All</p>
+          <ReceiptText size={16} />
+          <p className="text-[14px]">All</p>
         </button>
 
         <button
@@ -89,8 +89,8 @@ const Delivery = () => {
           }`}
           onClick={() => setFilter("On Deliver")}
         >
-          <ReceiptText size={10} />
-          <p className="text-[10px]">Delivering</p>
+          <ReceiptText size={16} />
+          <p className="text-[14px]">Delivering</p>
         </button>
 
         <div
@@ -99,8 +99,8 @@ const Delivery = () => {
           }`}
           onClick={() => setFilter("Finished")}
         >
-          <ReceiptText size={10} />
-          <p className="text-[10px]">Finished</p>
+          <ReceiptText size={16} />
+          <p className="text-[14px]">Finished</p>
         </div>
       </div>
 
@@ -115,35 +115,35 @@ const Delivery = () => {
               <div>
                 <p className="mb-3">{item.batchName}</p>
                 <div className="flex items-center gap-2">
-                  <div className="border border-black w-20 justify-center py-1 flex items-center gap-1 rounded-full">
-                    <FaCalendarAlt size={10} />
+                  <div className="border border-black w-[70px] justify-center py-1 flex items-center gap-1 rounded-full">
+                    {/* <FaCalendarAlt size={10} /> */}
                     <p className="text-[10px]">
                       {format(item.batchCreatedAt, "dd.MM.yyyy")}
                     </p>
                   </div>
 
-                  <div className="border border-black w-24 justify-center py-1 flex items-center gap-1 rounded-full">
-                    <CiDeliveryTruck size={10} />
+                  <div className="border border-black w-[75px] justify-center py-1 flex items-center gap-1 rounded-full">
+                    {/* <CiDeliveryTruck size={10} /> */}
                     <p className="text-[10px]">{item.deliveryType}</p>
                   </div>
 
-                  <div className="border border-black w-10 justify-center py-1 flex items-center gap-1 rounded-full">
-                    <LuPackagePlus size={10} />
-                    <p className="text-[10px]">{item.parcelCount}</p>
+                  <div className="border border-black w-[60px] justify-center py-1 flex items-center gap-1 rounded-full">
+                    {/* <LuPackagePlus size={10} /> */}
+                    <p className="text-[10px]">{item.parcelCount} parcels</p>
                   </div>
                 </div>
               </div>
 
               <div>
                 {item.status === "Finished" ? (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-green-200 w-24 py-3 text-green-900">
+                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-green-200 w-20 py-4 text-green-900">
                     <FileCheck size={15} />
-                    <p className="text-[14px] font-bold">Finsihed </p>
+                    <p className="text-[10px] font-bold">Finsihed </p>
                   </button>
                 ) : (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-blue-200 w-24 py-3 text-blue-900">
+                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-blue-200 w-20 py-4 text-blue-900">
                     <Truck size={15} />
-                    <p className="text-[14px] font-bold">Delivering</p>
+                    <p className="text-[10px] font-bold">Delivering</p>
                   </button>
                 )}
               </div>

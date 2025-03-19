@@ -14,13 +14,14 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
+  font-weight: bold;
   background-color: white;
   scroll-behavior: smooth;
   color: #2d3648;
 }
 
 .button {
-  @apply flex items-center gap-2  font-medium rounded-full px-5 py-3 text-[13px];
+  @apply flex items-center gap-2  font-semibold rounded-full px-5 py-3 text-[13px];
 }
 
 .button-color {
@@ -28,7 +29,7 @@ body {
 }
 
 .cancel {
-  @apply flex items-center gap-2 bg-red-500 font-medium rounded-full px-5 py-3 text-[14px] text-white;
+  @apply flex items-center gap-2 bg-red-500 font-semibold rounded-full px-5 py-3 text-[14px] text-white;
 }
 
 .header-text {
@@ -36,21 +37,21 @@ body {
 }
 
 .small-text {
-  @apply text-[#6B5201] text-sm;
+  @apply text-[#6B5201] text-sm font-semibold;
 }
 
 .text-color {
-  @apply text-[#6B5201];
+  @apply text-[#6B5201] font-semibold;
 }
 
 .body-text {
-  @apply text-body md:text-[18px] lg:text-[21px];
+  @apply text-body md:text-[18px] lg:text-[21px] font-semibold;
 }
 
 .card-header {
-  @apply text-cardheader md:text-[18px] lg:text-[24px];
+  @apply text-cardheader md:text-[18px] lg:text-[24px] font-semibold;
 }
 
 .card-body {
-  @apply text-cardbody md:text-[14px] lg:text-[16px];
+  @apply text-cardbody md:text-[14px] lg:text-[16px] font-semibold;
 }
