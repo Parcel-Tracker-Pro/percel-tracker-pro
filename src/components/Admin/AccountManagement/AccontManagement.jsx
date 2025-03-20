@@ -25,7 +25,7 @@ function AccontManagement() {
     const res = await getAllEmployees();
     console.log(res);
     if (res.code === 200) {
-      // setLoading(false);
+      setLoading(false);
       setEmployee(res.data.userData.filter((e) => e.username !== ownerName));
       if (ownerName) {
         setOwner(res.data.userData.find((e) => e.username === ownerName));
