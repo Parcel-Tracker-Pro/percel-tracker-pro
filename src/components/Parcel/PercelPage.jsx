@@ -16,7 +16,9 @@ import { UserCog } from "lucide-react";
 
 function PercelPage() {
   const role = localStorage.getItem("parcelRole");
-  const name = localStorage.getItem("parcelUsername");
+  const name = localStorage.getItem("percelUsername");
+  console.log("name", name);
+  console.log("work");
   const navigate = useNavigate();
   const today = new Date();
   const [filteredParcels, setFilteredParcels] = useState([]);
@@ -91,7 +93,7 @@ function PercelPage() {
         setFilteredParcels(response.data);
       } else {
         setFilteredParcels(
-          response.data.filter((parcel) => parcel.seller === name)
+          response.data.filter((parcel) => parcel.seller == name)
         );
       }
 
