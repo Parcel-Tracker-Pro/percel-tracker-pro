@@ -8,7 +8,7 @@ import PercelDetail from "../components/Parcel/ParcelDetail";
 
 function EmployeePage() {
   const location = useLocation();
-  console.log(location.pathname.includes("detail"));
+  // console.log(location.pathname.includes("detail"));
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="">

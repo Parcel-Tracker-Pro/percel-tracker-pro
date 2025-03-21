@@ -33,7 +33,7 @@ const Delivery = () => {
 
   const getDeliveryList = async () => {
     const res = await getAllDelivery();
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setDeliList(res.data);
     }

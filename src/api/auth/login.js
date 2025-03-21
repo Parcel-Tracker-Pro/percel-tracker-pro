@@ -10,7 +10,7 @@ const handleLogin = async (data) => {
       id: toastId,
       autoClose: 200, // Auto-close the toast after 5 seconds
     });
-    console.log(response.data);
+    // console.log(response.data);
     const role = response.data.data.user.role;
     const userId = response.data.data.user._id;
     const username = response.data.data.user.username;

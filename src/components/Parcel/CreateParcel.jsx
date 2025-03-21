@@ -27,7 +27,7 @@ const CreateParcel = () => {
       const text = await navigator.clipboard.readText();
       setCustomerName(text);
     } catch (err) {
-      console.error("Failed to read clipboard contents: ", err);
+      // console.error("Failed to read clipboard contents: ", err);
       alert("Failed to paste from clipboard, please try again.");
     }
   };
@@ -37,7 +37,7 @@ const CreateParcel = () => {
       const text = await navigator.clipboard.readText();
       setPhone(text);
     } catch (err) {
-      console.error("Failed to read clipboard contents: ", err);
+      // console.error("Failed to read clipboard contents: ", err);
       alert("Failed to paste from clipboard, please try again.");
     }
   };
@@ -79,9 +79,9 @@ const CreateParcel = () => {
 
   const getEmployees = async () => {
     const res = await getAllEmployees();
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
-      console.log(res.data);
+      // console.log(res.data);
       setEmployee(res.data.userData.map((e) => e.username));
     }
   };

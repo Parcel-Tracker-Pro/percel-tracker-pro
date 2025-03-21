@@ -11,7 +11,7 @@ const UpdateStatus = async (data, id) => {
       id: toastId,
       autoClose: 200, // Auto-close the toast after 5 seconds
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     toast.error(`${error.response.data.message}`, {

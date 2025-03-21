@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
   const today = new Date().toLocaleString("en-US", { timeZone: "Asia/Yangon" });
-  console.log("today", today);
+  // console.log("today", today);
 
   // console.log(format(today, "yyyy-MM-dd"));
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
       deliveryType: deliService,
       batchCreatedAt: today,
     };
-    console.log(data);
+    // console.log(data);
     const response = await CreateDeliBatch(data);
     // console.log(response);
     if (response.code === 201) {

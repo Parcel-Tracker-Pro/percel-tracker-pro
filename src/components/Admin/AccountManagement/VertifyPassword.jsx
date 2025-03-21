@@ -11,14 +11,14 @@ const VertifyPassword = ({ isOpen, onClose }) => {
   const [modelOpen, setModalOpen] = useState(false);
 
   const vertifypw = async (e) => {
-    console.log(verifyPassword);
+    // console.log(verifyPassword);
     e.preventDefault();
     const data = {
       verifyPassword,
     };
 
     const res = await vertifypassword(data);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.code === 200) {
       setModalOpen(true);
       // onClose();

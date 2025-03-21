@@ -20,7 +20,7 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
     };
 
     const res = await createEmployee(data);
-    console.log(res);
+    // console.log(res);
     if (res.statusCode === 201) {
       setUsername("");
       setPassword("");

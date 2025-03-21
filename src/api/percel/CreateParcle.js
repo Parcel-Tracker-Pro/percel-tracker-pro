@@ -8,7 +8,7 @@ const CeateAParcel = async (data) => {
     toast.success("Parcel created successfully!", {
       autoClose: 200, // Auto-close the toast after 5 seconds
     });
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
     toast.error(`${error.response.data.message}`, {

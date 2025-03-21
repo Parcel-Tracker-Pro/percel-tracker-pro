@@ -70,7 +70,7 @@ const DeliveryDetail = () => {
     }
   };
 
-  console.log(filteredParcels);
+  // console.log(filteredParcels);
 
   const searchParcels = (search) => {
     const response = delivery?.filter((parcel) =>

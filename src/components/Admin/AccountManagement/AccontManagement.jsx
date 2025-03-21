@@ -23,7 +23,7 @@ function AccontManagement() {
   const getEmployees = async () => {
     setLoading(true);
     const res = await getAllEmployees();
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setLoading(false);
       setEmployee(res.data.userData.filter((e) => e.username !== ownerName));
@@ -119,7 +119,7 @@ function AccontManagement() {
                 onClick={() => {
                   setUpdateOpen(true);
                   setId(staff._id);
-                  console.log(staff._id);
+                  // console.log(staff._id);
                 }}
               >
                 Update

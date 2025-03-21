@@ -69,12 +69,12 @@ const PercelDetail = () => {
   };
 
   const updateParcelStatus = async (value) => {
-    console.log(value);
+    // console.log(value);
     const data = {
       deliveryStatus: value,
     };
     const res = await UpdateStatus(data, id);
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setShowCancel(false);
       getPercel();
@@ -104,9 +104,9 @@ const PercelDetail = () => {
 
   const getEmployees = async () => {
     const res = await getAllEmployees();
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
-      console.log(res.data);
+      // console.log(res.data);
       setEmployee(res.data.userData.map((e) => e.username));
     }
   };

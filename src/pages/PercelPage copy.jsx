@@ -248,7 +248,7 @@ function PercelPage() {
     <TrailingActions>
       <SwipeAction
         destructive={true}
-        onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
+        // onClick={() => console.log(`Delete parcel with ID: ${parcel.id}`)}
       >
         <div className="bg-red-500 h-full flex items-center px-4 text-white">
           <svg
@@ -272,7 +272,7 @@ function PercelPage() {
   const leadingActions = (parcel) => (
     <LeadingActions>
       <SwipeAction
-        onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
+      // onClick={() => console.log(`Edit parcel with ID: ${parcel.id}`)}
       >
         <div className="bg-blue-500 h-full flex items-center px-4 text-white">
           <svg
