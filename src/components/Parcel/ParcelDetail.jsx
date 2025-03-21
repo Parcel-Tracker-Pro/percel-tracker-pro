@@ -11,8 +11,11 @@ import { CircleCheckBig, ClipboardCheck } from "lucide-react";
 import UpdateStatus from "../../api/percel/updateStatus";
 import UpdateParcel from "../../api/percel/updateParcel";
 import { format } from "date-fns";
+import getAllEmployees from "../../api/employee/getAllemployees";
+import { BiDownArrow } from "react-icons/bi";
 
 const PercelDetail = () => {
+  const role = localStorage.getItem("parcelRole");
   const navigate = useNavigate();
   const { id } = useParams();
   //   console.log(id);
@@ -31,10 +34,14 @@ const PercelDetail = () => {
   const [status, setStatus] = useState("On Deli");
   const [created, setCreated] = useState("");
   const [updated, setUpdated] = useState("");
+  const [employee, setEmployee] = useState([]);
+  const [dropDown, setDropDown] = useState(false);
+  const [dropDowntwo, setDropDownTwo] = useState(false);
 
   const getPercel = async () => {
+    const role = localStorage.getItem("parcelRole");
     const res = await getAPercel({ id });
-    console.log(res.data.ParcelUpdatedAt);
+    // console.log(res.data);
     if (res.code === 200) {
       setLoading(false);
       setCustomerName(res.data.customerName);
@@ -49,10 +56,6 @@ const PercelDetail = () => {
       setUpdated(res.data.ParcelUpdatedAt);
     }
   };
-
-  useEffect(() => {
-    getPercel();
-  }, []);
 
   const handleDelete = async () => {
     const data = {
@@ -80,7 +83,7 @@ const PercelDetail = () => {
   };
 
   const updateParcelDetail = async (value) => {
-    console.log(value);
+    // console.log(value);
     const data = {
       customerName,
       address: phone,
@@ -90,7 +93,7 @@ const PercelDetail = () => {
       parcelUpdatedAt: format(new Date(), "yyyy-MM-dd"),
     };
     const res = await UpdateParcel(data, id);
-    console.log(res);
+    // console.log(res);
     if (res.code === 200) {
       setShowCancel(false);
       setEdit(false);
@@ -99,10 +102,28 @@ const PercelDetail = () => {
     }
   };
 
+  const getEmployees = async () => {
+    const res = await getAllEmployees();
+    console.log(res);
+    if (res.code === 200) {
+      console.log(res.data);
+      setEmployee(res.data.userData.map((e) => e.username));
+    }
+  };
+
+  // console.log(employee);
+
+  useEffect(() => {
+    getPercel();
+    if (role === "owner") {
+      getEmployees();
+    }
+  }, []);
+
   return (
     <div>
       {/* Header */}
-      <div className="bg-white mb-6 flex items-center justify-between gap-4 px-4 py-5">
+      <div className="bg-white mb-6 flex items-center justify-between gap-4 px-5 py-5">
         <div className="flex items-center">
           <MoveLeft
             className="mr-4 text-color cursor-pointer"
@@ -110,7 +131,7 @@ const PercelDetail = () => {
             onClick={() => navigate(-1)}
           />
           <div>
-            <p className="header-text">Percel Detail</p>
+            <p className="header-text">Parcel Detail</p>
             <div className="flex gap-2">
               <div className="border mt-2 border-black w-24 justify-center py-1 flex items-center gap-1 rounded-full">
                 <FaCalendarAlt size={10} color="#6B5201" />
@@ -209,24 +230,37 @@ const PercelDetail = () => {
             </div>
           </div>
           <div className="flex gap-4">
-            <div className="space-y-3 w-1/2">
+            <div className="space-y-3 w-1/2 relative">
               <label className="font-bold text-lg">Seller</label>
               <div
-                className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
-                  !items && showErr
-                    ? "border-red-500"
-                    : `${edit ? "border-gray-300" : "border-gray-100"}`
+                onClick={() => setDropDown(!dropDown)}
+                className={`flex items-center justify-between w-full px-2 py-3 overflow-hidden border-2 rounded-lg ${
+                  !seller && showErr ? "border-red-500" : "border-gray-300"
                 }`}
               >
-                <input
-                  value={seller}
-                  onChange={(e) => setSeller(e.target.value)}
-                  type="text"
-                  className="w-full focus:outline-none"
-                  placeholder="Enter Seller"
-                  readOnly={!edit}
-                />
+                <p className="truncate w-24 text-gray-500">
+                  {seller || "Select seller"}
+                </p>
+                <BiDownArrow size={25} />
               </div>
+              {dropDown && role === "owner" && (
+                <div className="absolute w-full top-[80px] h-40 overflow-y-scroll right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
+                  <div className="text-center">
+                    {employee.map((emp, index) => (
+                      <p
+                        key={index}
+                        className="truncate p-2 border-b border-gray-200"
+                        onClick={() => {
+                          setSeller(emp);
+                          setDropDown(!dropDown);
+                        }}
+                      >
+                        {emp}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <div className="space-y-3 w-1/2">
               <label className="font-bold text-lg">Payment</label>
@@ -294,6 +328,7 @@ const PercelDetail = () => {
               </div>
             </div>
           </div>
+
           {edit && (
             <div className=" flex gap-4 bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed left-0 bottom-0 w-full">
               <button
@@ -325,7 +360,7 @@ const PercelDetail = () => {
         </div>
       )}
 
-      {status !== "On Deli" && !edit && (
+      {status !== "On Deli" && status !== "Pending" && !edit && (
         <div className="bg-white space-y-5 border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
           {showCancel && (
             <button

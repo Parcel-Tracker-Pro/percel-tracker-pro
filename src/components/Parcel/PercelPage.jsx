@@ -16,6 +16,7 @@ import { UserCog } from "lucide-react";
 
 function PercelPage() {
   const role = localStorage.getItem("parcelRole");
+  const name = localStorage.getItem("parcelUsername");
   const navigate = useNavigate();
   const today = new Date();
   const [filteredParcels, setFilteredParcels] = useState([]);
@@ -84,9 +85,16 @@ function PercelPage() {
     // console.log(startDate, endDate);
 
     const response = await getAllPercel({ start, end });
-    // console.log(response);
+    console.log(response);
     if (response.code === 200) {
-      setFilteredParcels(response.data);
+      if (role === "owner") {
+        setFilteredParcels(response.data);
+      } else {
+        setFilteredParcels(
+          response.data.filter((parcel) => parcel.seller === name)
+        );
+      }
+
       setLoading(false);
     }
     // console.log(response);

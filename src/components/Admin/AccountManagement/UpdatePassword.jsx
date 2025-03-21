@@ -72,13 +72,18 @@ const UpdatePassword = ({ isOpen, onClose, id }) => {
               </button>
             </label>
             <div className="flex justify-between gap-5 mt-10">
-              <button type="button" className="cancel" onClick={onClose}>
+              <button type="button" className="" onClick={onClose}>
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={createAccount}
-                className="w-full button"
+                className={`flex gap-4 font-bold justify-center rounded-md p-4 w-full ${
+                  newPassword !== "" && confirmPassword !== ""
+                    ? "bg-primary text-[#0E3F66] hover:scale-105 active:scale-95"
+                    : "button-color"
+                }`}
+                disabled={newPassword === "" && confirmPassword === ""}
               >
                 Update Password
               </button>

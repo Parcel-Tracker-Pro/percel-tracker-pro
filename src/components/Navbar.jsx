@@ -34,12 +34,12 @@ const staffnavs = [
   {
     name: "Home",
     icon: <MdHomeFilled size={20} />,
-    link: "/admin/",
+    link: "/employee/",
   },
   {
     name: "Add Parcel",
     icon: <LuPackagePlus size={20} />,
-    link: "/admin/addpercel",
+    link: "/employee/addpercel",
   },
 ];
 

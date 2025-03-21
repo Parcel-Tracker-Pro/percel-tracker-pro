@@ -18,7 +18,7 @@ function AccontManagement() {
   const [id, setId] = useState("");
   const [owner, setOwner] = useState(null);
   const ownerName = localStorage.getItem("percelUsername");
-  console.log(ownerName);
+  // console.log(ownerName);
 
   const getEmployees = async () => {
     setLoading(true);

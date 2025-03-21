@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
 import CeateAParcel from "../../api/percel/CreateParcle";
 import { format } from "date-fns";
 import { BiDownArrow } from "react-icons/bi";
+import getAllEmployees from "../../api/employee/getAllemployees";
 
 const CreateParcel = () => {
+  const role = localStorage.getItem("parcelRole");
   const today = new Date();
   const username = localStorage.getItem("percelUsername");
   // console.log(username);
@@ -17,7 +19,8 @@ const CreateParcel = () => {
   const [showErr, setShowErr] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const [seller, setSeller] = useState(username);
-  const [showSeller, setShowSeller] = useState(false);
+  const [dropDowntwo, setDropDownTwo] = useState(false);
+  const [employee, setEmployee] = useState([]);
 
   const handlePaste = async () => {
     try {
@@ -74,6 +77,23 @@ const CreateParcel = () => {
     }
   };
 
+  const getEmployees = async () => {
+    const res = await getAllEmployees();
+    console.log(res);
+    if (res.code === 200) {
+      console.log(res.data);
+      setEmployee(res.data.userData.map((e) => e.username));
+    }
+  };
+
+  // console.log(employee);
+
+  useEffect(() => {
+    if (role === "owner") {
+      getEmployees();
+    }
+  }, []);
+
   return (
     <div className="bg-gray-300 min-h-screen">
       {/* Header */}
@@ -124,7 +144,7 @@ const CreateParcel = () => {
           <div className="space-y-3 w-1/2 relative">
             <label className="font-bold text-lg">Seller</label>
             <div
-              onClick={() => setShowSeller(!showSeller)}
+              onClick={() => setDropDownTwo(!dropDowntwo)}
               className={`flex items-center justify-between w-full px-2 py-3 overflow-hidden border-2 rounded-lg ${
                 !seller && showErr ? "border-red-500" : "border-gray-300"
               }`}
@@ -134,21 +154,24 @@ const CreateParcel = () => {
               </p>
               <BiDownArrow size={25} />
             </div>
-            {/* {showSeller && (
-              <div className="absolute w-full top-[80px] right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
+            {dropDowntwo && role === "owner" && (
+              <div className="absolute w-full top-[80px] h-40 overflow-y-scroll right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
                 <div className="text-center">
-                  <p
-                    className="truncate p-2 border-b border-gray-200"
-                    onClick={() => {
-                      setSeller("Me Me - 1");
-                      setShowSeller(!showSeller);
-                    }}
-                  >
-                    Me Me - 1
-                  </p>
+                  {employee.map((emp, index) => (
+                    <p
+                      key={index}
+                      className="truncate p-2 border-b border-gray-200"
+                      onClick={() => {
+                        setSeller(emp);
+                        setDropDownTwo(!dropDowntwo);
+                      }}
+                    >
+                      {emp}
+                    </p>
+                  ))}
                 </div>
               </div>
-            )} */}
+            )}
           </div>
           <div className="space-y-3 w-1/2 relative">
             <label className="font-bold text-lg">Payment Status</label>

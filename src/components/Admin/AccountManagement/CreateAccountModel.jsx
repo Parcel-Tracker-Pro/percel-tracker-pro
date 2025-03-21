@@ -14,9 +14,9 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
   const createAccount = async (e) => {
     e.preventDefault();
     const data = {
-      username,
-      password,
-      confirmPassword,
+      username: `Mi Mi - ${username}`,
+      password: password,
+      confirmPassword: confirmPassword,
     };
 
     const res = await createEmployee(data);
@@ -48,13 +48,18 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
                 <FaRegCircleUser className="mr-5" size={20} />
                 <span className="text-lg font-semibold">User Name</span>
               </span>
-              <input
-                type="text"
-                placeholder="Enter Name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="mt-1 text-lg block text-secondary focus:outline-none w-full p-3 px-4 border-2 border-gray-300 rounded"
-              />
+              <div className="flex items-center w-full p-3 px-4 border-2 border-gray-300 rounded">
+                <div className="w-16">
+                  <p>Mi Mi</p>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Enter Name"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full text-lg text-secondary focus:outline-none"
+                />
+              </div>
             </label>
 
             <label className="block mb-2">
@@ -121,13 +126,27 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
             </label>
 
             <div className="flex justify-between gap-5 mt-10">
-              <button type="button" className="cancel" onClick={onClose}>
+              <button
+                type="button"
+                className="text-center w-1/3"
+                onClick={onClose}
+              >
                 Cancel
               </button>
               <button
                 type="submit"
                 onClick={createAccount}
-                className="w-full button"
+                className={`flex gap-4 font-bold justify-center rounded-md p-4 w-2/3  ${
+                  username !== "" && password !== "" && confirmPassword !== ""
+                    ? "bg-primary text-[#0E3F66] hover:scale-105 active:scale-95"
+                    : "button-color"
+                }`}
+                disabled={
+                  username === "" ||
+                  password === "" ||
+                  confirmPassword === "" ||
+                  password !== confirmPassword
+                }
               >
                 Create Account
               </button>

@@ -51,14 +51,18 @@ const VertifyPassword = ({ isOpen, onClose }) => {
               </button>
             </label>
 
-            <div className="flex justify-between gap-5 mt-10">
-              <button type="button" className="w-full cancel" onClick={onClose}>
+            <div className="flex gap-5 mt-10">
+              <button type="button" className="w-1/2" onClick={onClose}>
                 Discard
               </button>
               <button
                 type="submit"
                 onClick={vertifypw}
-                className="w-full button"
+                className={`flex gap-4 font-bold justify-center rounded-md p-4 w-1/2 ${
+                  verifyPassword
+                    ? "bg-primary text-[#0E3F66] hover:scale-105 active:scale-95"
+                    : "button-color"
+                }`}
               >
                 Confirm
               </button>
