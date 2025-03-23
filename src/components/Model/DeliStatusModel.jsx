@@ -1,9 +1,4 @@
 import { motion } from "framer-motion";
-import deletesvg from "./../../assets/images/delete.svg";
-import { Trash } from "lucide-react";
-import { useState } from "react";
-import { BiDownArrow } from "react-icons/bi";
-import CreateDeliBatch from "../../api/delivery/CreateDeliBatch";
 import { useNavigate } from "react-router-dom";
 import changeStatus from "../../api/delivery/changeStatus";
 import { format } from "date-fns";
@@ -15,7 +10,6 @@ const DeliStatusModel = ({
   totalParcels,
   id,
 }) => {
-  // console.log(selectedParcels);
   const navigate = useNavigate();
   const date = format(new Date(), "yyyy-MM-dd");
   const totalPrice = selectedParcels.reduce(
@@ -32,9 +26,7 @@ const DeliStatusModel = ({
       successParcelIds: selectedParcels.map((parcel) => parcel._id),
       timestamps: date,
     };
-    // console.log(data);
     const response = await changeStatus({ data, id });
-    // console.log(response);
     if (response.code === 200) {
       navigate("/admin/delivery");
     }
@@ -42,9 +34,23 @@ const DeliStatusModel = ({
 
   if (!isOpen) return null;
 
+  // Define animation variants
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 },
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-      <motion.div className="border border-gray-300 shadow-lg px-8 py-5 rounded-md bg-white max-w-sm mx-auto">
+      <motion.div
+        className="border border-gray-300 shadow-lg px-8 py-5 rounded-md bg-white max-w-sm mx-auto"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ duration: 0.3 }}
+      >
         <div className="">
           <p className="text-2xl mb-5">Check Nanja Van 12:30PM Delivery</p>
 
@@ -76,16 +82,13 @@ const DeliStatusModel = ({
               </div>
             </div>
           </div>
-          <div className="flex justify-center gap-4 md:gap-10 mt-4 ">
-            <button
-              onClick={onClose}
-              className="border border-gray-300 rounded-md p-4 text-gray-700 hover:bg-gray-200"
-            >
+          <div className="flex justify-between mt-4 ">
+            <button onClick={onClose} className="rounded-md p-4 text-gray-700">
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              className="flex gap-4 font-bold rounded-md p-4 bg-[#BADEFB] text-[#0E3F66] hover:scale-105 active:scale-95"
+              className="flex gap-4 font-bold rounded-md py-4 px-10 bg-[#C5E2C6] text-[#1C431E] hover:scale-105 active:scale-95"
             >
               Deliver Parcel
             </button>

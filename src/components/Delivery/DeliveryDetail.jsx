@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import DeliStatusModel from "../Model/DeliStatusModel";
 import Loading from "../Loading";
 import { format } from "date-fns";
+import { motion } from "framer-motion";
 
 const DeliveryDetail = () => {
   const { id } = useParams();
@@ -169,13 +170,13 @@ const DeliveryDetail = () => {
           {/* Table */}
           <div className="pt-6">
             {loading && (
-              <div>
+              <motion.div className="flex h-screen items-center justify-center">
                 <Loading />
-              </div>
+              </motion.div>
             )}
             {/* ____________________________________________ */}
             {filteredParcels.length > 0 && !loading && (
-              <div className="w-full">
+              <motion.div className="w-full">
                 <div className="rounded-2xl overflow-hidden">
                   <div className="flex w-full bg-white py-2 px-4 pb-4">
                     {status === "On Deliver" && (
@@ -273,7 +274,7 @@ const DeliveryDetail = () => {
                       ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
           </div>
 

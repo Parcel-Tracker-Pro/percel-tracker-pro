@@ -10,6 +10,7 @@ import { MonthInput, MonthPicker } from "react-lite-month-picker";
 import getdeliveryreport from "../../api/sale/getdellreport";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const SaleReport = () => {
   const navigate = useNavigate();
@@ -171,7 +172,12 @@ const SaleReport = () => {
         {!showStaff ? (
           <div>
             {reportdata.length > 0 ? (
-              <div className="">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className=""
+              >
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4 px-2">
                     <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
@@ -213,7 +219,7 @@ const SaleReport = () => {
                       ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-[65vh]">
                 <h3 className="font-bold text-xl mb-2">
@@ -229,7 +235,12 @@ const SaleReport = () => {
         ) : (
           <div>
             {deliverydata.length > 0 ? (
-              <div className="">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className=""
+              >
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4 px-2">
                     <div className="w-4/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
@@ -286,7 +297,7 @@ const SaleReport = () => {
                       ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-[65vh]">
                 <h3 className="font-bold text-xl mb-2">

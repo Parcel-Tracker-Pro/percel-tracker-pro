@@ -13,6 +13,7 @@ import UpdateParcel from "../../api/percel/updateParcel";
 import { format } from "date-fns";
 import getAllEmployees from "../../api/employee/getAllemployees";
 import { BiDownArrow } from "react-icons/bi";
+import { motion } from "framer-motion";
 
 const PercelDetail = () => {
   const role = localStorage.getItem("parcelRole");
@@ -184,11 +185,20 @@ const PercelDetail = () => {
 
       {/* form */}
       {loading ? (
-        <div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Loading />
-        </div>
+        </motion.div>
       ) : (
-        <div className="mx-3 bg-white px-6 pt-6 pb-20 rounded-lg space-y-5">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mx-3 bg-white px-6 pt-6 pb-20 rounded-lg space-y-5"
+        >
           <div className="space-y-3">
             <label className="font-bold text-lg">Customer Name</label>
             <div
@@ -357,7 +367,7 @@ const PercelDetail = () => {
               </button>
             </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {status !== "On Deli" && status !== "Pending" && !edit && (
@@ -373,7 +383,7 @@ const PercelDetail = () => {
             </button>
           )}
           <button
-            onClick={() => setShowCancel(true)}
+            onClick={() => setShowCancel(!showCancel)}
             className="bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 "
           >
             {status}

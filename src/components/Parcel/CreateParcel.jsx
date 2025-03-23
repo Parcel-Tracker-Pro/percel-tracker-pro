@@ -4,6 +4,7 @@ import CeateAParcel from "../../api/percel/CreateParcle";
 import { format } from "date-fns";
 import { BiDownArrow } from "react-icons/bi";
 import getAllEmployees from "../../api/employee/getAllemployees";
+import { motion } from "framer-motion";
 
 const CreateParcel = () => {
   const role = localStorage.getItem("parcelRole");
@@ -95,14 +96,19 @@ const CreateParcel = () => {
   }, []);
 
   return (
-    <div className="bg-gray-300 min-h-screen">
+    <motion.div className="bg-gray-300 min-h-screen">
       {/* Header */}
       <div className="flex bg-white items-center justify-between mb-6 gap-4 px-3 py-6">
         <p className="text-2xl font-bold">Add Parcel</p>
       </div>
 
       {/* form */}
-      <div className="mx-3 bg-white px-6 pt-6 pb-[100px] rounded-lg space-y-5">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="mx-3 bg-white px-6 pt-6 pb-[100px] rounded-lg space-y-5"
+      >
         <div className="space-y-3">
           <label className="font-bold text-lg">Customer Name</label>
           <div
@@ -283,8 +289,8 @@ const CreateParcel = () => {
             Add Parcel
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

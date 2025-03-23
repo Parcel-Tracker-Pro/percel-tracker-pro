@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import SearchFilterParcel from "../../api/percel/SearclParcel";
 import { useNavigate } from "react-router-dom";
 import noSearch from "./../../assets/images/nosearch.svg";
-import { motion, AnimatePresence } from "framer-motion"; // Import from framer-motion
+import { motion } from "framer-motion"; // Import from framer-motion
 import { format } from "date-fns";
 import Loading from "../Loading";
 
@@ -89,11 +89,21 @@ function SearchParcel() {
 
       {cusname !== "" ? (
         loading ? (
-          <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex justify-center"
+          >
             <Loading />
-          </div>
+          </motion.div>
         ) : (
-          <div className="mb-6 py-5">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6 py-5"
+          >
             <h2 className="text-color text-lg font-semibold mb-10 ms-5 mt-5">
               <span className="button-color rounded-full py-2 px-4 mr-3">
                 {matchedParcels.length}
@@ -152,15 +162,20 @@ function SearchParcel() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         )
       ) : (
-        <div className="flex flex-col justify-center h-[60vh] items-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col justify-center h-[60vh] items-center"
+        >
           <img src={noSearch} alt="no search" />
           <p className="text-gray500 text-center">
             Search the parcel with <br /> customer name & phone <br /> number.
           </p>
-        </div>
+        </motion.div>
       )}
     </div>
   );

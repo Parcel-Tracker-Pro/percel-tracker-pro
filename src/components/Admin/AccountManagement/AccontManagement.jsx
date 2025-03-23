@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MdGroupAdd } from "react-icons/md";
+import { MdGroupAdd, MdOutlineLogout } from "react-icons/md";
 // page
 import CreateAccountModal from "./CreateAccountModel";
 import VertifyPassword from "./VertifyPassword";
@@ -8,8 +8,11 @@ import getAllEmployees from "./../../../api/employee/getAllemployees";
 import UpdatePassword from "./UpdatePassword";
 import { MoveLeft } from "lucide-react";
 import Loading from "../../Loading";
+import { useNavigate } from "react-router-dom";
+import LogoutModel from "../../Model/LogoutModel";
 
 function AccontManagement() {
+  const navigate = useNavigate();
   const [isModalOpen, setModalOpen] = useState(false);
   const [isVertifyOpen, setVertifyOpen] = useState(false);
   const [isUpdateOpen, setUpdateOpen] = useState(false);
@@ -18,6 +21,7 @@ function AccontManagement() {
   const [id, setId] = useState("");
   const [owner, setOwner] = useState(null);
   const ownerName = localStorage.getItem("percelUsername");
+  const [showLogout, setShowLogout] = useState(false);
   // console.log(ownerName);
 
   const getEmployees = async () => {
@@ -31,6 +35,12 @@ function AccontManagement() {
         setOwner(res.data.userData.find((e) => e.username === ownerName));
       }
     }
+  };
+
+  const handleLogout = () => {
+    setShowLogout(false);
+    localStorage.clear();
+    navigate("/");
   };
 
   // console.log(employee);
@@ -51,16 +61,24 @@ function AccontManagement() {
   return (
     <div className="mb-20">
       <div className="bg-white mb-6 flex flex-col justify-between gap-4 px-4 py-5">
-        <div className="flex items-center">
-          <MoveLeft
-            className="mr-4 text-color"
-            size={23}
-            onClick={() => navigate(-1)}
-          />
-          <div>
-            <p className="header-text">Account Management</p>
-            {/* <span className="small-text">{seller}</span> */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <MoveLeft
+              className="mr-4 text-color"
+              size={23}
+              onClick={() => navigate(-1)}
+            />
+            <div>
+              <p className="header-text">Account Management</p>
+            </div>
           </div>
+
+          <button
+            className="button button-color text-color border border-primary "
+            onClick={() => setShowLogout(!showLogout)}
+          >
+            <MdOutlineLogout size={18} className="text-color" />
+          </button>
         </div>
 
         <div className="flex w-full justify-between gap-2 items-center px-4 py-3 rounded-lg my-5">
@@ -141,6 +159,13 @@ function AccontManagement() {
         isOpen={isUpdateOpen}
         onClose={() => setUpdateOpen(false)}
         id={id}
+      />
+
+      <LogoutModel
+        isOpen={showLogout}
+        onClose={() => setShowLogout(false)}
+        submit={handleLogout}
+        text="Are you sure you want to logout?"
       />
     </div>
   );

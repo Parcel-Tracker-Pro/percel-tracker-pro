@@ -14,6 +14,7 @@ import Loading from "../Loading";
 import ConfirmModel from "../Model/ConfirmModel";
 import { MoveLeft } from "lucide-react";
 import DeliCreateModel from "../Model/DeliCreateModel";
+import { motion } from "framer-motion";
 
 function CreateDelivery() {
   const navigate = useNavigate();
@@ -183,7 +184,12 @@ function CreateDelivery() {
             </div>
             {/* ____________________________________________ */}
             {filteredParcels.length > 0 ? (
-              <div className="w-screen">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="w-screen"
+              >
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4">
                     <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
@@ -255,15 +261,20 @@ function CreateDelivery() {
                       ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-[65vh]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center justify-center w-full h-[65vh]"
+              >
                 <img src={noParcel} alt="no parcel" />
                 <h3 className="font-bold text-xl mb-2">No Parcels Yet</h3>
                 <p className="text-gray-500">
                   Let’s add your first parcel to get started.
                 </p>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>

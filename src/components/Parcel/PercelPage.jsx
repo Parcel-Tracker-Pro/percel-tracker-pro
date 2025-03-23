@@ -13,6 +13,9 @@ import noParcel from "../../assets/images/noparcel.svg";
 import Loading from "../Loading";
 import ConfirmModel from "../Model/ConfirmModel";
 import { UserCog } from "lucide-react";
+import { MdOutlineLogout } from "react-icons/md";
+import LogoutModel from "../Model/LogoutModel";
+import { motion } from "framer-motion";
 
 function PercelPage() {
   const role = localStorage.getItem("parcelRole");
@@ -25,7 +28,9 @@ function PercelPage() {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedParcels, setSelectedParcels] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [animation, setAnimation] = useState(false);
   const [startDate, setStartDate] = useState(
     sessionStorage.getItem("startDate") || startOfDay(today)
   );
@@ -40,6 +45,11 @@ function PercelPage() {
     },
   ]);
 
+  const handleLogout = () => {
+    setShowLogout(false);
+    localStorage.clear();
+    navigate("/");
+  };
   // console.log(filteredParcels);
 
   const handleDateRangeChange = (ranges) => {
@@ -109,11 +119,11 @@ function PercelPage() {
   return (
     <div className="overflow-hidden w-full">
       {/* Header */}
-      <div className="flex items-center bg-white justify-between py-5 gap-4 px-4">
+      <div className="flex items-center bg-white justify-between py-5 gap-2 px-4">
         <div className="flex gap-4 items-center">
           <button
             onClick={() => setShowDatePicker(!showDatePicker)}
-            className="button button-color text-color border border-primary "
+            className="button button-color text-color border border-primary transition-all duration-300 "
           >
             <FaCalendarAlt className="text-color" />
             {format(startDate, "MMMM d,yyyy") == format(endDate, "MMMM d,yyyy")
@@ -126,17 +136,27 @@ function PercelPage() {
           {role === "owner" && (
             <Link
               to="/admin/acc"
-              className="button button-color text-color border border-primary "
+              className="button button-color text-color border border-primary transition-all duration-300"
             >
               <UserCog size={18} className="text-color" />
             </Link>
           )}
         </div>
-        <div
-          className="flex bg-primary items-center border border-gray-500 rounded-full p-2"
-          onClick={() => navigate("search")}
-        >
-          <FaMagnifyingGlass className="text-color" />
+        <div className="flex gap-4">
+          <div
+            className="flex button-color items-center border border-gray-500 rounded-full p-4"
+            onClick={() => navigate("search")}
+          >
+            <FaMagnifyingGlass className="text-color" />
+          </div>
+          {role !== "owner" && (
+            <button
+              className="button button-color text-color border border-primary "
+              onClick={() => setShowLogout(!showLogout)}
+            >
+              <MdOutlineLogout size={18} className="text-color" />
+            </button>
+          )}
         </div>
       </div>
 
@@ -216,7 +236,12 @@ function PercelPage() {
             </div>
             {/* ____________________________________________ */}
             {filteredParcels.length > 0 ? (
-              <div className="w-full">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="w-full"
+              >
                 <div className="rounded-2xl overflow-hidden mx-3">
                   <div className="flex w-full bg-white py-2 pb-4">
                     <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
@@ -286,15 +311,20 @@ function PercelPage() {
                       ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ) : (
-              <div className="flex flex-col items-center justify-center w-full h-[65vh]">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center justify-center w-full h-[65vh]"
+              >
                 <img src={noParcel} alt="no parcel" />
                 <h3 className="font-bold text-xl mb-2">No Parcels Yet</h3>
                 <p className="text-gray-500">
                   Let’s add your first parcel to get started.
                 </p>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
@@ -305,6 +335,13 @@ function PercelPage() {
         onClose={() => setShowDelete(false)}
         submit={handleDelete}
         text="Delete Parcel Cannot be recovered !!"
+      />
+
+      <LogoutModel
+        isOpen={showLogout}
+        onClose={() => setShowLogout(false)}
+        submit={handleLogout}
+        text="Logout Cannot be recovered !!"
       />
     </div>
   );

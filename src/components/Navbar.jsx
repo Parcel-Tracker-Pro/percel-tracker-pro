@@ -1,10 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { MdHomeFilled } from "react-icons/md";
 import { TbReportMoney } from "react-icons/tb";
-import { FaRegCircleUser } from "react-icons/fa6";
-import { PackagePlus } from "lucide";
+
 import { LuPackagePlus } from "react-icons/lu";
 import { CiDeliveryTruck } from "react-icons/ci";
+import { FaTruck } from "react-icons/fa6";
 
 // import React from "react";
 const navs = [
@@ -20,7 +20,7 @@ const navs = [
   },
   {
     name: "Delivery",
-    icon: <CiDeliveryTruck size={20} />,
+    icon: <FaTruck size={20} />,
     link: "/admin/delivery",
   },
   {
@@ -54,10 +54,10 @@ function Navbar() {
             <NavLink
               to={nav.link}
               key={index}
-              end={nav.link === "/admin/"}
+              end={nav.link === "/employee/"}
               className={({ isActive }) =>
                 `flex flex-col gap-2 items-center text-sm ${
-                  isActive ? "text-secondary" : "text-gray-400"
+                  isActive ? "text-[#6B5201]" : "text-gray-400"
                 }`
               }
             >
@@ -79,8 +79,8 @@ function Navbar() {
             key={index}
             end={nav.link === "/admin/"}
             className={({ isActive }) =>
-              `flex flex-col gap-2 items-center text-sm ${
-                isActive ? "text-secondary" : "text-gray-400"
+              `flex flex-col gap-2 items-center text-sm cursor-pointer transition-all duration-300 ${
+                isActive ? "text-[#6B5201]" : "text-gray-400"
               }`
             }
           >

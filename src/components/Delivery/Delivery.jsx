@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import getAllDelivery from "../../api/delivery/getAllDelivery";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Delivery = () => {
   const navigate = useNavigate();
@@ -74,8 +75,10 @@ const Delivery = () => {
 
       <div className="flex items-center gap-4 mb-5">
         <button
-          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
-            filter === "All" ? "button-color" : ""
+          className={`transition all duration-300 active:scale-95 border  px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "All"
+              ? "button-color text-color border-[#6B5201]"
+              : "border-gray-300"
           }`}
           onClick={() => setFilter("All")}
         >
@@ -84,8 +87,10 @@ const Delivery = () => {
         </button>
 
         <button
-          className={`transition all duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
-            filter === "On Deliver" ? "button-color" : ""
+          className={`transition all duration-300 active:scale-95 border px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "On Deliver"
+              ? "button-color text-color border-[#6B5201]"
+              : "border-gray-300"
           }`}
           onClick={() => setFilter("On Deliver")}
         >
@@ -94,8 +99,10 @@ const Delivery = () => {
         </button>
 
         <div
-          className={`transition all cursor-pointer duration-300 active:scale-95 border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
-            filter === "Finished" ? "button-color" : ""
+          className={`transition all cursor-pointer duration-300 active:scale-95 border px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
+            filter === "Finished"
+              ? "button-color text-color border-[#6B5201]"
+              : "border-gray-300"
           }`}
           onClick={() => setFilter("Finished")}
         >
@@ -106,9 +113,12 @@ const Delivery = () => {
 
       {filterDeliList.length > 0 ? (
         <div className="space-y-4">
-          {filterDeliList.map((item) => (
-            <div
-              key={item._id}
+          {filterDeliList.map((item, index) => (
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+              key={item._id + filter}
               onClick={() => navigate(`/admin/deliverydetail/${item._id}`)}
               className="flex p-3 bg-white mx-2 rounded-lg items-center justify-between"
             >
@@ -147,7 +157,7 @@ const Delivery = () => {
                   </button>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       ) : null}
