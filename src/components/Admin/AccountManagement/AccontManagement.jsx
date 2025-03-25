@@ -59,7 +59,7 @@ function AccontManagement() {
   }
 
   return (
-    <div className="mb-20">
+    <div className="">
       <div className="bg-white mb-6 flex flex-col justify-between gap-4 px-4 py-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -115,36 +115,38 @@ function AccontManagement() {
             <span> Add Staff</span>
           </button>
         </div>
-        {employee.map((staff, index) => (
-          <div
-            key={index}
-            className="flex w-full justify-between gap-2 bg-white items-center px-4 py-3 rounded-lg my-2"
-          >
-            <div className="flex gap-2 items-center">
-              <img
-                src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
-                alt="avater"
-                className="w-14 h-14 rounded-full"
-              />
-              <div>
-                <p className="text-[16px">{staff.username}</p>
-                <span className="text-sm text-gray-500">{staff.role}</span>
+        <div div className="pb-20">
+          {employee.map((staff, index) => (
+            <div
+              key={index}
+              className="flex w-full justify-between gap-2 bg-white items-center px-4 py-3 rounded-lg my-2"
+            >
+              <div className="flex gap-2 items-center">
+                <img
+                  src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png"
+                  alt="avater"
+                  className="w-14 h-14 rounded-full"
+                />
+                <div>
+                  <p className="text-[16px">{staff.username}</p>
+                  <span className="text-sm text-gray-500">{staff.role}</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  className="button border border-gray-500"
+                  onClick={() => {
+                    setUpdateOpen(true);
+                    setId(staff._id);
+                    // console.log(staff._id);
+                  }}
+                >
+                  Update
+                </button>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                className="button border border-gray-500"
-                onClick={() => {
-                  setUpdateOpen(true);
-                  setId(staff._id);
-                  // console.log(staff._id);
-                }}
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
       <CreateAccountModal
         isOpen={isModalOpen}

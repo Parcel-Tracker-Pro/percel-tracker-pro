@@ -124,10 +124,10 @@ const PercelDetail = () => {
   return (
     <div>
       {/* Header */}
-      <div className="bg-white mb-6 flex items-center justify-between gap-4 px-5 py-5">
+      <div className="bg-white mb-6 flex items-center justify-between gap-2 px-5 py-3">
         <div className="flex items-center">
           <MoveLeft
-            className="mr-4 text-color cursor-pointer"
+            className="mr-2 text-color cursor-pointer"
             size={23}
             onClick={() => navigate(-1)}
           />
@@ -157,9 +157,9 @@ const PercelDetail = () => {
             </div>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <button
-            className="flex items-center bg-orange-200 font-medium rounded-full px-4 py-3"
+            className="flex items-center button-color font-medium rounded-full px-4 py-3"
             onClick={() => setEdit(!edit)}
           >
             <svg
@@ -174,7 +174,7 @@ const PercelDetail = () => {
           </button>
 
           <button
-            className="flex items-center bg-orange-200 font-medium rounded-full px-4 py-3"
+            className="flex items-center button-color font-medium rounded-full px-4 py-3"
             // onClick={handleDelete}
             onClick={() => setShowDelete(true)}
           >

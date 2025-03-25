@@ -16,7 +16,7 @@ const SaleReport = () => {
   const navigate = useNavigate();
   const [reportdata, setReportData] = useState([]);
   const [deliverydata, setDeliveryData] = useState([]);
-  const [showStaff, setShowStaff] = useState(false);
+  const [showStaff, setShowStaff] = useState(true);
   const [shwoAna, setShowAna] = useState(false);
   const [totalSale, setTotalSale] = useState(0);
   const [topSale, setTopSale] = useState("");
@@ -120,23 +120,23 @@ const SaleReport = () => {
             <div className="w-1/2 flex justify-center">
               <button
                 className={`flex flex-col justify-center items-center ${
-                  showStaff ? "text-gray-300" : "text-color"
-                }`}
-                onClick={() => setShowStaff(false)}
-              >
-                <RiCustomerService2Line size={18} />
-                Staff
-              </button>
-            </div>
-            <div className="w-1/2 flex justify-center">
-              <button
-                className={`flex flex-col justify-center items-center ${
                   !showStaff ? "text-gray-300" : "text-color"
                 }`}
                 onClick={() => setShowStaff(true)}
               >
                 <CiDeliveryTruck size={18} />
                 Delivery
+              </button>
+            </div>
+            <div className="w-1/2 flex justify-center">
+              <button
+                className={`flex flex-col justify-center items-center ${
+                  showStaff ? "text-gray-300" : "text-color"
+                }`}
+                onClick={() => setShowStaff(false)}
+              >
+                <RiCustomerService2Line size={18} />
+                Staff
               </button>
             </div>
           </div>
@@ -153,7 +153,7 @@ const SaleReport = () => {
           >
             <FaRegCalendarAlt className="" />
             <p className="font-medium">
-              {selectedMonthData.month} {selectedMonthData.year}
+              {selectedMonthData.month} / {selectedMonthData.year}
             </p>
           </button>
 
@@ -188,7 +188,7 @@ const SaleReport = () => {
                       Customer
                     </div>
 
-                    <div className="w-3/12 py-3 text-color text-center text-[13px] uppercase font-bold">
+                    <div className="w-5/12 py-3 text-color text-center text-[13px] uppercase font-bold">
                       <span className="me-3">Price</span>
                     </div>
                   </div>
@@ -208,9 +208,8 @@ const SaleReport = () => {
                               {parcel.sellerName}
                             </div>
 
-                            <div className="w-3/12 py-4 text-center text-sm text-gray-900">
+                            <div className="w-5/12 py-4 text-center text-sm text-gray-900">
                               <span className="me-3">
-                                {" "}
                                 {parcel.sellerTotalSaleAmount} Ks
                               </span>
                             </div>
