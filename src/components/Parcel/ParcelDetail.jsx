@@ -63,9 +63,8 @@ const PercelDetail = () => {
       ids: [id],
     };
     const res = await deleteParcel(data);
-    // console.log(res);
     if (res.code === 200) {
-      navigate("/admin");
+      navigate(-1);
     }
   };
 
@@ -272,30 +271,63 @@ const PercelDetail = () => {
                 </div>
               )}
             </div>
-            <div className="space-y-3 w-1/2">
-              <label className="font-bold text-lg">Payment</label>
+            <div className="space-y-3 w-1/2 relative">
+              <label className="font-bold text-lg">Payment Status</label>
               <div
-                className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
+                onClick={() => setDropDownTwo(!dropDowntwo)}
+                className={`flex items-center justify-between w-full px-2 py-3 overflow-hidden border-2 rounded-lg ${
                   !paymentMethod && showErr
                     ? "border-red-500"
-                    : `${edit ? "border-gray-300" : "border-gray-100"}`
+                    : "border-gray-300"
                 }`}
               >
-                <select
-                  className="w-full focus:outline-none bg-white"
-                  value={paymentMethod}
-                  disabled={!edit}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                >
-                  <option value="" disabled>
-                    Select Payment Status
-                  </option>
-                  <option value="paid">Paid</option>
-                  <option value="unpaid">Unpaid</option>
-                  <option value="pending">Pending</option>
-                  <option value="due">COD</option>
-                </select>
+                <p className="truncate w-24 text-gray-500">
+                  {paymentMethod || "Select payment"}
+                </p>
+                <BiDownArrow size={25} />
               </div>
+              {dropDowntwo && (
+                <div className="absolute w-full top-[80px] right-0 bg-white border border-gray-300 rounded-t rounded-xl shadow-sm">
+                  <div className="text-center">
+                    <p
+                      className="truncate p-2 border-b border-gray-200"
+                      onClick={() => {
+                        setPaymentMethod("Delivery Only");
+                        setDropDownTwo(!dropDowntwo);
+                      }}
+                    >
+                      Delivery Only
+                    </p>
+                    <p
+                      className="truncate p-2 border-b border-gray-200"
+                      onClick={() => {
+                        setPaymentMethod("Fully Paid");
+                        setDropDownTwo(!dropDowntwo);
+                      }}
+                    >
+                      Fully Paid
+                    </p>
+                    <p
+                      className="truncate p-2 border-b border-gray-200"
+                      onClick={() => {
+                        setPaymentMethod("COD");
+                        setDropDownTwo(!dropDowntwo);
+                      }}
+                    >
+                      COD
+                    </p>
+                    <p
+                      className="truncate p-2"
+                      onClick={() => {
+                        setPaymentMethod("Gate Drop Off");
+                        setDropDownTwo(!dropDowntwo);
+                      }}
+                    >
+                      Gate Drop Off
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="flex gap-4">
@@ -343,7 +375,10 @@ const PercelDetail = () => {
             <div className=" flex gap-4 bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed left-0 bottom-0 w-full">
               <button
                 className="flex items-center gap-2 px-6"
-                onClick={() => setEdit(false)}
+                onClick={() => {
+                  setEdit(false);
+                  navigate(-1);
+                }}
               >
                 <ClipboardCheck size={20} />
                 Discard

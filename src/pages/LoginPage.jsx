@@ -25,9 +25,9 @@ const LoginPage = () => {
     if (res.code === 200) {
       setIsLoading(false);
       if (res.data.user.role === "owner") {
-        navigate("/admin");
+        navigate("/admin/");
       } else {
-        navigate("/employee");
+        navigate("/employee/");
       }
     } else {
       setIsLoading(false);

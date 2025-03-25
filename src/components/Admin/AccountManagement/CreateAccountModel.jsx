@@ -14,7 +14,7 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
   const createAccount = async (e) => {
     e.preventDefault();
     const data = {
-      username: `Mi Mi - ${username}`,
+      username: `MeMe${username}`,
       password: password,
       confirmPassword: confirmPassword,
     };
@@ -50,7 +50,7 @@ const CreateAccountModal = ({ isOpen, onClose }) => {
               </span>
               <div className="flex items-center w-full p-3 px-4 border-2 border-gray-300 rounded">
                 <div className="w-16">
-                  <p>Mi Mi</p>
+                  <p>MeMe</p>
                 </div>
                 <input
                   type="text"

@@ -54,11 +54,7 @@ const SaleReport = () => {
     if (res.code === 200) {
       setDeliveryData(res.data);
     }
-
-    // setReportData(res.data.userData);
   };
-
-  //   console.log("topslae", topSale);
 
   useEffect(() => {
     getSellerData();
@@ -185,11 +181,11 @@ const SaleReport = () => {
                     </div>
 
                     <div className="w-5/12 py-3 text-color text-left text-[13px] font-bold text-gray-500 uppercase">
-                      Customer
+                      Staff
                     </div>
 
                     <div className="w-5/12 py-3 text-color text-center text-[13px] uppercase font-bold">
-                      <span className="me-3">Price</span>
+                      <span className="me-3">Total Sale</span>
                     </div>
                   </div>
 
