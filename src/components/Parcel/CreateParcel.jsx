@@ -5,12 +5,14 @@ import { format } from "date-fns";
 import { BiDownArrow } from "react-icons/bi";
 import getAllEmployees from "../../api/employee/getAllemployees";
 import { motion } from "framer-motion";
+import { FaCalendarAlt } from "react-icons/fa";
+import { Calendar, DateRange } from "react-date-range";
 
 const CreateParcel = () => {
   const role = localStorage.getItem("parcelRole");
   const today = new Date();
   const username = localStorage.getItem("percelUsername");
-  // console.log(username);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [items, setItems] = useState("");
@@ -22,6 +24,9 @@ const CreateParcel = () => {
   const [seller, setSeller] = useState(username);
   const [dropDowntwo, setDropDownTwo] = useState(false);
   const [employee, setEmployee] = useState([]);
+  const [date, setDate] = useState(today);
+
+  console.log(date);
 
   const handlePaste = async () => {
     try {
@@ -63,7 +68,7 @@ const CreateParcel = () => {
       price: price * 1,
       deliveryFee: DeliFee * 1,
       seller: username,
-      parcelCreatedAt: format(today, "yyyy-MM-dd"),
+      parcelCreatedAt: format(date, "yyyy-MM-dd"),
     };
     // console.log(data);
     const res = await CeateAParcel(data);
@@ -100,7 +105,33 @@ const CreateParcel = () => {
       {/* Header */}
       <div className="flex bg-white items-center justify-between mb-6 gap-4 px-3 py-6">
         <p className="text-2xl font-bold">Add Parcel</p>
+
+        <div className="flex gap-4 items-center">
+          <button
+            onClick={() => {
+              setShowDatePicker(!showDatePicker);
+              console.log(showDatePicker);
+            }}
+            className="button button-color text-color border border-primary transition-all duration-300 "
+          >
+            <FaCalendarAlt className="text-color" />
+            {format(date, "MMMM d,yyyy")}
+          </button>
+        </div>
       </div>
+
+      {/* Date Range Picker */}
+      {showDatePicker && (
+        <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
+          <Calendar
+            date={new Date()}
+            onChange={(date) => {
+              setDate(date);
+              setShowDatePicker(false);
+            }}
+          />
+        </div>
+      )}
 
       {/* form */}
       <motion.div
