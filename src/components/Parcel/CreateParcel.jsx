@@ -63,7 +63,7 @@ const CreateParcel = () => {
       price: price * 1,
       deliveryFee: DeliFee * 1,
       seller: username,
-      createdAt: format(today, "yyyy-MM-dd"),
+      parcelCreatedAt: format(today, "yyyy-MM-dd"),
     };
     // console.log(data);
     const res = await CeateAParcel(data);
