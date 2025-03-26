@@ -85,9 +85,7 @@ const CreateParcel = () => {
 
   const getEmployees = async () => {
     const res = await getAllEmployees();
-    // console.log(res);
     if (res.code === 200) {
-      // console.log(res.data);
       setEmployee(res.data.userData.map((e) => e.username));
     }
   };
@@ -124,7 +122,7 @@ const CreateParcel = () => {
       {showDatePicker && (
         <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
           <Calendar
-            date={new Date()}
+            date={today}
             onChange={(date) => {
               setDate(date);
               setShowDatePicker(false);
