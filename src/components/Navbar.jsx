@@ -74,7 +74,7 @@ function Navbar() {
 
   return (
     <div>
-      <div className="flex w-full md:w-2/4 mx-auto border border-gray-200 shadow-lg md:rounded-lg justify-between items-center px-5 py-3">
+      <div className="flex w-full lg:w-2/4 mx-auto border border-gray-200 shadow-lg md:rounded-lg justify-between items-center px-5 py-3">
         {navs.map((nav, index) => (
           <NavLink
             to={nav.link}

@@ -77,7 +77,7 @@ const SaleReport = () => {
     const start = format(startDate, "yyyy-MM-dd");
     const end = format(endDate, "yyyy-MM-dd");
     const res = await getdeliveryreport({ start, end });
-    // console.log("res", res.data);
+    console.log("res", res);
     if (res.code === 200) {
       setDeliveryData(res.data);
     }
@@ -183,7 +183,7 @@ const SaleReport = () => {
                 )}`}
           </button>
 
-          <div className="mx-auto absolute top-[-100px]">
+          <div className="mx-auto absolute top-[-100px] z-50">
             {showDatePicker && (
               <div className="mb-4 bg-white rounded-lg shadow-md">
                 <div className="p-4 border-b border-gray-200">

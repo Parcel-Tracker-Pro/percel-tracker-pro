@@ -39,9 +39,7 @@ function CheckDelivery() {
     if (search) {
       // setFilteredParcels(parcels);
       const filtered = parcels.filter((parcel) =>
-        Object.values(parcel).some((value) =>
-          value.toString().toLowerCase().includes(search.toLowerCase())
-        )
+        parcel.customerName.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredParcels(filtered);
     } else {
@@ -88,7 +86,7 @@ function CheckDelivery() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               type="text"
-              placeholder="Search"
+              placeholder="Search by Customer Name"
               className="w-full py-3 outline-none rounded-xl px-5"
             />
             <button className="text-[#6B5201] py-3 px-5 rounded-xl focus:outline-none">
@@ -224,7 +222,7 @@ function CheckDelivery() {
                             </div>
 
                             {status === "On Deli" && (
-                              <div className="w-4/12 sm:w-2/12 py-4 flex justify-center">
+                              <div className="w-4/12 sm:w-3/12 py-4 flex justify-center">
                                 <div className="flex gap-3">
                                   <button
                                     className="p-3 text-[#1C431E] bg-[#C5E2C6] rounded-lg focus:outline-none active:scale-105"

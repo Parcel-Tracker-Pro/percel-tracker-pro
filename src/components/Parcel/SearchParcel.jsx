@@ -173,7 +173,7 @@ function SearchParcel() {
         >
           <img src={noSearch} alt="no search" />
           <p className="text-gray500 text-center">
-            Search the parcel with <br /> customer name & phone <br /> number.
+            Search the parcel with <br /> customer name.
           </p>
         </motion.div>
       )}

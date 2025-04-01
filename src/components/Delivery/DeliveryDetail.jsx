@@ -179,20 +179,6 @@ const DeliveryDetail = () => {
               <motion.div className="w-full">
                 <div className="rounded-2xl overflow-hidden">
                   <div className="flex w-full bg-white py-2 px-4 pb-4">
-                    {status === "On Deliver" && (
-                      <div className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500 uppercase tracking-wider">
-                        <input
-                          checked={
-                            selectedParcels.length === filteredParcels.length &&
-                            selectedParcels.length > 0
-                          }
-                          type="checkbox"
-                          className="h-4 w-4"
-                          onChange={selectAll}
-                        />
-                      </div>
-                    )}
-
                     <div className="w-2/12 py-3 text-color text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                       <span className="ms-2">No</span>
                     </div>
@@ -224,27 +210,6 @@ const DeliveryDetail = () => {
                               navigate(`/admin/detail/${parcel._id}`)
                             }
                           >
-                            {status === "On Deliver" && (
-                              <div
-                                className="w-2/12 py-3 text-center text-[13px] font-medium text-gray-500"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <input
-                                  type="checkbox"
-                                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                                  checked={selectedParcels.includes(parcel)}
-                                  onChange={(e) =>
-                                    setSelectedParcels(
-                                      e.target.checked
-                                        ? [...selectedParcels, parcel]
-                                        : selectedParcels.filter(
-                                            (p) => p._id !== parcel._id
-                                          )
-                                    )
-                                  }
-                                />
-                              </div>
-                            )}
                             <div className="w-2/12 text-left py-4 whitespace-nowrap text-sm text-gray-900">
                               <span className="ms-2"> {index + 1}</span>
                             </div>
@@ -278,7 +243,7 @@ const DeliveryDetail = () => {
             )}
           </div>
 
-          {status === "On Deliver" && (
+          {/* {status === "On Deliver" && (
             <div className="bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
               <button
                 onClick={() => setShowModel(true)}
@@ -292,7 +257,7 @@ const DeliveryDetail = () => {
                 Confirm Delivery
               </button>
             </div>
-          )}
+          )} */}
 
           {status === "Finished" && edit && (
             <div className=" flex gap-4 bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
