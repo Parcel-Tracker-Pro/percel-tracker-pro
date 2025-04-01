@@ -37,7 +37,7 @@ const ConfirmModel = ({ isOpen, onClose, submit, text }) => {
               onClick={submit}
               className="flex items-center justify-center gap-2 border border-red-500 font-bold rounded-md w-full py-4 text-white bg-red-500 hover:bg-red-600 active:scale-95"
             >
-              Delete Parcel
+              Delete
               <Trash size={20} />
             </button>
           </div>

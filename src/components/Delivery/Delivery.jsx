@@ -10,12 +10,15 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import DeleteDelivery from "../../api/delivery/DeleteDelivery";
+import ConfirmModel from "../Model/ConfirmModel";
 
 const Delivery = () => {
   const navigate = useNavigate();
   const [delilist, setDeliList] = useState([]);
   const [filterDeliList, setFilterDelilist] = useState([]);
   const [filter, setFilter] = useState("All");
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   const formatTime = (dateString) => {
     const date = new Date(dateString);
@@ -50,10 +53,11 @@ const Delivery = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    const res = await DeleteDelivery(id);
+  const handleDelete = async () => {
+    const res = await DeleteDelivery(deleteId);
     console.log(res);
     if (res.code === 200) {
+      setShowDelete(false);
       getDeliveryList();
     }
   };
@@ -158,7 +162,8 @@ const Delivery = () => {
                   className="flex flex-col rounded-lg items-center gap-1 bg-red-200 w-20 py-4 text-red-900"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDelete(item._id);
+                    setShowDelete(true);
+                    setDeleteId(item._id);
                   }}
                 >
                   <Trash2Icon size={15} />
@@ -168,6 +173,13 @@ const Delivery = () => {
           ))}
         </div>
       ) : null}
+
+      <ConfirmModel
+        isOpen={showDelete}
+        onClose={() => setShowDelete(false)}
+        submit={handleDelete}
+        text="Delete Batch Cannot be recovered !!"
+      />
     </div>
   );
 };
