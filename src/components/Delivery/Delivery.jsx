@@ -146,7 +146,7 @@ const Delivery = () => {
                     <p className="text-[10px]">{item.deliveryType}</p>
                   </div>
 
-                  <div className="border border-black w-[60px] justify-center py-1 flex items-center gap-1 rounded-full">
+                  <div className="border border-black px-4 justify-center py-1 flex items-center gap-1 rounded-full">
                     {/* <LuPackagePlus size={10} /> */}
                     <p className="text-[10px]">{item.parcelCount} parcels</p>
                   </div>
