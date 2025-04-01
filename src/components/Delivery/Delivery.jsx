@@ -1,6 +1,6 @@
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaCalendarAlt } from "react-icons/fa";
-import { ReceiptText } from "lucide-react";
+import { ReceiptText, Trash2Icon } from "lucide-react";
 import { Truck } from "lucide-react";
 import { FileCheck } from "lucide-react";
 import { LuPackagePlus } from "react-icons/lu";
@@ -9,6 +9,7 @@ import getAllDelivery from "../../api/delivery/getAllDelivery";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import DeleteDelivery from "../../api/delivery/DeleteDelivery";
 
 const Delivery = () => {
   const navigate = useNavigate();
@@ -49,6 +50,14 @@ const Delivery = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    const res = await DeleteDelivery(id);
+    console.log(res);
+    if (res.code === 200) {
+      getDeliveryList();
+    }
+  };
+
   useEffect(() => {
     getDeliveryList();
   }, []);
@@ -73,7 +82,7 @@ const Delivery = () => {
         </button>
       </div>
 
-      <div className="flex items-center gap-4 mb-5">
+      {/* <div className="flex items-center gap-4 mb-5">
         <button
           className={`transition all duration-300 active:scale-95 border  px-4 justify-center py-1 flex items-center gap-1 rounded-full ${
             filter === "All"
@@ -109,7 +118,7 @@ const Delivery = () => {
           <ReceiptText size={16} />
           <p className="text-[14px]">Finished</p>
         </div>
-      </div>
+      </div> */}
 
       {filterDeliList.length > 0 ? (
         <div className="space-y-4">
@@ -145,17 +154,15 @@ const Delivery = () => {
               </div>
 
               <div>
-                {item.status === "Finished" ? (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-green-200 w-20 py-4 text-green-900">
-                    <FileCheck size={15} />
-                    <p className="text-[10px] font-bold">Finsihed </p>
-                  </button>
-                ) : (
-                  <button className=" flex flex-col rounded-lg items-center gap-1 bg-blue-200 w-20 py-4 text-blue-900">
-                    <Truck size={15} />
-                    <p className="text-[10px] font-bold">Delivering</p>
-                  </button>
-                )}
+                <button
+                  className="flex flex-col rounded-lg items-center gap-1 bg-red-200 w-20 py-4 text-red-900"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(item._id);
+                  }}
+                >
+                  <Trash2Icon size={15} />
+                </button>
               </div>
             </motion.div>
           ))}

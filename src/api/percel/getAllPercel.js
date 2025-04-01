@@ -1,10 +1,12 @@
 import axios from "../axios";
 import { toast } from "sonner";
 
-const getAllPercel = async ({ start, end }) => {
+const getAllPercel = async ({ start, end, status }) => {
   try {
     const response = await axios.get(
-      `api/v1/parcels/range?startDate=${start}&endDate=${end}`
+      `api/v1/parcels/range?${start ? `startDate=${start}&` : ""}${
+        end ? `endDate=${end}&` : ""
+      }${status ? `deliveryStatus=${status}` : ""}`
     );
     // console.log(response.data);
     return response.data;

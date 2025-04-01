@@ -6,13 +6,14 @@ import getsellersale from "../../api/sale/getsellersale";
 import { CircleUserRound } from "lucide-react";
 import { DollarSign } from "lucide-react";
 import { useEffect, useState } from "react";
-import { MonthInput, MonthPicker } from "react-lite-month-picker";
+import { format, startOfDay, endOfDay } from "date-fns";
 import getdeliveryreport from "../../api/sale/getdellreport";
-import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { DateRange } from "react-date-range";
 
 const SaleReport = () => {
+  const today = new Date();
   const navigate = useNavigate();
   const [reportdata, setReportData] = useState([]);
   const [deliverydata, setDeliveryData] = useState([]);
@@ -21,17 +22,44 @@ const SaleReport = () => {
   const [totalSale, setTotalSale] = useState(0);
   const [topSale, setTopSale] = useState("");
   const [totalCus, setTotalCus] = useState(0);
-  const [selectedMonthData, setSelectedMonthData] = useState({
-    month: new Date().getMonth() + 1,
-    year: new Date().getFullYear(),
-  });
-  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [startDate, setStartDate] = useState(
+    sessionStorage.getItem("startDate") || startOfDay(today)
+  );
+  const [endDate, setEndDate] = useState(
+    sessionStorage.getItem("endDate") || endOfDay(today)
+  );
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: startOfDay(today),
+      endDate: endOfDay(today),
+      key: "selection",
+    },
+  ]);
+
+  const handleDateRangeChange = (ranges) => {
+    setDateRange([
+      {
+        ...ranges.selection,
+        startDate: startOfDay(ranges.selection.startDate),
+        endDate: endOfDay(ranges.selection.endDate),
+      },
+    ]);
+  };
+
+  const ApplyDate = () => {
+    setStartDate(startOfDay(dateRange[0].startDate));
+    setEndDate(endOfDay(dateRange[0].endDate));
+    setShowDatePicker(false);
+    sessionStorage.setItem("startDate", dateRange[0].startDate);
+    sessionStorage.setItem("endDate", dateRange[0].endDate);
+  };
 
   const getSellerData = async () => {
-    const res = await getsellersale(
-      selectedMonthData.month,
-      selectedMonthData.year
-    );
+    const start = format(startDate, "yyyy-MM-dd");
+    const end = format(endDate, "yyyy-MM-dd");
+    console.log(start, end);
+    const res = await getsellersale({ start, end });
     // console.log("res", res.data.topSeller.sellerName);
     if (res.code === 200) {
       setTopSale(res.data.topSeller.sellerName);
@@ -46,10 +74,9 @@ const SaleReport = () => {
   // console.log("report", reportdata);
 
   const getDeliveryData = async () => {
-    const res = await getdeliveryreport(
-      selectedMonthData.month,
-      selectedMonthData.year
-    );
+    const start = format(startDate, "yyyy-MM-dd");
+    const end = format(endDate, "yyyy-MM-dd");
+    const res = await getdeliveryreport({ start, end });
     // console.log("res", res.data);
     if (res.code === 200) {
       setDeliveryData(res.data);
@@ -59,7 +86,7 @@ const SaleReport = () => {
   useEffect(() => {
     getSellerData();
     getDeliveryData();
-  }, [selectedMonthData]);
+  }, [startDate, endDate]);
 
   return (
     <div className="">
@@ -144,24 +171,59 @@ const SaleReport = () => {
           <p className="header-text">Staff Report</p>
 
           <button
-            onClick={() => setIsPickerOpen(!isPickerOpen)}
+            onClick={() => setShowDatePicker(!showDatePicker)}
             className="button button-color"
           >
             <FaRegCalendarAlt className="" />
-            <p className="font-medium">
-              {selectedMonthData.month} / {selectedMonthData.year}
-            </p>
+            {format(startDate, "MMMM d,yyyy") == format(endDate, "MMMM d,yyyy")
+              ? format(startDate, "dd-MM-yyyy")
+              : `${format(startDate, "dd-MM-yyyy")} - ${format(
+                  endDate,
+                  "dd-MM-yyyy"
+                )}`}
           </button>
 
-          <div className="mx-auto absolute top-[50px] left-1/4">
-            {isPickerOpen ? (
-              <MonthPicker
-                size="small"
-                setIsOpen={setIsPickerOpen}
-                selected={selectedMonthData}
-                onChange={setSelectedMonthData}
-              />
-            ) : null}
+          <div className="mx-auto absolute top-[-100px]">
+            {showDatePicker && (
+              <div className="mb-4 bg-white rounded-lg shadow-md">
+                <div className="p-4 border-b border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <h3 className="header-text">Select Date Range</h3>
+                  </div>
+                </div>
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={handleDateRangeChange}
+                  moveRangeOnFirstSelection={false}
+                  ranges={dateRange}
+                  className="p-4"
+                />
+                <div className="flex items-center justify-end gap-2 p-4">
+                  <button
+                    className="flex items-center w-24 justify-center py-3 button-color text-color  rounded-xl"
+                    onClick={() => {
+                      setShowDatePicker(false);
+                      setDateRange([
+                        {
+                          ...dateRange[0],
+                          startDate: startOfDay(startDate),
+                          endDate: endOfDay(endDate),
+                        },
+                      ]);
+                    }}
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    className="flex items-center w-24 justify-center py-3 bg-primary  rounded-xl text-color"
+                    onClick={() => ApplyDate()}
+                  >
+                    <p>OK</p>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -295,10 +357,7 @@ const SaleReport = () => {
               </motion.div>
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-[65vh]">
-                <h3 className="font-bold text-xl mb-2">
-                  No Data for {selectedMonthData.monthName}{" "}
-                  {selectedMonthData.year}
-                </h3>
+                <h3 className="font-bold text-xl mb-2">No Data</h3>
                 <p className="text-gray-500">
                   Please select a month and year to view data
                 </p>

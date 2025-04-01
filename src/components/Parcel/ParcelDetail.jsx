@@ -42,7 +42,7 @@ const PercelDetail = () => {
   const getPercel = async () => {
     const role = localStorage.getItem("parcelRole");
     const res = await getAPercel({ id });
-    // console.log(res.data);
+    console.log(res.data);
     if (res.code === 200) {
       setLoading(false);
       setCustomerName(res.data.customerName);
@@ -90,7 +90,7 @@ const PercelDetail = () => {
       price: price,
       deliveryFee: DeliFee,
       paymentStatus: paymentMethod,
-      parcelUpdatedAt: format(new Date(), "yyyy-MM-dd"),
+      // parcelUpdatedAt: format(new Date(), "yyyy-MM-dd"),
     };
     const res = await UpdateParcel(data, id);
     // console.log(res);
@@ -412,14 +412,22 @@ const PercelDetail = () => {
               onClick={() =>
                 updateParcelStatus(status === "Success" ? "Cancel" : "Success")
               }
-              className="bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 "
+              className={`px-4 py-3 rounded w-full active:scale-95 ${
+                status === "Success"
+                  ? " text-[#601816] bg-[#F7C2C0]"
+                  : "text-[#1C431E] bg-[#C5E2C6]"
+              }`}
             >
               {status === "Success" ? "Cancel" : "Success"}
             </button>
           )}
           <button
             onClick={() => setShowCancel(!showCancel)}
-            className="bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 "
+            className={`px-4 py-3 rounded w-full active:scale-95 ${
+              status === "Success"
+                ? "text-[#1C431E] bg-[#C5E2C6]"
+                : "text-[#601816] bg-[#F7C2C0]"
+            }`}
           >
             {status}
           </button>

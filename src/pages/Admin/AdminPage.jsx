@@ -9,6 +9,7 @@ import PercelDetail from "../../components/Parcel/ParcelDetail";
 import SearchParcel from "../../components/Parcel/SearchParcel";
 import DeliveryDetail from "../../components/Delivery/DeliveryDetail";
 import SaleReport from "../../components/SaleReport/SaleReport";
+import CheckDelivery from "../../components/CheckDelivery/CheckDelivery";
 
 function AdminPage() {
   const location = useLocation();
@@ -27,6 +28,7 @@ function AdminPage() {
           <Route path="/detail/:id" element={<PercelDetail />} />
           <Route path="/createdelivery" element={<CreateDelivery />} />
           <Route path="/deliverydetail/:id" element={<DeliveryDetail />} />
+          <Route path="/check" element={<CheckDelivery />} />
         </Routes>
       </div>
       {!location.pathname.includes("create") &&

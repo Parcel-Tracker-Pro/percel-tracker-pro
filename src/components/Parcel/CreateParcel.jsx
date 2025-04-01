@@ -6,7 +6,7 @@ import { BiDownArrow } from "react-icons/bi";
 import getAllEmployees from "../../api/employee/getAllemployees";
 import { motion } from "framer-motion";
 import { FaCalendarAlt } from "react-icons/fa";
-import { Calendar, DateRange } from "react-date-range";
+import { Calendar } from "react-date-range";
 
 const CreateParcel = () => {
   const role = localStorage.getItem("parcelRole");
@@ -26,7 +26,7 @@ const CreateParcel = () => {
   const [employee, setEmployee] = useState([]);
   const [date, setDate] = useState(today);
 
-  console.log(date);
+  // console.log(date);
 
   const handlePaste = async () => {
     try {

@@ -20,8 +20,7 @@ import { motion } from "framer-motion";
 function PercelPage() {
   const role = localStorage.getItem("parcelRole");
   const name = localStorage.getItem("percelUsername");
-  // console.log("name", name);
-  // console.log("work");
+
   const navigate = useNavigate();
   const today = new Date();
   const [filteredParcels, setFilteredParcels] = useState([]);
@@ -30,7 +29,7 @@ function PercelPage() {
   const [loading, setLoading] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [animation, setAnimation] = useState(false);
+  // const [animation, setAnimation] = useState(false);
   const [startDate, setStartDate] = useState(
     sessionStorage.getItem("startDate") || startOfDay(today)
   );
@@ -96,7 +95,7 @@ function PercelPage() {
     const end = format(endDate, "yyyy-MM-dd");
     // console.log(startDate, endDate);
 
-    const response = await getAllPercel({ start, end });
+    const response = await getAllPercel({ start, end, status: "Pending" });
     // console.log(response);
     if (response.code === 200) {
       if (role === "owner") {

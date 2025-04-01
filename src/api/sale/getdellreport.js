@@ -1,11 +1,11 @@
 import axios from "../axios";
 import { toast } from "sonner";
 
-const getdeliveryreport = async (month, year) => {
-  // console.log(month, year);
+const getdeliveryreport = async ({ start, end }) => {
+  console.log(start, end);
   try {
     const response = await axios.get(
-      `api/v1/delivery-report?month=${month}&year=${year}`
+      `api/v1/delivery-report?startDate=${start}&endDate=${end}`
     );
     // console.log(response.data);
     return response.data;

@@ -1,12 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { MdHomeFilled } from "react-icons/md";
 import { TbReportMoney } from "react-icons/tb";
-
+import { IoIosListBox } from "react-icons/io";
 import { LuPackagePlus } from "react-icons/lu";
-import { CiDeliveryTruck } from "react-icons/ci";
 import { FaTruck } from "react-icons/fa6";
-
-// import React from "react";
 const navs = [
   {
     name: "Home",
@@ -22,6 +19,11 @@ const navs = [
     name: "Delivery",
     icon: <FaTruck size={20} />,
     link: "/admin/delivery",
+  },
+  {
+    name: "Delivery List",
+    icon: <IoIosListBox size={20} />,
+    link: "/admin/check",
   },
   {
     name: "Sale Report",
@@ -85,7 +87,7 @@ function Navbar() {
             }
           >
             {nav.icon}
-            <p>{nav.name}</p>
+            <p className="text-xs sm:text-sm">{nav.name}</p>
           </NavLink>
         ))}
       </div>

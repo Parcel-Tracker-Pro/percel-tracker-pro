@@ -83,7 +83,7 @@ function CreateDelivery() {
     const end = format(endDate, "yyyy-MM-dd");
     // console.log(startDate, endDate);
 
-    const response = await getAllPercel({ start, end });
+    const response = await getAllPercel({ start, end, status: "Pending" });
     if (response.code === 200) {
       setFilteredParcels(response.data);
       setLoading(false);
@@ -283,7 +283,10 @@ function CreateDelivery() {
       <div className="bg-white border border-gray-200 shadow-md p-5 rounded-xl fixed bottom-0 w-full">
         <button
           onClick={() => setShowSummary(true)}
-          className="bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 "
+          className={`bg-[#0E3F66] text-white px-4 py-3 rounded w-full active:scale-95 ${
+            selectedParcels.length === 0 && "opacity-50 cursor-not-allowed"
+          }`}
+          disabled={selectedParcels.length === 0}
         >
           Add to Delivery
         </button>
