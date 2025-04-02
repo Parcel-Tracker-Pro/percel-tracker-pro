@@ -91,7 +91,7 @@ const LoginPage = () => {
           className={`${
             username === "" || password === ""
               ? "button-color cursor-not-allowed "
-              : "bg-primary hover:scale-105 active:scale-95"
+              : "bg-primary hover:scale-95 active:scale-95"
           } font-bold w-full py-4 px-6 rounded transition duration-300`}
           onClick={() => submitLogin()}
         >

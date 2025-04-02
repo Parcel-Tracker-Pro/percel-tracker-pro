@@ -53,8 +53,9 @@ function CheckDelivery() {
       parcelUpdatedAt: format(new Date(), "yyyy-MM-dd"),
     };
     const res = await UpdateStatus(data, id);
+    console.log(res);
     if (res.code === 200) {
-      setShowCancel(false);
+      // setShowCancel(false);
       getPercels();
       // console.log("work");
     }
