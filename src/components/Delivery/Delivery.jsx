@@ -137,7 +137,7 @@ const Delivery = () => {
             >
               <div>
                 <p className="mb-3">{item.batchName}</p>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <div className="border border-black w-[70px] justify-center py-1 flex items-center gap-1 rounded-full">
                     {/* <FaCalendarAlt size={10} /> */}
                     <p className="text-[10px]">
