@@ -58,11 +58,11 @@ const SaleReport = () => {
   const getSellerData = async () => {
     const start = format(startDate, "yyyy-MM-dd");
     const end = format(endDate, "yyyy-MM-dd");
-    console.log(start, end);
+    // console.log(start, end);
     const res = await getsellersale({ start, end });
-    // console.log("res", res.data.topSeller.sellerName);
+    console.log("res", res);
     if (res.code === 200) {
-      setTopSale(res.data.topSeller.sellerName);
+      setTopSale(res.data.topSeller?  .sellerName);
       setTotalSale(res.data.totalSalesValue);
       setTotalCus(res.data.totalParcelCount);
       setReportData(res.data.sellerSalesData);
@@ -112,7 +112,7 @@ const SaleReport = () => {
                   <span>Top Sale</span>
                 </div>
 
-                <p className="text-xl font-bold">{topSale}</p>
+                <p className="text-xl font-bold">{topSale || "No Seller"}</p>
               </div>
             </div>
 
@@ -123,7 +123,7 @@ const SaleReport = () => {
                   <span>Total Cus</span>
                 </div>
 
-                <p className="text-xl font-bold">{totalCus}</p>
+                <p className="text-xl font-bold">{totalCus || "No Customer"}</p>
               </div>
             </div>
 
@@ -134,7 +134,7 @@ const SaleReport = () => {
                   <span>Total Sale</span>
                 </div>
 
-                <p className="text-xl font-bold">{totalSale}</p>
+                <p className="text-xl font-bold">{totalSale || "No Sale"}</p>
               </div>
             </div>
           </div>
@@ -279,13 +279,8 @@ const SaleReport = () => {
               </motion.div>
             ) : (
               <div className="flex flex-col items-center justify-center w-full h-[65vh]">
-                <h3 className="font-bold text-xl mb-2">
-                  No Data for {selectedMonthData.monthName}{" "}
-                  {selectedMonthData.year}
-                </h3>
-                <p className="text-gray-500">
-                  Please select a month and year to view data
-                </p>
+                <h3 className="font-bold text-xl mb-2">No Data</h3>
+                <p className="text-gray-500">Please select a date range</p>
               </div>
             )}
           </div>
