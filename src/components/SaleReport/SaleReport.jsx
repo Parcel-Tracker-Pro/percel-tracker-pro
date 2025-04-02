@@ -60,9 +60,9 @@ const SaleReport = () => {
     const end = format(endDate, "yyyy-MM-dd");
     // console.log(start, end);
     const res = await getsellersale({ start, end });
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
-      setTopSale(res.data.topSeller?  .sellerName);
+      setTopSale(res.data.topSeller?.sellerName);
       setTotalSale(res.data.totalSalesValue);
       setTotalCus(res.data.totalParcelCount);
       setReportData(res.data.sellerSalesData);
@@ -77,7 +77,7 @@ const SaleReport = () => {
     const start = format(startDate, "yyyy-MM-dd");
     const end = format(endDate, "yyyy-MM-dd");
     const res = await getdeliveryreport({ start, end });
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
       setDeliveryData(res.data);
     }
