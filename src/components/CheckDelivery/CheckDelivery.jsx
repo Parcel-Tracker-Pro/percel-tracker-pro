@@ -8,9 +8,14 @@ import { motion } from "framer-motion";
 import noParcel from "../../assets/images/noparcel.svg";
 import { format } from "date-fns";
 import UpdateStatus from "../../api/percel/updateStatus";
+import { Calendar } from "react-date-range";
+import { FaCalendarAlt } from "react-icons/fa";
 
 function CheckDelivery() {
+  const today = new Date();
   const role = localStorage.getItem("parcelRole");
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [date, setDate] = useState(today);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [parcels, setParcels] = useState([]);
@@ -50,14 +55,12 @@ function CheckDelivery() {
   const updateParcelStatus = async (value, id) => {
     const data = {
       deliveryStatus: value,
-      parcelUpdatedAt: format(new Date(), "yyyy-MM-dd"),
+      parcelUpdatedAt: format(date, "yyyy-MM-dd"),
     };
+    console.log(data);
     const res = await UpdateStatus(data, id);
-    console.log(res);
     if (res.code === 200) {
-      // setShowCancel(false);
       getPercels();
-      // console.log("work");
     }
   };
 
@@ -73,14 +76,41 @@ function CheckDelivery() {
     <div>
       <div className="bg-white py-5 gap-4 px-4">
         <div className="">
-          <div className="flex gap-2 items-center">
-            <MoveLeft
-              className="mr-4 text-color cursor-pointer"
-              size={23}
-              onClick={() => navigate(-1)}
-            />
-            <p className="header-text">Delivery Parcel Lists</p>
+          <div className="flex gap-2 items-center justify-between">
+            <div className="flex gap-2 items-center">
+              <MoveLeft
+                className="mr-4 text-color cursor-pointer"
+                size={23}
+                onClick={() => navigate(-1)}
+              />
+              <p className="header-text">Delivery Parcel Lists</p>
+            </div>
+            <div className="flex gap-4 items-center">
+              <button
+                onClick={() => {
+                  setShowDatePicker(!showDatePicker);
+                  // console.log(showDatePicker);
+                }}
+                className="button button-color text-color border border-primary transition-all duration-300 "
+              >
+                <FaCalendarAlt className="text-color" />
+                {format(date, "MMMM d,yyyy")}
+              </button>
+            </div>
           </div>
+
+          {/* Date Range Picker */}
+          {showDatePicker && (
+            <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
+              <Calendar
+                date={today}
+                onChange={(date) => {
+                  setDate(date);
+                  setShowDatePicker(false);
+                }}
+              />
+            </div>
+          )}
 
           <div className="w-full mt-5 flex border-2 border-[#CBD2E0] rounded-xl">
             <input

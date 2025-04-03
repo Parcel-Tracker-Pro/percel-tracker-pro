@@ -42,7 +42,7 @@ const PercelDetail = () => {
   const getPercel = async () => {
     const role = localStorage.getItem("parcelRole");
     const res = await getAPercel({ id });
-    console.log(res.data);
+    // console.log(res.data);
     if (res.code === 200) {
       setLoading(false);
       setCustomerName(res.data.customerName);

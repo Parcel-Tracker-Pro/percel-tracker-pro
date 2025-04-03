@@ -2,7 +2,7 @@ import axios from "../axios";
 import { toast } from "sonner";
 
 const getdeliveryreport = async ({ start, end }) => {
-  console.log(start, end);
+  // console.log(start, end);
   try {
     const response = await axios.get(
       `api/v1/delivery-report?startDate=${start}&endDate=${end}`

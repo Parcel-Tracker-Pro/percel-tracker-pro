@@ -61,26 +61,28 @@ const CreateParcel = () => {
       return;
     }
 
+    console.log(seller);
+
     const data = {
       customerName,
       address: phone,
       paymentStatus: paymentMethod,
       price: price * 1,
       deliveryFee: DeliFee * 1,
-      seller: username,
+      seller: seller,
       parcelCreatedAt: format(date, "yyyy-MM-dd"),
     };
     // console.log(data);
-    const res = await CeateAParcel(data);
-    if (res.code === 201) {
-      setCustomerName("");
-      setPhone("");
-      setItems("");
-      setPaymentMethod("");
-      setPrice("");
-      setDeliFee("");
-      setShowErr(false);
-    }
+    // const res = await CeateAParcel(data);
+    // if (res.code === 201) {
+    //   setCustomerName("");
+    //   setPhone("");
+    //   setItems("");
+    //   setPaymentMethod("");
+    //   setPrice("");
+    //   setDeliFee("");
+    //   setShowErr(false);
+    // }
   };
 
   const getEmployees = async () => {
@@ -108,7 +110,7 @@ const CreateParcel = () => {
           <button
             onClick={() => {
               setShowDatePicker(!showDatePicker);
-              console.log(showDatePicker);
+              // console.log(showDatePicker);
             }}
             className="button button-color text-color border border-primary transition-all duration-300 "
           >
