@@ -73,16 +73,16 @@ const CreateParcel = () => {
       parcelCreatedAt: format(date, "yyyy-MM-dd"),
     };
     // console.log(data);
-    // const res = await CeateAParcel(data);
-    // if (res.code === 201) {
-    //   setCustomerName("");
-    //   setPhone("");
-    //   setItems("");
-    //   setPaymentMethod("");
-    //   setPrice("");
-    //   setDeliFee("");
-    //   setShowErr(false);
-    // }
+    const res = await CeateAParcel(data);
+    if (res.code === 201) {
+      setCustomerName("");
+      setPhone("");
+      setItems("");
+      setPaymentMethod("");
+      setPrice("");
+      setDeliFee("");
+      setShowErr(false);
+    }
   };
 
   const getEmployees = async () => {
