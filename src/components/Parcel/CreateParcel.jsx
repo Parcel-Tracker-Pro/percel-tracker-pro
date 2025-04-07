@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { FaRegCopy } from "react-icons/fa";
-import CeateAParcel from "../../api/percel/CreateParcle";
 import { format } from "date-fns";
 import { BiDownArrow } from "react-icons/bi";
-import getAllEmployees from "../../api/employee/getAllemployees";
 import { motion } from "framer-motion";
 import { FaCalendarAlt } from "react-icons/fa";
 import { Calendar } from "react-date-range";
+import getAllEmployees from "../../api/employee/getAllemployees";
+import CeateAParcel from "../../api/percel/CreateParcle";
 
 const CreateParcel = () => {
+  console.log(sessionStorage.getItem("parcelCreateDate"));
   const role = localStorage.getItem("parcelRole");
   const today = new Date();
   const username = localStorage.getItem("percelUsername");
@@ -24,7 +25,9 @@ const CreateParcel = () => {
   const [seller, setSeller] = useState(username);
   const [dropDowntwo, setDropDownTwo] = useState(false);
   const [employee, setEmployee] = useState([]);
-  const [date, setDate] = useState(today);
+  const [date, setDate] = useState(
+    sessionStorage.getItem("parcelCreateDate") || today
+  );
 
   // console.log(date);
 
@@ -43,7 +46,6 @@ const CreateParcel = () => {
       const text = await navigator.clipboard.readText();
       setPhone(text);
     } catch (err) {
-      // console.error("Failed to read clipboard contents: ", err);
       alert("Failed to paste from clipboard, please try again.");
     }
   };
@@ -61,8 +63,6 @@ const CreateParcel = () => {
       return;
     }
 
-    console.log(seller);
-
     const data = {
       customerName,
       address: phone,
@@ -77,7 +77,6 @@ const CreateParcel = () => {
     if (res.code === 201) {
       setCustomerName("");
       setPhone("");
-      setItems("");
       setPaymentMethod("");
       setPrice("");
       setDeliFee("");
@@ -128,6 +127,7 @@ const CreateParcel = () => {
             onChange={(date) => {
               setDate(date);
               setShowDatePicker(false);
+              sessionStorage.setItem("parcelCreateDate", date);
             }}
           />
         </div>
@@ -231,6 +231,8 @@ const CreateParcel = () => {
                     onClick={() => {
                       setPaymentMethod("Delivery Only");
                       setDropDown(!dropDown);
+                      setDeliFee(0);
+                      setPrice(0);
                     }}
                   >
                     Delivery Only
@@ -240,6 +242,8 @@ const CreateParcel = () => {
                     onClick={() => {
                       setPaymentMethod("Fully Paid");
                       setDropDown(!dropDown);
+                      setPrice(0);
+                      setDeliFee("");
                     }}
                   >
                     Fully Paid
@@ -249,6 +253,8 @@ const CreateParcel = () => {
                     onClick={() => {
                       setPaymentMethod("COD");
                       setDropDown(!dropDown);
+                      setDeliFee(0);
+                      setPrice("");
                     }}
                   >
                     COD
