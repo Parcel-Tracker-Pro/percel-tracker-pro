@@ -55,7 +55,7 @@ function CheckDelivery() {
   const updateParcelStatus = async (value, id) => {
     const data = {
       deliveryStatus: value,
-      parcelUpdatedAt: format(date, "yyyy-MM-dd"),
+      ParcelUpdatedAt: format(date, "yyyy-MM-dd"),
     };
     console.log(data);
     const res = await UpdateStatus(data, id);
