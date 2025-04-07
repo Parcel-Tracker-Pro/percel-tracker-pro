@@ -9,7 +9,10 @@ import getAllEmployees from "../../api/employee/getAllemployees";
 import CeateAParcel from "../../api/percel/CreateParcle";
 
 const CreateParcel = () => {
-  console.log(sessionStorage.getItem("parcelCreateDate"));
+  const a = 0;
+  const b = "";
+  console.log(a === b);
+  // console.log(sessionStorage.getItem("parcelCreateDate"));
   const role = localStorage.getItem("parcelRole");
   const today = new Date();
   const username = localStorage.getItem("percelUsername");
@@ -51,6 +54,8 @@ const CreateParcel = () => {
   };
 
   const addParcel = async () => {
+    console.log("price", price);
+    console.log("deli", DeliFee);
     if (
       !customerName ||
       !phone ||
@@ -278,7 +283,7 @@ const CreateParcel = () => {
             <label className="font-bold text-lg">Price</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
-                !price && showErr ? "border-red-500" : "border-gray-300"
+                price === "" && showErr ? "border-red-500" : "border-gray-300"
               }`}
             >
               <input
@@ -294,7 +299,7 @@ const CreateParcel = () => {
             <label className="font-bold text-lg">Delivery Fees</label>
             <div
               className={`flex items-center w-full px-4 py-3 border-2 rounded-lg ${
-                !DeliFee && showErr ? "border-red-500" : "border-gray-300"
+                DeliFee === "" && showErr ? "border-red-500" : "border-gray-300"
               }`}
             >
               <input
