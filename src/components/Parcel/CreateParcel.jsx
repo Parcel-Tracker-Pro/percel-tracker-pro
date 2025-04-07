@@ -56,8 +56,8 @@ const CreateParcel = () => {
       !phone ||
       !seller ||
       !paymentMethod ||
-      !price ||
-      !DeliFee
+      price === "" ||
+      DeliFee === ""
     ) {
       setShowErr(true);
       return;
@@ -317,8 +317,8 @@ const CreateParcel = () => {
               !phone ||
               !seller ||
               !paymentMethod ||
-              !price ||
-              !DeliFee
+              price === "" ||
+              DeliFee === ""
                 ? "bg-primary/50"
                 : "bg-primary"
             } justify-center w-full flex items-center gap-2 mt-10 text-white font-medium rounded-xl px-4 py-3`}
