@@ -9,9 +9,6 @@ import getAllEmployees from "../../api/employee/getAllemployees";
 import CeateAParcel from "../../api/percel/CreateParcle";
 
 const CreateParcel = () => {
-  const a = 0;
-  const b = "";
-  console.log(a === b);
   // console.log(sessionStorage.getItem("parcelCreateDate"));
   const role = localStorage.getItem("parcelRole");
   const today = new Date();
