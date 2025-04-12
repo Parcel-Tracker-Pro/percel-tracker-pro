@@ -18,10 +18,12 @@ const SaleReport = () => {
   // const [deliverydata, setDeliveryData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showStaff, setShowStaff] = useState(true);
-  const [shwoAna, setShowAna] = useState(false);
+  // const [shwoAna, setShowAna] = useState(false);
   const [totalSale, setTotalSale] = useState(0);
   const [topSale, setTopSale] = useState("");
   const [totalCus, setTotalCus] = useState(0);
+  const [successCount, setSuccessCount] = useState(0);
+  const [cancelCount, setCancelCount] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [startDate, setStartDate] = useState(
     sessionStorage.getItem("startDate") || startOfDay(today)
@@ -61,12 +63,15 @@ const SaleReport = () => {
     const end = format(endDate, "yyyy-MM-dd");
     // console.log(start, end);
     const res = await getsellersale({ start, end });
-    // console.log("res", res);
+    console.log("res", res);
     if (res.code === 200) {
       setLoading(false);
-      setTopSale(res.data.topSeller?.sellerName);
+      // setTopSale(res.data.topSeller?.sellerName);
       setTotalSale(res.data.totalSalesValue);
       setTotalCus(res.data.totalParcelCount);
+      setSuccessCount(res.data.successCount);
+      setCancelCount(res.data.cancelCount);
+
       setReportData(res.data.sellerSalesData);
     }
 
@@ -289,11 +294,13 @@ const SaleReport = () => {
                   <div className="w-full">
                     <div className="button-color p-5 rounded-lg border border-gray-200 flex sm:flex-col justify-between sm:justify-center gap-5 ">
                       <div className="flex items-center gap-4">
-                        <FaRegCheckCircle />
+                        <FaRegCheckCircle size={24} />
                         <span>Success Parcels</span>
                       </div>
 
-                      <p className="text-xl font-bold">{totalCus || " - "}</p>
+                      <p className="text-xl font-bold">
+                        {successCount || " - "}
+                      </p>
                     </div>
                   </div>
 
@@ -305,7 +312,7 @@ const SaleReport = () => {
                       </div>
 
                       <p className="text-xl font-bold">
-                        {totalCus ? 0 : " - "}
+                        {cancelCount || " - "}
                       </p>
                     </div>
                   </div>
