@@ -63,7 +63,7 @@ const SaleReport = () => {
     const end = format(endDate, "yyyy-MM-dd");
     // console.log(start, end);
     const res = await getsellersale({ start, end });
-    console.log("res", res);
+    // console.log("res", res);
     if (res.code === 200) {
       setLoading(false);
       // setTopSale(res.data.topSeller?.sellerName);
