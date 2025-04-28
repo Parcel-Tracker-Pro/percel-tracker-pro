@@ -96,7 +96,7 @@ function PercelPage() {
     // console.log(startDate, endDate);
 
     const response = await getAllPercel({ start, end, status: "Pending" });
-    // console.log(response);
+    console.log(response);
     if (response.code === 200) {
       if (role === "owner") {
         setFilteredParcels(response.data);

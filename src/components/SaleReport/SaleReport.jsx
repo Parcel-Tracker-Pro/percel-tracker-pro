@@ -20,7 +20,6 @@ const SaleReport = () => {
   const [showStaff, setShowStaff] = useState(true);
   // const [shwoAna, setShowAna] = useState(false);
   const [totalSale, setTotalSale] = useState(0);
-  const [topSale, setTopSale] = useState("");
   const [totalCus, setTotalCus] = useState(0);
   const [successCount, setSuccessCount] = useState(0);
   const [cancelCount, setCancelCount] = useState(0);
@@ -214,7 +213,7 @@ const SaleReport = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
-                    className=""
+                    className="bg-white rounded-2xl overflow-hidden mx-3"
                   >
                     <div className="rounded-2xl overflow-hidden mx-3">
                       <div className="flex w-full bg-white py-2 pb-4 px-2">
@@ -266,9 +265,14 @@ const SaleReport = () => {
               </div>
             ) : (
               <div className="mx-2">
-                <div className="flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-5 gap-5 text-color">
+                <div
+                  className="bg-[#FCE79C] border border-gray-300 p-2 rounded-xl flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-5 gap-5 text-color cursor-pointer"
+                  onClick={() => {
+                    navigate("/admin/saleDetail");
+                  }}
+                >
                   <div className="w-full">
-                    <div className="button-color p-5 rounded-lg border border-gray-200 flex sm:flex-col justify-between sm:justify-center gap-5 ">
+                    <div className="p-5 rounded-lg border-r border-gray-300 flex items-center sm:flex-col justify-between sm:justify-center gap-5">
                       <div className="flex items-center gap-4">
                         <DollarSign />
                         <span>Total Sale</span>
@@ -279,9 +283,9 @@ const SaleReport = () => {
                       </p>
                     </div>
                   </div>
-
+                  {/* <div className="w-1 h-full bg-gray-300"></div> */}
                   <div className="w-full">
-                    <div className="button-color p-5 rounded-lg border border-gray-200 flex sm:flex-col justify-between sm:justify-center gap-5 ">
+                    <div className="p-5 rounded-lg border-r border-gray-300 flex items-center sm:flex-col justify-between sm:justify-center gap-5 ">
                       <div className="flex items-center gap-4">
                         <Package />
                         <span>Total Parcels</span>
@@ -292,7 +296,7 @@ const SaleReport = () => {
                   </div>
 
                   <div className="w-full">
-                    <div className="button-color p-5 rounded-lg border border-gray-200 flex sm:flex-col justify-between sm:justify-center gap-5 ">
+                    <div className="p-5 flex sm:flex-col border-r border-gray-300 flex items-center justify-between sm:justify-center gap-5 ">
                       <div className="flex items-center gap-4">
                         <FaRegCheckCircle size={24} />
                         <span>Success Parcels</span>
@@ -305,7 +309,7 @@ const SaleReport = () => {
                   </div>
 
                   <div className="w-full">
-                    <div className="button-color p-5 rounded-lg border border-gray-200 flex sm:flex-col justify-between sm:justify-center gap-5 ">
+                    <div className="p-5 flex sm:flex-col border-r border-gray-300 flex items-center justify-between sm:justify-center gap-5 ">
                       <div className="flex items-center gap-4">
                         <CircleX />
                         <span>Cancel Parcels</span>

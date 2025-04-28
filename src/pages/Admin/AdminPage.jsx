@@ -10,6 +10,7 @@ import SearchParcel from "../../components/Parcel/SearchParcel";
 import DeliveryDetail from "../../components/Delivery/DeliveryDetail";
 import SaleReport from "../../components/SaleReport/SaleReport";
 import CheckDelivery from "../../components/CheckDelivery/CheckDelivery";
+import SaleDetail from "../../components/SaleReport/SaleDetail";
 
 function AdminPage() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function AdminPage() {
           <Route path="/detail/:id" element={<PercelDetail />} />
           <Route path="/createdelivery" element={<CreateDelivery />} />
           <Route path="/deliverydetail/:id" element={<DeliveryDetail />} />
+          <Route path="/saleDetail" element={<SaleDetail />} />
           <Route path="/check" element={<CheckDelivery />} />
         </Routes>
       </div>
