@@ -178,7 +178,7 @@ const SaleReport = () => {
 
       <div className="relative">
         <div className="flex items-center justify-between px-3 mb-5">
-          <p className="header-text">{} Report</p>
+          <p className="header-text">Report</p>
         </div>
 
         {loading ? (
