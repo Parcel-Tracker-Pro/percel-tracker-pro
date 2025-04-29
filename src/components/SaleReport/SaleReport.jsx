@@ -60,9 +60,7 @@ const SaleReport = () => {
     setLoading(true);
     const start = format(startDate, "yyyy-MM-dd");
     const end = format(endDate, "yyyy-MM-dd");
-    // console.log(start, end);
     const res = await getsellersale({ start, end });
-    // console.log("res", res);
     if (res.code === 200) {
       setLoading(false);
       // setTopSale(res.data.topSeller?.sellerName);
@@ -73,21 +71,7 @@ const SaleReport = () => {
 
       setReportData(res.data.sellerSalesData);
     }
-
-    // setReportData(res.data.userData);
   };
-
-  // console.log("report", reportdata);
-
-  // const getDeliveryData = async () => {
-  //   const start = format(startDate, "yyyy-MM-dd");
-  //   const end = format(endDate, "yyyy-MM-dd");
-  //   const res = await getdeliveryreport({ start, end });
-  //   // console.log("res", res);
-  //   if (res.code === 200) {
-  //     setDeliveryData(res.data);
-  //   }
-  // };
 
   useEffect(() => {
     getSellerData();

@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import { motion } from "framer-motion";
 import noParcel from "../../assets/images/noparcel.svg";
 import { format } from "date-fns";
+import getsellersale from "../../api/sale/getsellersale";
 // import UpdateStatus from "../../api/percel/updateStatus";
 
 function SaleDetail() {
@@ -13,26 +14,32 @@ function SaleDetail() {
   const startDate = sessionStorage.getItem("startDate");
   const endDate = sessionStorage.getItem("endDate");
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("Success");
   const [filteredParcels, setFilteredParcels] = useState([]);
-  const status = "Success";
+  const [successParcels, setSuccessParcels] = useState([]);
+  const [cancelParcels, setCancelParcels] = useState([]);
   const navigate = useNavigate();
 
-  console.log(format(startDate, "yyyy-MM-dd"), format(endDate, "yyyy-MM-dd"));
+  // console.log(format(startDate, "yyyy-MM-dd"), format(endDate, "yyyy-MM-dd"));
 
   const getPercels = async () => {
     setLoading(true);
 
-    const response = await getAllPercel({
+    const response = await getsellersale({
       start: format(startDate, "yyyy-MM-dd"),
       end: format(endDate, "yyyy-MM-dd"),
-      status: "Success",
     });
-    console.log(response);
+    // console.log(response);
     if (response.code === 200) {
       if (role === "owner") {
         // setParcels(response.data);
-        setFilteredParcels(response.data);
+        setSuccessParcels(response.data.detailedSuccessfulParcels);
+        setCancelParcels(response.data.detailedCancelledParcels);
+        setFilteredParcels(response.data.detailedSuccessfulParcels);
       } else {
+        // setFilteredParcels([]);
+        setSuccessParcels([]);
+        setCancelParcels([]);
         setFilteredParcels([]);
       }
 
@@ -40,23 +47,9 @@ function SaleDetail() {
     }
   };
 
-  // const updateParcelStatus = async (value, id) => {
-  //   const data = {
-  //     deliveryStatus: value,
-  //     ParcelUpdatedAt: format(date, "yyyy-MM-dd"),
-  //   };
-  //   console.log(data);
-  //   const res = await UpdateStatus(data, id);
-  //   if (res.code === 200) {
-  //     getPercels();
-  //   }
-  // };
-
-  // eslint-disable-line react-hooks/exhaustive-deps
-
   useEffect(() => {
     getPercels();
-  }, [status]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
@@ -71,60 +64,16 @@ function SaleDetail() {
               />
               <p className="header-text">Sale Details</p>
             </div>
-            {/* <div className="flex gap-4 items-center">
-              <button
-                onClick={() => {
-                  setShowDatePicker(!showDatePicker);
-                  // console.log(showDatePicker);
-                }}
-                className="button button-color text-color border border-primary transition-all duration-300 "
-              >
-                <FaCalendarAlt className="text-color" />
-                {format(date, "MMMM d,yyyy")}
-              </button>
-            </div> */}
           </div>
-
-          {/* Date Range Picker */}
-          {/* {showDatePicker && (
-            <div className="mb-4 bg-white rounded-lg shadow-md absolute right-0 z-10">
-              <Calendar
-                date={today}
-                onChange={(date) => {
-                  setDate(date);
-                  setShowDatePicker(false);
-                }}
-              />
-            </div>
-          )} */}
-
-          {/* <div className="w-full mt-5 flex border-2 border-[#CBD2E0] rounded-xl">
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              type="text"
-              placeholder="Search by Customer Name"
-              className="w-full py-3 outline-none rounded-xl px-5"
-            />
-            <button className="text-[#6B5201] py-3 px-5 rounded-xl focus:outline-none">
-              <FaSearch />
-            </button>
-          </div> */}
-
-          {/* <div className="mt-5 flex justify-between">
-            <button
-              className={`text-color py-1 px-5 ${
-                status === "On Deli" ? "border-b-2 border-[#6B5201]" : ""
-              }`}
-              onClick={() => setStatus("On Deli")}
-            >
-              On Delivery
-            </button>
+          <div className="mt-5 flex justify-center gap-20">
             <button
               className={`text-color py-1 px-5 ${
                 status === "Success" ? "border-b-2 border-[#6B5201]" : ""
               }`}
-              onClick={() => setStatus("Success")}
+              onClick={() => {
+                setStatus("Success");
+                setFilteredParcels(successParcels);
+              }}
             >
               Success
             </button>
@@ -132,11 +81,14 @@ function SaleDetail() {
               className={`text-color py-1 px-5 ${
                 status === "Cancel" ? "border-b-2 border-[#6B5201]" : ""
               }`}
-              onClick={() => setStatus("Cancel")}
+              onClick={() => {
+                setStatus("Cancel");
+                setFilteredParcels(cancelParcels);
+              }}
             >
               Cancel
             </button>
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -217,53 +169,17 @@ function SaleDetail() {
                                 status === "Success" ? "line-through" : ""
                               }`}
                             >
-                              {format(parcel.batchCreatedAt, "dd/MM/yyyy")}
+                              {format(parcel.parcelCreatedAt, "dd/MM/yyyy")}
                             </div>
-
-                            {status !== "On Deli" && (
-                              <div
-                                className={`w-4/12 sm:w-3/12 text-center py-4 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-gray-900 ${
-                                  status === "Success" ? "line-through" : ""
-                                }`}
-                              >
-                                {format(parcel?.ParcelUpdatedAt, "dd/MM/yyyy")}
-                              </div>
-                            )}
-
                             <div
                               className={`w-2/12 hidden sm:block py-4 text-center text-sm text-gray-900 ${
-                                status === "Success" ? "line-through" : ""
+                                parcel.deliveryStatus === "Success"
+                                  ? "line-through"
+                                  : ""
                               }`}
                             >
                               <span className="me-3"> {parcel.price} Ks</span>
                             </div>
-
-                            {/* {status === "On Deli" && (
-                              <div className="w-4/12 sm:w-3/12 py-4 flex justify-center">
-                                <div className="flex gap-3">
-                                  <button
-                                    className="p-3 text-[#1C431E] bg-[#C5E2C6] rounded-lg focus:outline-none active:scale-105"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      updateParcelStatus("Success", parcel._id);
-                                      // handleDelivery(parcel._id);
-                                    }}
-                                  >
-                                    <CircleCheck />
-                                  </button>
-
-                                  <button
-                                    className="p-3 text-[#601816] bg-[#F7C2C0] rounded-lg focus:outline-none active:scale-105"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      updateParcelStatus("Cancel", parcel._id);
-                                    }}
-                                  >
-                                    <CircleX />
-                                  </button>
-                                </div>
-                              </div>
-                            )} */}
                           </div>
                         </div>
                       ))}
