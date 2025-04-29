@@ -117,14 +117,14 @@ function SaleDetail() {
                     </div>
 
                     <div className="w-4/12 sm:w-3/12 py-3  text-color text-center text-[13px] uppercase font-bold">
-                      <span className="me-3">Delivery Date</span>
+                      <span className="me-3">Parcel Create Date</span>
                     </div>
 
-                    {status !== "On Deli" && (
+                    {/* {status !== "On Deli" && (
                       <div className="w-4/12 sm:w-3/12 py-3 text-color text-center text-[13px] uppercase font-bold">
                         <span className="me-3">Update Date</span>
                       </div>
-                    )}
+                    )} */}
 
                     <div className="w-2/12 hidden sm:block py-3 text-color text-center text-[13px] uppercase font-bold">
                       <span className="me-3">Price</span>
