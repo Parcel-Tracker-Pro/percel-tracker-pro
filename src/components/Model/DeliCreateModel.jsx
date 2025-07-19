@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Calendar } from "react-date-range";
 
 const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
-  console.log(selectedParcels);
+  // console.log(selectedParcels);
   const today = new Date();
   const [date, setDate] = useState(today);
   // Convert the date to the specified timezone
@@ -114,6 +114,15 @@ const DeliCreateModel = ({ isOpen, onClose, selectedParcels }) => {
                       }}
                     >
                       Own Delivery
+                    </p>
+                    <p
+                      className="truncate p-2 border-b border-gray-200 cursor-pointer"
+                      onClick={() => {
+                        setDeliService("Safe Delivery");
+                        setShowDeliService(false);
+                      }}
+                    >
+                      Safe Delivery
                     </p>
                   </div>
                 </div>
